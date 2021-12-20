@@ -1,7 +1,7 @@
 import "../styles/fonts.css";
 import { ThemeProvider } from "styled-components";
 import { theme } from "../styles/theme";
-import { GlobalStyle } from "../styles/GlobalStyles";
+import { GlobalStyle } from "../styles/GlobalStyle";
 
 function MyApp({ Component, pageProps }) {
   return (
