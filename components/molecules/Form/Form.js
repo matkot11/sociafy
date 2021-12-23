@@ -13,10 +13,13 @@ const StyledForm = styled.form`
   }
 `;
 
-const Form = ({ children }) => <StyledForm>{children}</StyledForm>;
+const Form = ({ children, onSubmit }) => (
+  <StyledForm onSubmit={onSubmit}>{children}</StyledForm>
+);
 
 Form.propTypes = {
   children: PropTypes.node.isRequired,
+  onSubmit: PropTypes.func,
 };
 
 export default Form;

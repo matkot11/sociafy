@@ -35,6 +35,7 @@ const ErrorMessage = ({ message = "Something went wrong" }) => {
           autoRound: false,
         },
         {
+          duration: 1.5,
           width: "50%",
           background: "#CC0000",
         },
@@ -49,6 +50,7 @@ const ErrorMessage = ({ message = "Something went wrong" }) => {
           autoRound: false,
         },
         {
+          duration: 1.5,
           width: "50%",
           background: "#CC0000",
         },
@@ -64,6 +66,7 @@ const ErrorMessage = ({ message = "Something went wrong" }) => {
           autoRound: false,
         },
         {
+          duration: 1.5,
           height: "100%",
           background: "#CC0000",
         },
@@ -78,6 +81,7 @@ const ErrorMessage = ({ message = "Something went wrong" }) => {
           autoRound: false,
         },
         {
+          duration: 1.5,
           height: "100%",
           background: "#CC0000",
         },
@@ -93,6 +97,7 @@ const ErrorMessage = ({ message = "Something went wrong" }) => {
           autoRound: false,
         },
         {
+          duration: 1.5,
           width: "50%",
           background: "#CC0000",
         },
@@ -107,6 +112,7 @@ const ErrorMessage = ({ message = "Something went wrong" }) => {
           autoRound: false,
         },
         {
+          duration: 1.5,
           width: "50%",
           background: "#CC0000",
         },
@@ -116,7 +122,7 @@ const ErrorMessage = ({ message = "Something went wrong" }) => {
       .to(
         e,
         {
-          duration: 1.5,
+          duration: 1,
           y: 100,
         },
         "top",

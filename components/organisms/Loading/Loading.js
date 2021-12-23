@@ -64,8 +64,8 @@ const Loading = () => {
           src={"/svg/loadingMessage.svg"}
           alt={`${i + 1} loader`}
           layout="fixed"
-          width={300}
-          height={100}
+          width={200}
+          height={65}
           priority="true"
         />
       ))}
