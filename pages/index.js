@@ -6,7 +6,7 @@ const HomePage = () => {
 
   useEffect(() => {
     router.push("/auth");
-  }, []);
+  }, [router]);
   return (
     <>
       <h1>Home Page</h1>

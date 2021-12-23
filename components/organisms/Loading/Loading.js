@@ -16,6 +16,7 @@ const Loading = () => {
     tl.fromTo(
       message[0],
       {
+        display: "none",
         opacity: 1,
         y: 0,
         ease: "easeInCirc",
@@ -23,6 +24,7 @@ const Loading = () => {
       {
         opacity: 0,
         y: 50,
+        display: "block",
       },
       "0",
     )
