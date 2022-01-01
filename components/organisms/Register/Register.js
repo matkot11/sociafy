@@ -5,24 +5,23 @@ import Input from "../../atoms/Input/Input";
 import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
-import { useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Loading from "../Loading/Loading";
+import { useRouter } from "next/router";
 
 const Register = ({ onClickLogin }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { dispatchError } = useError();
-  const router = useRouter();
   const emailRef = useRef();
   const passwordRef = useRef();
   const repeatPasswordRef = useRef();
+  const { dispatchError } = useError();
+  const router = useRouter();
 
   const registerHandler = async (e) => {
     e.preventDefault();
     const enteredEmail = emailRef.current.value;
     const enteredPassword = passwordRef.current.value;
     const enteredRepeatPassword = repeatPasswordRef.current.value;
-
     setIsLoading(true);
 
     await axios
@@ -31,7 +30,7 @@ const Register = ({ onClickLogin }) => {
         password: enteredPassword,
         repeatPassword: enteredRepeatPassword,
       })
-      .then(async (response) => {
+      .then(async () => {
         const loginResponse = await signIn("credentials", {
           redirect: false,
           email: enteredEmail,
@@ -39,8 +38,9 @@ const Register = ({ onClickLogin }) => {
         });
 
         if (!loginResponse.error) {
-          await router.replace("/");
+          await router.replace("/user-details");
         }
+
         setIsLoading(false);
       })
       .catch((e) => {
@@ -58,23 +58,18 @@ const Register = ({ onClickLogin }) => {
   return (
     <>
       <Form onSubmit={registerHandler}>
-        <Input
-          ref={emailRef}
-          inputType="email"
-          name="Email"
-          isRequired={true}
-        />
+        <Input ref={emailRef} inputType="email" name="Email*" required={true} />
         <Input
           ref={passwordRef}
           inputType="password"
-          name="Password"
-          isRequired={true}
+          name="Password*"
+          required={true}
         />
         <Input
           ref={repeatPasswordRef}
           inputType="password"
-          name="Repeat Password"
-          isRequired={true}
+          name="Repeat Password*"
+          required={true}
         />
         <RectangleButton>Register</RectangleButton>
       </Form>
