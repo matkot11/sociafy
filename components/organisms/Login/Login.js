@@ -47,17 +47,12 @@ const Login = ({ onClickRegister }) => {
   return (
     <>
       <Form onSubmit={loginHandler}>
-        <Input
-          ref={emailRef}
-          inputType="email"
-          name="Email"
-          isRequired={true}
-        />
+        <Input ref={emailRef} inputType="email" name="Email*" required={true} />
         <Input
           ref={passwordRef}
           inputType="password"
-          name="Password"
-          isRequired={true}
+          name="Password*"
+          required={true}
         />
         <RectangleButton>Login</RectangleButton>
       </Form>

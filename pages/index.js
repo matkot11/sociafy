@@ -1,4 +1,4 @@
-import { getSession, signOut, useSession } from "next-auth/react";
+import { getSession, signOut } from "next-auth/react";
 
 const HomePage = () => {
   return (
