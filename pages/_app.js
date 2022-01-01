@@ -4,17 +4,15 @@ import { theme } from "../styles/theme";
 import { GlobalStyle } from "../styles/GlobalStyle";
 import { ErrorProvider } from "../hooks/useError";
 import { SessionProvider } from "next-auth/react";
+import AppProviders from "../providers/AppProviders";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={theme}>
-      <ErrorProvider>
-        <SessionProvider session={pageProps.session}>
-          <GlobalStyle />
-          <Component {...pageProps} />
-        </SessionProvider>
-      </ErrorProvider>
-    </ThemeProvider>
+    <AppProviders>
+      <SessionProvider session={pageProps.session}>
+        <Component {...pageProps} />
+      </SessionProvider>
+    </AppProviders>
   );
 }
 

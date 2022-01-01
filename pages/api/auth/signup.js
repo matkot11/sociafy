@@ -79,6 +79,8 @@ const handler = async (req, res) => {
     email: email,
     password: hashedPassword,
     profileImage: imageUrl,
+    fullName: "No Name",
+    birthday: null,
   });
 
   res.status(201).json({ message: "User created!" });
