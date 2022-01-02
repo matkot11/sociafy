@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Form from "../../molecules/Form/Form";
 import Input from "../../atoms/Input/Input";
 import FileInput from "../../atoms/FileInput/FileInput";
@@ -14,10 +14,30 @@ const UpdateUserDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
-  const fullNameRef = useRef();
+  const [loadedDetails, setLoadedDetails] = useState(null);
+  const nameRef = useRef();
   const birthdayRef = useRef();
   const { dispatchError } = useError();
   const router = useRouter();
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      await axios
+        .get("/api/user/info")
+        .then(({ data }) => {
+          setLoadedDetails(data);
+          nameRef.current.value = data.name;
+          birthdayRef.current.value = data.birthday;
+        })
+        .catch((e) => {
+          setTimeout(() => {
+            dispatchError(e.response.data.message);
+            setIsLoading(false);
+          }, 1200);
+        });
+    };
+    getUserDetails();
+  }, [dispatchError]);
 
   const profileImageHandler = async (e) => {
     await setSelectedFile(e.target.files[0]);
@@ -26,20 +46,19 @@ const UpdateUserDetails = () => {
 
     reader.onload = async () => {
       await setProfileImage(reader.result);
-      await setProfileImage(reader.result);
     };
   };
 
   const userDetailsHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const enteredFullName = fullNameRef.current.value;
+    const enteredName = nameRef.current.value;
     const enteredBirthdayName = birthdayRef.current.value;
 
     await axios
       .post("/api/auth/signup-details", {
         file: profileImage,
-        fullName: enteredFullName,
+        name: enteredName,
         birthday: enteredBirthdayName,
       })
       .then((response) => {
@@ -54,7 +73,7 @@ const UpdateUserDetails = () => {
       });
   };
 
-  if (isLoading) {
+  if (isLoading || !loadedDetails) {
     return <Loading />;
   }
 
@@ -63,15 +82,10 @@ const UpdateUserDetails = () => {
       {selectedFile ? (
         <ProfileImage src={URL.createObjectURL(selectedFile)} />
       ) : (
-        <ProfileImage src="/icons/user.svg" />
+        <ProfileImage src={loadedDetails.profileImage} />
       )}
       <FileInput onChange={profileImageHandler} />
-      <Input
-        ref={fullNameRef}
-        inputType="text"
-        name="Full name"
-        required={false}
-      />
+      <Input ref={nameRef} inputType="text" name="Name" required={false} />
       <Input
         ref={birthdayRef}
         inputType="date"
@@ -82,7 +96,7 @@ const UpdateUserDetails = () => {
         <RectangleButton onClick={() => router.replace("/")}>
           Cancel
         </RectangleButton>
-        <RectangleButton onSubmit={userDetailsHandler}>Upload</RectangleButton>
+        <RectangleButton onSubmit={userDetailsHandler}>Update</RectangleButton>
       </ButtonWrapper>
     </Form>
   );

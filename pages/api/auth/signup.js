@@ -79,7 +79,7 @@ const handler = async (req, res) => {
     email: email,
     password: hashedPassword,
     profileImage: imageUrl,
-    fullName: "No Name",
+    name: email.split("@")[0],
     birthday: null,
   });
 

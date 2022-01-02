@@ -7,7 +7,7 @@ const handler = async (req, res) => {
     return;
   }
 
-  const { file, fullName, birthday } = req.body;
+  const { file, name, birthday } = req.body;
 
   const session = await getSession({ req });
 
@@ -62,14 +62,14 @@ const handler = async (req, res) => {
     }
   }
 
-  if (fullName && birthday) {
+  if (name && birthday) {
     try {
       await db.collection("users").updateOne(
         { email: session.user.email },
         {
           $set: {
-            fullName: fullName,
-            birthday: birthday,
+            name,
+            birthday,
           },
         },
       );
@@ -79,18 +79,18 @@ const handler = async (req, res) => {
     }
   }
 
-  if (fullName) {
+  if (name) {
     try {
       await db.collection("users").updateOne(
         { email: session.user.email },
         {
           $set: {
-            fullName: fullName,
+            name,
           },
         },
       );
     } catch (e) {
-      res.status(404).json({ message: "Full name did not upload correctly" });
+      res.status(404).json({ message: "Name did not upload correctly" });
       await client.close();
     }
   }
@@ -101,7 +101,7 @@ const handler = async (req, res) => {
         { email: session.user.email },
         {
           $set: {
-            birthday: birthday,
+            birthday,
           },
         },
       );
