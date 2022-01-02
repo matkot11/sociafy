@@ -1,6 +1,7 @@
 import cloudinary from "cloudinary";
 import { connectToDataBase } from "../../../lib/db";
 import { getSession } from "next-auth/react";
+import { getAndCheckSession } from "../../../lib/getAndCheckSession";
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
@@ -9,26 +10,11 @@ const handler = async (req, res) => {
 
   const { file, name, birthday } = req.body;
 
-  const session = await getSession({ req });
+  const session = await getAndCheckSession(req, res);
 
-  if (!session) {
-    res.status(404).json({ message: "No session" });
-    return;
-  }
-
-  const client = await connectToDataBase();
-
-  const db = client.db();
-
-  const existingUser = await db
-    .collection("users")
-    .findOne({ email: session.user.email });
-
-  if (!existingUser) {
-    res.status(404).json({ message: "User not found" });
-    await client.close();
-    return;
-  }
+  const { existingUser, client, db } = await connectToDataBase(res, "users", {
+    email: session.user.email,
+  });
 
   if (file) {
     let imageUrl = "";

@@ -10,34 +10,19 @@ import Loading from "../Loading/Loading";
 import { useRouter } from "next/router";
 import { ButtonWrapper } from "./UpdateUserDetails.styles";
 
-const UpdateUserDetails = () => {
+const UpdateUserDetails = ({ profileImage, name, birthday }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [profileImage, setProfileImage] = useState(null);
-  const [loadedDetails, setLoadedDetails] = useState(null);
+  const [newProfileImage, setNewProfileImage] = useState(null);
   const nameRef = useRef();
   const birthdayRef = useRef();
   const { dispatchError } = useError();
   const router = useRouter();
 
   useEffect(() => {
-    const getUserDetails = async () => {
-      await axios
-        .get("/api/user/info")
-        .then(({ data }) => {
-          setLoadedDetails(data);
-          nameRef.current.value = data.name;
-          birthdayRef.current.value = data.birthday;
-        })
-        .catch((e) => {
-          setTimeout(() => {
-            dispatchError(e.response.data.message);
-            setIsLoading(false);
-          }, 1200);
-        });
-    };
-    getUserDetails();
-  }, [dispatchError]);
+    nameRef.current.value = name;
+    birthdayRef.current.value = birthday;
+  }, [name, birthday]);
 
   const profileImageHandler = async (e) => {
     await setSelectedFile(e.target.files[0]);
@@ -45,7 +30,7 @@ const UpdateUserDetails = () => {
     await reader.readAsDataURL(e.target.files[0]);
 
     reader.onload = async () => {
-      await setProfileImage(reader.result);
+      await setNewProfileImage(reader.result);
     };
   };
 
@@ -57,7 +42,7 @@ const UpdateUserDetails = () => {
 
     await axios
       .post("/api/auth/signup-details", {
-        file: profileImage,
+        file: newProfileImage,
         name: enteredName,
         birthday: enteredBirthdayName,
       })
@@ -73,7 +58,7 @@ const UpdateUserDetails = () => {
       });
   };
 
-  if (isLoading || !loadedDetails) {
+  if (isLoading || !name || !birthday) {
     return <Loading />;
   }
 
@@ -82,7 +67,7 @@ const UpdateUserDetails = () => {
       {selectedFile ? (
         <ProfileImage src={URL.createObjectURL(selectedFile)} />
       ) : (
-        <ProfileImage src={loadedDetails.profileImage} />
+        <ProfileImage src={profileImage} />
       )}
       <FileInput onChange={profileImageHandler} />
       <Input ref={nameRef} inputType="text" name="Name" required={false} />
@@ -101,4 +86,5 @@ const UpdateUserDetails = () => {
     </Form>
   );
 };
+
 export default UpdateUserDetails;

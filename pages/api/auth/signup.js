@@ -43,16 +43,9 @@ const handler = async (req, res) => {
     return;
   }
 
-  const client = await connectToDataBase();
-
-  const db = client.db();
-
-  const existingUser = await db.collection("users").findOne({ email: email });
-
-  if (existingUser) {
-    res.status(422).json({ message: "User exists already!" });
-    return;
-  }
+  const { client, db } = await connectToDataBase(res, "users", {
+    email: email,
+  });
 
   const hashedPassword = await hashPassword(password);
   const id = new ObjectId();

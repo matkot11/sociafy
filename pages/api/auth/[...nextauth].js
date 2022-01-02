@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
-import { connectToDataBase } from "../../../lib/db";
 import { verifyPassword } from "../../../lib/auth";
+import { MongoClient } from "mongodb";
 
 export default NextAuth({
   session: {
@@ -10,7 +10,7 @@ export default NextAuth({
   providers: [
     CredentialProvider({
       async authorize(credentials) {
-        const client = await connectToDataBase();
+        const client = await MongoClient.connect(process.env.MONGODBAPI);
 
         const usersCollection = client.db().collection("users");
 
