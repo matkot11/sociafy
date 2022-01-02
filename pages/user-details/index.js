@@ -1,7 +1,7 @@
 import AuthTemplate from "../../components/templates/AuthTemplate/AuthTemplate";
 import styled from "styled-components";
 import ErrorMessage from "../../components/molecules/ErrorMessage/ErrorMessage";
-import RegisterUserDetails from "../../components/organisms/RegisterUserDetails/RegisterUserDetails";
+import UpdateUserDetails from "../../components/organisms/UpdateUserDetails/UpdateUserDetails";
 import { useError } from "../../hooks/useError";
 
 export const InnerWrapper = styled.div`
@@ -16,7 +16,7 @@ const UserDetails = () => {
 
   return (
     <AuthTemplate>
-      <RegisterUserDetails />
+      <UpdateUserDetails />
       {error ? <ErrorMessage message={error} /> : null}
     </AuthTemplate>
   );

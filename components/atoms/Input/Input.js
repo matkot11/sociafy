@@ -5,12 +5,8 @@ import { Wrapper } from "./Input.styles";
 const Input = forwardRef(({ name, inputType, required = false }, ref) => (
   <Wrapper>
     <label>
-      <input
-        placeholder={name}
-        ref={ref}
-        type={inputType}
-        required={required}
-      />
+      {name}
+      <input ref={ref} type={inputType} required={required} />
     </label>
   </Wrapper>
 ));

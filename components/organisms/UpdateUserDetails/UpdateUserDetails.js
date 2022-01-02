@@ -8,9 +8,9 @@ import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import Loading from "../Loading/Loading";
 import { useRouter } from "next/router";
-import { ButtonWrapper } from "./RegisterUserDetails.styles";
+import { ButtonWrapper } from "./UpdateUserDetails.styles";
 
-const RegisterUserDetails = () => {
+const UpdateUserDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
@@ -87,4 +87,4 @@ const RegisterUserDetails = () => {
     </Form>
   );
 };
-export default RegisterUserDetails;
+export default UpdateUserDetails;

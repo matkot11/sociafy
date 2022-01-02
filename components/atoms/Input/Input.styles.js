@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  position: relative;
   width: 100%;
 
   input {
-    z-index: 10;
     padding: 0.5rem 1rem 0.5rem 1rem;
     width: 100%;
     font-size: ${({ theme }) => theme.fontSize.s};
