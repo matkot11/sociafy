@@ -10,9 +10,11 @@ const Wrapper = styled.div`
 
 const InnerWrapper = styled.div`
   margin-top: 2rem;
-  width: 80%;
+  width: 100%;
   justify-self: center;
   transition: all 0.5s;
+  display: flex;
+  align-items: center;
 `;
 
 const MainTemplate = ({ children }) => (

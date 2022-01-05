@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const StyledImage = styled(Image)`
   border-radius: 50%;
@@ -11,8 +12,14 @@ const StyledImage = styled(Image)`
   }
 `;
 
-const ProfileImage = ({ src }) => (
-  <StyledImage src={src} alt="Profile image" width={125} height={125} />
+const ProfileImage = ({ src, width = 125, height = 125 }) => (
+  <StyledImage src={src} alt="Profile image" width={width} height={height} />
 );
+
+ProfileImage.propTypes = {
+  src: PropTypes.string.isRequired,
+  width: PropTypes.number,
+  height: PropTypes.number,
+};
 
 export default ProfileImage;
