@@ -8,7 +8,7 @@ import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import Loading from "../Loading/Loading";
 import { useRouter } from "next/router";
-import { ButtonWrapper } from "./UpdateUserDetails.styles";
+import { ButtonWrapper, Wrapper } from "./UpdateUserDetails.styles";
 
 const UpdateUserDetails = ({ profileImage, name, birthday }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -63,27 +63,31 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
   }
 
   return (
-    <Form onSubmit={userDetailsHandler}>
-      {selectedFile ? (
-        <ProfileImage src={URL.createObjectURL(selectedFile)} />
-      ) : (
-        <ProfileImage src={profileImage} />
-      )}
-      <FileInput onChange={profileImageHandler} />
-      <Input ref={nameRef} inputType="text" name="Name" required={false} />
-      <Input
-        ref={birthdayRef}
-        inputType="date"
-        name="Birth date"
-        required={false}
-      />
-      <ButtonWrapper>
-        <RectangleButton onClick={() => router.replace("/")}>
-          Cancel
-        </RectangleButton>
-        <RectangleButton onSubmit={userDetailsHandler}>Update</RectangleButton>
-      </ButtonWrapper>
-    </Form>
+    <Wrapper>
+      <Form onSubmit={userDetailsHandler}>
+        {selectedFile ? (
+          <ProfileImage src={URL.createObjectURL(selectedFile)} />
+        ) : (
+          <ProfileImage src={profileImage} />
+        )}
+        <FileInput onChange={profileImageHandler} />
+        <Input ref={nameRef} inputType="text" name="Name" required={false} />
+        <Input
+          ref={birthdayRef}
+          inputType="date"
+          name="Birth date"
+          required={false}
+        />
+        <ButtonWrapper>
+          <RectangleButton onClick={() => router.replace("/")}>
+            Cancel
+          </RectangleButton>
+          <RectangleButton onSubmit={userDetailsHandler}>
+            Update
+          </RectangleButton>
+        </ButtonWrapper>
+      </Form>
+    </Wrapper>
   );
 };
 

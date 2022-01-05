@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
 
       &:first-child {
         & > * {
-          margin: 0.8rem 0 0.8rem 0;
+          margin: 1rem 0 1rem 0;
         }
       }
     }

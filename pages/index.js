@@ -1,12 +1,12 @@
-import { getSession, signOut } from "next-auth/react";
-import Navbar from "../components/organisms/Navbar/Navbar";
+import { getSession } from "next-auth/react";
 import MainTemplate from "../components/templates/MainTemplate/MainTemplate";
+import { connectToDataBase } from "../lib/db";
+import AddPostButton from "../components/organisms/AddPostButton/AddPostButton";
 
-const HomePage = () => {
+const HomePage = ({ profileImage }) => {
   return (
     <MainTemplate>
-      <h1>Home Page</h1>
-      <button onClick={async () => await signOut()}>Logout</button>
+      <AddPostButton profileImage={profileImage} />
     </MainTemplate>
   );
 };
@@ -23,8 +23,20 @@ export const getServerSideProps = async (context) => {
     };
   }
 
+  const { existingUser, client } = await connectToDataBase(
+    context.res,
+    "users",
+    {
+      email: session.user.email,
+    },
+  );
+  await client.close();
+
   return {
-    props: { session },
+    props: {
+      session,
+      profileImage: existingUser.profileImage,
+    },
   };
 };
 
