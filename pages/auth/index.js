@@ -5,7 +5,7 @@ import Register from "../../components/organisms/Register/Register";
 import {
   LoginWrapper,
   RegisterWrapper,
-} from "../../components/Layouts/Auth.styles";
+} from "../../components/layouts/Auth.styles";
 import { useError } from "../../hooks/useError";
 import ErrorMessage from "../../components/molecules/ErrorMessage/ErrorMessage";
 import { getSession, useSession } from "next-auth/react";
