@@ -34,6 +34,10 @@ export const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   h1, h2, h3, h4, h5, h5 {
@@ -43,9 +47,9 @@ export const GlobalStyle = createGlobalStyle`
   hr {
     margin: 0;
   }
-  
+
   input {
     font-family: 'Montserrat', sans-serif;
   }
-  
+
 `;
