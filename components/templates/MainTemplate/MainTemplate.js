@@ -14,7 +14,12 @@ const InnerWrapper = styled.div`
   justify-self: center;
   transition: all 0.5s;
   display: flex;
+  flex-direction: column;
   align-items: center;
+
+  & > * {
+    margin-bottom: 2rem;
+  }
 `;
 
 const MainTemplate = ({ children }) => (

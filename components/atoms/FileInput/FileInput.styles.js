@@ -9,7 +9,7 @@ export const StyledLabel = styled.label`
   width: 100%;
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   font-size: ${({ theme }) => theme.fontSize.s};
-  background-color: ${({ theme }) => theme.color.lightGrey};
+  background-color: ${({ theme }) => theme.color.darkGrey};
   border-radius: 5px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.2s;

@@ -3,7 +3,7 @@ export const theme = {
     white: "#FFFFFF",
     black: "#111111",
     lightGrey: "#F4F4F9",
-    darkGrey: "#3A3B3C",
+    darkGrey: "#EAEAF0",
     lightGreen: "#B8DBD9",
     darkGreen: "#2F4550",
   },
@@ -19,6 +19,7 @@ export const theme = {
   fontWeight: {
     bold: 700,
     semiBold: 600,
+    medium: 500,
     regular: 400,
   },
 };

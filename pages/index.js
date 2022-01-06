@@ -2,11 +2,13 @@ import { getSession } from "next-auth/react";
 import MainTemplate from "../components/templates/MainTemplate/MainTemplate";
 import { connectToDataBase } from "../lib/db";
 import AddPostButton from "../components/organisms/AddPostButton/AddPostButton";
+import Post from "../components/organisms/Post/Post";
 
 const HomePage = ({ profileImage }) => {
   return (
     <MainTemplate>
       <AddPostButton profileImage={profileImage} />
+      <Post profileImage={profileImage} />
     </MainTemplate>
   );
 };
