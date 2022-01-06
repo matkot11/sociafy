@@ -7,13 +7,16 @@ const Wrapper = styled.div`
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
-const GreyWrapper = ({ children, as = "div" }) => (
-  <Wrapper as={as}>{children}</Wrapper>
+const GreyWrapper = ({ onClick, children, as = "div" }) => (
+  <Wrapper onClick={onClick} as={as}>
+    {children}
+  </Wrapper>
 );
 
 GreyWrapper.prototype = {
   children: PropTypes.node.isRequired,
   as: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default GreyWrapper;

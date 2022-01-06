@@ -48,7 +48,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 
-  input {
+  input, textarea {
     font-family: 'Montserrat', sans-serif;
   }
 

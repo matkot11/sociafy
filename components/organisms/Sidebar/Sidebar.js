@@ -10,14 +10,6 @@ const Sidebar = () => (
       <div>
         <Link href="/" passHref>
           <IconTextLink
-            iconPath="/icons/add.svg"
-            name="Add post"
-            width={35}
-            height={35}
-          />
-        </Link>
-        <Link href="/" passHref>
-          <IconTextLink
             iconPath="/icons/home.svg"
             name="Main page"
             width={35}

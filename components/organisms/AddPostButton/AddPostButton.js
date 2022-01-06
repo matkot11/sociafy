@@ -4,8 +4,8 @@ import Image from "next/image";
 import { Wrapper } from "./AddPostButton.styles";
 import GreyWrapper from "../../molecules/GreyWrapper/GreyWrapper";
 
-const AddPostButton = ({ profileImage }) => (
-  <GreyWrapper as="button">
+const AddPostButton = ({ profileImage, onClick }) => (
+  <GreyWrapper as="button" onClick={onClick}>
     <Wrapper>
       <ProfileImage src={profileImage} width={60} height={60} />
       <RoundedButton>
