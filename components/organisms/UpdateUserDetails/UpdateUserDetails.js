@@ -41,7 +41,7 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
     const enteredBirthdayName = birthdayRef.current.value;
 
     await axios
-      .post("/api/auth/signup-details", {
+      .post("/api/auth/user-details", {
         file: newProfileImage,
         name: enteredName,
         birthday: enteredBirthdayName,
@@ -52,7 +52,7 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
       })
       .catch((e) => {
         setTimeout(() => {
-          dispatchError(e.response.data.message);
+          dispatchError(e.response.data);
           setIsLoading(false);
         }, 1200);
       });

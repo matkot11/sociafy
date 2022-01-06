@@ -33,7 +33,7 @@ const Auth = () => {
       <RegisterWrapper isOpenLogin={isLoginOpen && "isOpenLogin"}>
         <Register onClickLogin={(e) => handleDisplayAuth(e, true)} />
       </RegisterWrapper>
-      {error ? <ErrorMessage message={error} /> : null}
+      {error && <ErrorMessage message={error} />}
     </AuthTemplate>
   );
 };

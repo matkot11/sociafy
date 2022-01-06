@@ -23,7 +23,7 @@ const UserDetails = ({ profileImage, name, birthday }) => {
         name={name}
         birthday={birthday}
       />
-      {error ? <ErrorMessage message={error} /> : null}
+      {error && <ErrorMessage message={error} />}
     </MainTemplate>
   );
 };

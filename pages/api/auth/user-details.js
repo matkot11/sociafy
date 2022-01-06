@@ -18,22 +18,16 @@ const handler = async (req, res) => {
 
   if (file) {
     let imageUrl = "";
-
-    await cloudinary.v2.uploader
-      .upload(file, {
+    try {
+      const response = await cloudinary.v2.uploader.upload(file, {
         resource_type: "image",
         public_id: `users/${existingUser._id.toString()}`,
         use_filename: true,
         filename_override: existingUser._id.toString(),
-      })
-      .then((response) => (imageUrl = response.url))
-      .catch((e) =>
-        res
-          .status(404)
-          .json({ message: "Profile image did not upload correctly" }),
-      );
+      });
 
-    try {
+      imageUrl = await response.url;
+
       await db.collection("users").updateOne(
         { email: session.user.email },
         {
@@ -42,8 +36,10 @@ const handler = async (req, res) => {
           },
         },
       );
+      await client.close();
     } catch (e) {
-      res.status(404).json({ message: "Data did not upload correctly" });
+      console.log(e);
+      res.status(e.status).json({ message: e.message });
       await client.close();
     }
   }

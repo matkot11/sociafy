@@ -36,7 +36,6 @@ const Login = ({ onClickRegister }) => {
     if (!result.error) {
       setIsLoading(false);
       await router.replace("/");
-      console.log(result);
     }
   };
 
