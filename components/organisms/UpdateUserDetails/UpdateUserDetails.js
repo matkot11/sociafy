@@ -70,7 +70,7 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
         ) : (
           <ProfileImage src={profileImage} />
         )}
-        <FileInput onChange={profileImageHandler} />
+        <FileInput text="Add profile image" onChange={profileImageHandler} />
         <Input ref={nameRef} inputType="text" name="Name" required={false} />
         <Input
           ref={birthdayRef}
