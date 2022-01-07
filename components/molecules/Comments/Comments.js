@@ -5,8 +5,17 @@ import axios from "axios";
 import { useError } from "../../../hooks/useError";
 
 const Wrapper = styled.div`
+  width: 100%;
   padding: 2rem 2rem 1rem 2rem;
   align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  span {
+    width: 100%;
+    text-align: center;
+  }
 
   & > * {
     margin: 1rem 0 1rem 0;
@@ -16,7 +25,6 @@ const Wrapper = styled.div`
 const Comments = ({ comments, session, postId }) => {
   const [commentsArray, setCommentsArray] = useState(comments);
   const { dispatchError } = useError();
-  console.log(comments);
 
   useEffect(() => {
     setCommentsArray(comments);

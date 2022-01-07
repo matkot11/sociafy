@@ -83,6 +83,7 @@ export const getServerSideProps = async (context) => {
       profileImage,
       posts: posts.map((post) => ({
         id: post._id.toString(),
+        email: post.email,
         date: format(new Date(post._id.getTimestamp()), "PP"),
         name: post.name,
         profileImage: post.profileImage,

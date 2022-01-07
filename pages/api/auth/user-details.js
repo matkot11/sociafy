@@ -137,6 +137,11 @@ const handler = async (req, res) => {
     }
   }
 
+  if (!birthday && !name && !file) {
+    res.status(404).json({ message: "Did not provide any data" });
+    await client.close();
+  }
+
   res.status(200).json({ message: "User created!" });
 
   await client.close();

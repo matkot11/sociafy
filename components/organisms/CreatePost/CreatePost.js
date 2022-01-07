@@ -42,16 +42,17 @@ const CreatePost = () => {
         text: enteredText,
       })
       .then((response) => {
-        setIsLoading(false);
         router.reload();
+        setIsLoading(false);
       })
       .catch((e) => {
         setTimeout(() => {
-          if (e.response.data.message === undefined) {
+          if (e.response.data.message !== undefined) {
+            console.log(e.response.data.message);
             dispatchError(e.response.data.message);
-            setIsLoading(false);
+          } else {
+            dispatchError(e.response.data);
           }
-          dispatchError(e.response.data);
           setIsLoading(false);
         }, 1200);
       });
