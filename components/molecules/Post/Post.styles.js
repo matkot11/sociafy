@@ -7,24 +7,31 @@ export const Wrapper = styled.div`
 `;
 
 export const UserWrapper = styled.div`
-  padding: 2rem 0 2rem 1rem;
+  padding: 2rem 2rem 2rem 1rem;
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   div {
-    margin-left: 1rem;
     display: flex;
-    flex-direction: column;
+    align-items: center;
 
-    span:nth-child(1) {
-      font-size: ${({ theme }) => theme.fontSize.s};
-      font-weight: ${({ theme }) => theme.fontWeight.bold};
-    }
+    div {
+      margin-left: 1rem;
+      display: flex;
+      flex-direction: column;
 
-    span:nth-child(2) {
-      font-size: ${({ theme }) => theme.fontSize.xxs};
-      font-weight: ${({ theme }) => theme.fontWeight.semiBold};
+      span:nth-child(1) {
+        font-size: ${({ theme }) => theme.fontSize.s};
+        font-weight: ${({ theme }) => theme.fontWeight.bold};
+      }
+
+      span:nth-child(2) {
+        align-self: flex-start;
+        font-size: ${({ theme }) => theme.fontSize.xxs};
+        font-weight: ${({ theme }) => theme.fontWeight.semiBold};
+      }
     }
   }
 `;

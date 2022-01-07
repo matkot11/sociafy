@@ -76,6 +76,9 @@ const handler = async (req, res) => {
     res.status(201).json({ message: "Post created!" });
     await client.close();
   }
+
+  res.status(404).json({ message: "Did not provide any data" });
+  await client.close();
 };
 
 export const config = {

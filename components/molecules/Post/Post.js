@@ -14,8 +14,9 @@ import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import Comments from "../Comments/Comments";
 import AddComment from "../../atoms/Add Comment/AddComment";
+import IconLink from "../../atoms/IconLink/IconLink";
 
-const Post = ({ session, post }) => {
+const Post = ({ session, post, onClick, isYourPost }) => {
   const commentRef = useRef();
   const [likesArray, setLikesArray] = useState(post.likes);
   const [commentsArray, setCommentsArray] = useState(post.comments);
@@ -65,11 +66,22 @@ const Post = ({ session, post }) => {
     <GreyWrapper>
       <Wrapper>
         <UserWrapper>
-          <ProfileImage src={post.profileImage} width={40} height={40} />
           <div>
-            <span>{post.name}</span>
-            <span>{post.date}</span>
+            <ProfileImage src={post.profileImage} width={40} height={40} />
+            <div>
+              <span>{post.name}</span>
+              <span>{post.date}</span>
+            </div>
           </div>
+          {isYourPost && (
+            <IconLink
+              onClick={onClick}
+              name="Bin"
+              iconPath="/icons/bin.svg"
+              width={24}
+              height={24}
+            />
+          )}
         </UserWrapper>
         <Paragraph>{post.text}</Paragraph>
         {post.image && (
