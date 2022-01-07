@@ -29,11 +29,19 @@ export const UserWrapper = styled.div`
   }
 `;
 
+export const Paragraph = styled.p`
+  padding: 1rem;
+  align-self: flex-start;
+  height: auto;
+  word-wrap: break-word;
+  max-width: 100%;
+`;
+
 export const ImageWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 24rem;
-  object-fit: cover;
+  height: auto;
+  min-height: 25rem;
 `;
 
 export const BottomWrapper = styled.div`

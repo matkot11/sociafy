@@ -17,11 +17,11 @@ const ErrorMessage = ({ message = "Something went wrong" }) => {
     tl.fromTo(
       e,
       {
-        y: 100,
+        y: document.documentElement.scrollTop + 100,
       },
       {
         duration: 1,
-        y: 0,
+        y: document.documentElement.scrollTop,
       },
       "0",
     )
@@ -123,7 +123,7 @@ const ErrorMessage = ({ message = "Something went wrong" }) => {
         e,
         {
           duration: 1,
-          y: 100,
+          y: document.documentElement.scrollTop + 100,
         },
         "top",
       );

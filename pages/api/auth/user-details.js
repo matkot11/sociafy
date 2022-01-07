@@ -1,10 +1,10 @@
 import cloudinary from "cloudinary";
 import { connectToDataBase } from "../../../lib/db";
-import { getSession } from "next-auth/react";
 import { getAndCheckSession } from "../../../lib/getAndCheckSession";
+import { uploadImage } from "../../../lib/uploadImage";
 
 const handler = async (req, res) => {
-  if (req.method !== "POST") {
+  if (req.method !== "PATCH") {
     return;
   }
 
@@ -12,39 +12,83 @@ const handler = async (req, res) => {
 
   const session = await getAndCheckSession(req, res);
 
-  const { existingUser, client, db } = await connectToDataBase(res, "users", {
+  const { client, db } = await connectToDataBase();
+
+  const existingUser = await db.collection("users").findOne({
     email: session.user.email,
   });
 
-  if (file) {
-    let imageUrl = "";
+  if (file && name && birthday) {
+    const { imageUrl } = await uploadImage(
+      res,
+      file,
+      existingUser._id.toString(),
+      "users",
+    );
     try {
-      const response = await cloudinary.v2.uploader.upload(file, {
-        resource_type: "image",
-        public_id: `users/${existingUser._id.toString()}`,
-        use_filename: true,
-        filename_override: existingUser._id.toString(),
-      });
-
-      imageUrl = await response.url;
-
       await db.collection("users").updateOne(
         { email: session.user.email },
         {
           $set: {
             profileImage: imageUrl,
+            name,
+            birthday,
           },
         },
       );
-      await client.close();
     } catch (e) {
-      console.log(e);
-      res.status(e.status).json({ message: e.message });
+      res.status(404).json({ message: "Data did not upload correctly" });
       await client.close();
     }
   }
 
-  if (name && birthday) {
+  if (file && name && !birthday) {
+    const { imageUrl } = await uploadImage(
+      res,
+      file,
+      existingUser._id.toString(),
+      "users",
+    );
+    try {
+      await db.collection("users").updateOne(
+        { email: session.user.email },
+        {
+          $set: {
+            profileImage: imageUrl,
+            name,
+          },
+        },
+      );
+    } catch (e) {
+      res.status(404).json({ message: "Data did not upload correctly" });
+      await client.close();
+    }
+  }
+
+  if (file && birthday && !name) {
+    const { imageUrl } = await uploadImage(
+      res,
+      file,
+      existingUser._id.toString(),
+      "users",
+    );
+    try {
+      await db.collection("users").updateOne(
+        { email: session.user.email },
+        {
+          $set: {
+            profileImage: imageUrl,
+            birthday,
+          },
+        },
+      );
+    } catch (e) {
+      res.status(404).json({ message: "Data did not upload correctly" });
+      await client.close();
+    }
+  }
+
+  if (name && birthday && !file) {
     try {
       await db.collection("users").updateOne(
         { email: session.user.email },
@@ -61,7 +105,7 @@ const handler = async (req, res) => {
     }
   }
 
-  if (name) {
+  if (name && !birthday && !file) {
     try {
       await db.collection("users").updateOne(
         { email: session.user.email },
@@ -77,7 +121,7 @@ const handler = async (req, res) => {
     }
   }
 
-  if (birthday) {
+  if (birthday && !name && !file) {
     try {
       await db.collection("users").updateOne(
         { email: session.user.email },
@@ -96,6 +140,14 @@ const handler = async (req, res) => {
   res.status(200).json({ message: "User created!" });
 
   await client.close();
+};
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb",
+    },
+  },
 };
 
 export default handler;
