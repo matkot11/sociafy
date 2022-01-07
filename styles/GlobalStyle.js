@@ -43,6 +43,10 @@ export const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h5 {
     margin: 0;
   }
+  
+  p {
+    margin: 0;
+  }
 
   hr {
     margin: 0;

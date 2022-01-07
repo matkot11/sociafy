@@ -31,13 +31,18 @@ const UserDetails = ({ profileImage, name, birthday }) => {
 export const getServerSideProps = async (context) => {
   const session = await getAndCheckSession(context.req, context.res);
 
-  const { existingUser, client } = await connectToDataBase(
-    context.res,
-    "users",
-    {
-      email: session.user.email,
-    },
-  );
+  const { client, db } = await connectToDataBase();
+
+  const existingUser = await db.collection("users").findOne({
+    email: session.user.email,
+  });
+
+  if (!existingUser) {
+    context.res.status(404).json({ message: "User not found" });
+    await client.close();
+    return;
+  }
+
   await client.close();
 
   return {

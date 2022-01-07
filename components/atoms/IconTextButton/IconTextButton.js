@@ -15,6 +15,7 @@ const Wrapper = styled.button`
 `;
 
 const IconTextButton = ({
+  onClick,
   src,
   alt,
   text,
@@ -22,13 +23,14 @@ const IconTextButton = ({
   imageHeight = 23,
   fontWeight = 600,
 }) => (
-  <Wrapper fontWeight={fontWeight}>
+  <Wrapper onClick={onClick} fontWeight={fontWeight}>
     <Image src={src} alt={alt} width={imageWidth} height={imageHeight} />
     <span>{text}</span>
   </Wrapper>
 );
 
 IconTextButton.propTypes = {
+  onClick: PropTypes.func,
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,

@@ -2,7 +2,7 @@ import ProfileImage from "../../atoms/ProfileImage/ProfileImage";
 import RoundedButton from "../../atoms/RoundedButton/RoundedButton";
 import Image from "next/image";
 import { Wrapper } from "./AddPostButton.styles";
-import GreyWrapper from "../../molecules/GreyWrapper/GreyWrapper";
+import GreyWrapper from "../GreyWrapper/GreyWrapper";
 
 const AddPostButton = ({ profileImage, onClick }) => (
   <GreyWrapper as="button" onClick={onClick}>

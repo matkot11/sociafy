@@ -41,7 +41,7 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
     const enteredBirthdayName = birthdayRef.current.value;
 
     await axios
-      .post("/api/auth/user-details", {
+      .patch("/api/auth/user-details", {
         file: newProfileImage,
         name: enteredName,
         birthday: enteredBirthdayName,
@@ -52,13 +52,17 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
       })
       .catch((e) => {
         setTimeout(() => {
+          if (e.response.data.message === undefined) {
+            dispatchError(e.response.data.message);
+            setIsLoading(false);
+          }
           dispatchError(e.response.data);
           setIsLoading(false);
         }, 1200);
       });
   };
 
-  if (isLoading || !name || !birthday) {
+  if (isLoading) {
     return <Loading />;
   }
 

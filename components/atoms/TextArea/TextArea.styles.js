@@ -6,7 +6,8 @@ export const Wrapper = styled.div`
   textarea {
     padding: 1.5rem;
     width: 100%;
-    min-height: 15rem;
+    min-height: ${({ textAreaHeight }) =>
+      textAreaHeight ? textAreaHeight : "15rem"};
     font-size: ${({ theme }) => theme.fontSize.s};
     font-weight: ${({ theme }) => theme.fontWeight.regular};
     border: none;
