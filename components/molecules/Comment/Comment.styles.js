@@ -1,12 +1,20 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  width: max-content;
   display: flex;
   flex-direction: column;
+  text-align: right;
+
+  span {
+    text-align: left;
+    margin-bottom: 0.3rem;
+    align-self: flex-end;
+    font-size: ${({ theme }) => theme.fontSize.xs};
+  }
 
   div {
-    padding: 1rem;
-    width: 100%;
+    padding: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -19,11 +27,5 @@ export const Wrapper = styled.div`
       font-size: ${({ theme }) => theme.fontSize.s};
       word-wrap: break-word;
     }
-  }
-
-  span {
-    margin-bottom: 0.3rem;
-    align-self: flex-end;
-    font-size: ${({ theme }) => theme.fontSize.xs};
   }
 `;

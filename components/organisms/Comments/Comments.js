@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-end;
 
-  span {
+  span:last-child {
     width: 100%;
     text-align: center;
   }

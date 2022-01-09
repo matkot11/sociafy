@@ -3,7 +3,7 @@ import ProfileImage from "../../atoms/ProfileImage/ProfileImage";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  width: 90%;
+  //width: 90%;
   padding: 1rem;
   display: flex;
   align-items: center;
