@@ -48,7 +48,6 @@ const CreatePost = () => {
       .catch((e) => {
         setTimeout(() => {
           if (e.response.data.message !== undefined) {
-            console.log(e.response.data.message);
             dispatchError(e.response.data.message);
           } else {
             dispatchError(e.response.data);

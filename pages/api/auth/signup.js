@@ -60,6 +60,7 @@ const handler = async (req, res) => {
     profileImage: imageUrl,
     name: email.split("@")[0],
     birthday: null,
+    friends: [],
   });
 
   res.status(201).json({ message: "User created!" });

@@ -10,14 +10,14 @@ import { format } from "date-fns";
 import ErrorMessage from "../components/molecules/ErrorMessage/ErrorMessage";
 import { useError } from "../hooks/useError";
 
-const HomePage = ({ profileImage, posts, session }) => {
+const HomePage = ({ profileImage, posts, session, userId }) => {
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
   const { error } = useError();
 
   return (
-    <MainTemplate id="root">
+    <MainTemplate userId={userId}>
       <AddPostButton profileImage={profileImage} onClick={handleOpenModal} />
-      <Posts posts={posts} session={session} />
+      <Posts posts={posts} email={session.user.email} />
       <Modal isOpen={isOpen} handleClose={handleCloseModal}>
         <CreatePost />
       </Modal>
@@ -50,13 +50,11 @@ export const getServerSideProps = async (context) => {
     return;
   }
 
-  let profileImage = existingUser.profileImage;
-
   const posts = await db.collection("posts").find().sort({ _id: -1 }).toArray();
 
   await client.close();
 
-  // // Updates posts with newest profile images and names
+  // // Updates posts with newest [profileId] images and names
   // for (const post of posts) {
   //   const { collection, client } = await connectToDataBase(
   //     context.res,
@@ -80,7 +78,8 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       session,
-      profileImage,
+      profileImage: existingUser.profileImage,
+      userId: existingUser._id.toString(),
       posts: posts.map((post) => ({
         id: post._id.toString(),
         email: post.email,

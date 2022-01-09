@@ -5,7 +5,7 @@ import NavbarButtons from "../../molecules/NavbarButtons/NavbarButtons";
 import { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 
-const Navbar = () => {
+const Navbar = ({ userId }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <Wrapper>
@@ -36,7 +36,7 @@ const Navbar = () => {
           </button>
         </div>
       </UpperInnerWrapper>
-      {isSidebarOpen ? <Sidebar /> : <NavbarButtons />}
+      {isSidebarOpen ? <Sidebar /> : <NavbarButtons userId={userId} />}
     </Wrapper>
   );
 };
