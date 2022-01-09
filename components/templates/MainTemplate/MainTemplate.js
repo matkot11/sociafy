@@ -22,9 +22,9 @@ const InnerWrapper = styled.div`
   }
 `;
 
-const MainTemplate = ({ children }) => (
+const MainTemplate = ({ children, userId }) => (
   <Wrapper>
-    <Navbar />
+    <Navbar userId={userId} />
     <InnerWrapper>{children}</InnerWrapper>
   </Wrapper>
 );

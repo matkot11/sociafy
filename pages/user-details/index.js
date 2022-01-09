@@ -13,11 +13,11 @@ export const InnerWrapper = styled.div`
   transition: all 0.5s;
 `;
 
-const UserDetails = ({ profileImage, name, birthday }) => {
+const UserDetails = ({ id, profileImage, name, birthday }) => {
   const { error } = useError();
 
   return (
-    <MainTemplate>
+    <MainTemplate userId={id}>
       <UpdateUserDetails
         profileImage={profileImage}
         name={name}
@@ -47,6 +47,7 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
+      id: existingUser._id.toString(),
       profileImage: existingUser.profileImage,
       name: existingUser.name,
       birthday: existingUser.birthday,

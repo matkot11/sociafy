@@ -12,12 +12,10 @@ const RectangleButton = styled.button`
   transition: all 0.2s;
 
   &:focus {
-    transform: scale(1.01);
     box-shadow: 0 4px 4px ${({ theme }) => theme.color.lightGreen};
   }
 
   &:hover {
-    transform: scale(1.01);
     box-shadow: 0 4px 4px ${({ theme }) => theme.color.lightGreen};
   }
 

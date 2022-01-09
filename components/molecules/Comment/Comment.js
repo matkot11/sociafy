@@ -1,4 +1,4 @@
-import IconLink from "../IconLink/IconLink";
+import IconLink from "../../atoms/IconLink/IconLink";
 import { Wrapper } from "./Comment.styles";
 
 const Comment = ({ onClick, comment, isYourComment }) => (

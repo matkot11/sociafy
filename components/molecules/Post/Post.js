@@ -12,11 +12,11 @@ import {
 import IconTextButton from "../../atoms/IconTextButton/IconTextButton";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
-import Comments from "../Comments/Comments";
+import Comments from "../../organisms/Comments/Comments";
 import AddComment from "../../atoms/Add Comment/AddComment";
 import IconLink from "../../atoms/IconLink/IconLink";
 
-const Post = ({ session, post, onClick, isYourPost }) => {
+const Post = ({ email, post, onClick, isYourPost }) => {
   const commentRef = useRef();
   const [likesArray, setLikesArray] = useState(post.likes);
   const [commentsArray, setCommentsArray] = useState(post.comments);
@@ -46,7 +46,7 @@ const Post = ({ session, post, onClick, isYourPost }) => {
         .patch("/api/posts/add-comment-post", {
           id: post.id,
           comment,
-          email: session.user.email,
+          email,
         })
         .then(({ data }) => {
           setCommentsArray(data.comments);
@@ -109,7 +109,7 @@ const Post = ({ session, post, onClick, isYourPost }) => {
           </div>
           <hr />
           <div>
-            {likesArray && likesArray.includes(session.user.email) ? (
+            {likesArray && likesArray.includes(email) ? (
               <IconTextButton
                 onClick={likeHandler}
                 src="/icons/like.svg"
@@ -138,11 +138,7 @@ const Post = ({ session, post, onClick, isYourPost }) => {
         </BottomWrapper>
         {showComments && (
           <>
-            <Comments
-              comments={commentsArray}
-              session={session}
-              postId={post.id}
-            />
+            <Comments comments={commentsArray} email={email} postId={post.id} />
             <AddComment onSubmit={commentHandler} ref={commentRef} />
           </>
         )}

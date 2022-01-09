@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Comment from "../../atoms/Comment/Comment";
+import Comment from "../../molecules/Comment/Comment";
 import styled from "styled-components";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Comments = ({ comments, session, postId }) => {
+const Comments = ({ comments, email, postId }) => {
   const [commentsArray, setCommentsArray] = useState(comments);
   const { dispatchError } = useError();
 
@@ -53,7 +53,7 @@ const Comments = ({ comments, session, postId }) => {
         commentsArray.map((comment) => (
           <Comment
             onClick={() => deleteCommentHandler(comment)}
-            isYourComment={session.user.email === comment.email}
+            isYourComment={email === comment.email}
             key={comment.id}
             comment={comment}
           />

@@ -2,8 +2,20 @@ import { useEffect, useState } from "react";
 import Post from "../../molecules/Post/Post";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
+import styled from "styled-components";
 
-const Posts = ({ posts, session }) => {
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > * {
+    margin: 1rem 0 1rem 0;
+  }
+`;
+
+const Posts = ({ posts, email }) => {
   const [postsArray, setPostsArray] = useState(posts);
   const { dispatchError } = useError();
 
@@ -25,17 +37,21 @@ const Posts = ({ posts, session }) => {
   };
 
   return (
-    <>
-      {postsArray.map((post) => (
-        <Post
-          key={post.id}
-          post={post}
-          session={session}
-          isYourPost={session.user.email === post.email}
-          onClick={() => deletePostHandler(post.id)}
-        />
-      ))}
-    </>
+    <Wrapper>
+      {postsArray.length !== 0 ? (
+        postsArray.map((post) => (
+          <Post
+            key={post.id}
+            post={post}
+            email={email}
+            isYourPost={email === post.email}
+            onClick={() => deletePostHandler(post.id)}
+          />
+        ))
+      ) : (
+        <span>No posts</span>
+      )}
+    </Wrapper>
   );
 };
 

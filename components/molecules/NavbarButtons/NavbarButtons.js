@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
 `;
 
-const NavbarButtons = () => (
+const NavbarButtons = ({ userId }) => (
   <Wrapper>
     <Link href="/" passHref>
       <IconsLink
@@ -19,7 +19,7 @@ const NavbarButtons = () => (
         height={24}
       />
     </Link>
-    <Link href="/user-details" passHref>
+    <Link href="/" passHref>
       <IconsLink
         iconPath="/icons/calendar.svg"
         name="Events"
@@ -27,14 +27,22 @@ const NavbarButtons = () => (
         height={24}
       />
     </Link>
-    <button>
+    <Link href={`/user/${userId}`} passHref>
       <IconsLink
         iconPath="/icons/user-profile.svg"
         name="User profile"
         width={24}
         height={24}
       />
-    </button>
+    </Link>
+    <Link href={`/user-details`} passHref>
+      <IconsLink
+        iconPath="/icons/pen.svg"
+        name="User profile"
+        width={24}
+        height={24}
+      />
+    </Link>
   </Wrapper>
 );
 

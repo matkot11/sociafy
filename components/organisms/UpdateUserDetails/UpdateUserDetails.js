@@ -41,7 +41,7 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
     const enteredBirthdayName = birthdayRef.current.value;
 
     await axios
-      .patch("/api/auth/user-details", {
+      .patch("/api/user/update-user", {
         file: newProfileImage,
         name: enteredName,
         birthday: enteredBirthdayName,
