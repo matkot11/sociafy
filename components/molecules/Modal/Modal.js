@@ -25,9 +25,9 @@ const Modal = ({ handleClose, isOpen, children }) => {
 };
 
 Modal.propTypes = {
-  handleClose: PropTypes.func,
-  isOpen: PropTypes.bool,
-  children: PropTypes.element,
+  handleClose: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default Modal;

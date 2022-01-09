@@ -3,6 +3,7 @@ import Post from "../../molecules/Post/Post";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -53,6 +54,11 @@ const Posts = ({ posts, email }) => {
       )}
     </Wrapper>
   );
+};
+
+Posts.propTypes = {
+  posts: PropTypes.array.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 export default Posts;

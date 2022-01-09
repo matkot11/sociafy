@@ -13,6 +13,7 @@ TextArea.displayName = "TextArea";
 
 TextArea.propTypes = {
   placeholder: PropTypes.string,
+  textAreaHeight: PropTypes.string,
 };
 
 export default TextArea;

@@ -1,6 +1,7 @@
 import Link from "next/link";
-import IconsLink from "../../atoms/IconLink/IconLink";
+import IconsLink from "../../atoms/Icon/Icon";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -45,5 +46,9 @@ const NavbarButtons = ({ userId }) => (
     </Link>
   </Wrapper>
 );
+
+NavbarButtons.propTypes = {
+  userId: PropTypes.string.isRequired,
+};
 
 export default NavbarButtons;

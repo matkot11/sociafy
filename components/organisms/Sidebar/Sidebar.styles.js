@@ -13,6 +13,10 @@ export const Wrapper = styled.div`
   justify-content: center;
   background-color: ${({ theme }) => theme.color.darkGreen};
 
+  button {
+    color: white;
+  }
+
   div {
     height: 80%;
     display: flex;

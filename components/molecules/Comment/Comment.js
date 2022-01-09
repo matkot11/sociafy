@@ -1,5 +1,6 @@
-import IconLink from "../../atoms/IconLink/IconLink";
+import Icon from "../../atoms/Icon/Icon";
 import { Wrapper } from "./Comment.styles";
+import PropTypes from "prop-types";
 
 const Comment = ({ onClick, comment, isYourComment }) => (
   <Wrapper>
@@ -7,7 +8,7 @@ const Comment = ({ onClick, comment, isYourComment }) => (
     <div>
       <p>{comment.comment}</p>
       {isYourComment && (
-        <IconLink
+        <Icon
           onClick={onClick}
           name="Bin"
           iconPath="/icons/bin.svg"
@@ -18,5 +19,11 @@ const Comment = ({ onClick, comment, isYourComment }) => (
     </div>
   </Wrapper>
 );
+
+Comment.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  comment: PropTypes.object.isRequired,
+  isYourComment: PropTypes.bool.isRequired,
+};
 
 export default Comment;

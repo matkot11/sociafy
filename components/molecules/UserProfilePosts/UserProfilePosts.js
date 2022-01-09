@@ -2,6 +2,7 @@ import { useState } from "react";
 import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
 import Image from "next/image";
 import Posts from "../../organisms/Posts/Posts";
+import PropTypes from "prop-types";
 
 const UserProfilePosts = ({ posts, email }) => {
   const [isPostsOpen, setIsPostsOpen] = useState(false);
@@ -28,6 +29,11 @@ const UserProfilePosts = ({ posts, email }) => {
       {isPostsOpen && <Posts posts={posts} email={email} />}
     </>
   );
+};
+
+UserProfilePosts.propTypes = {
+  posts: PropTypes.array.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 export default UserProfilePosts;

@@ -1,5 +1,6 @@
 import Friend from "../../molecules/Friend/Friend";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -21,5 +22,9 @@ const Friends = ({ friends }) => (
     )}
   </Wrapper>
 );
+
+Friends.propTypes = {
+  friends: PropTypes.array.isRequired,
+};
 
 export default Friends;

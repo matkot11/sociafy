@@ -14,7 +14,8 @@ import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import Comments from "../../organisms/Comments/Comments";
 import AddComment from "../../atoms/Add Comment/AddComment";
-import IconLink from "../../atoms/IconLink/IconLink";
+import Icon from "../../atoms/Icon/Icon";
+import PropTypes from "prop-types";
 
 const Post = ({ email, post, onClick, isYourPost }) => {
   const commentRef = useRef();
@@ -74,7 +75,7 @@ const Post = ({ email, post, onClick, isYourPost }) => {
             </div>
           </div>
           {isYourPost && (
-            <IconLink
+            <Icon
               onClick={onClick}
               name="Bin"
               iconPath="/icons/bin.svg"
@@ -98,13 +99,11 @@ const Post = ({ email, post, onClick, isYourPost }) => {
           <div>
             <IconTextButton
               src="/icons/like.svg"
-              alt="Like"
-              text={likesArray.length.toString()}
+              name={likesArray.length.toString()}
             />
             <IconTextButton
               src="/icons/comment.svg"
-              alt="Comment"
-              text={commentsArray.length.toString()}
+              name={commentsArray.length.toString()}
             />
           </div>
           <hr />
@@ -113,16 +112,14 @@ const Post = ({ email, post, onClick, isYourPost }) => {
               <IconTextButton
                 onClick={likeHandler}
                 src="/icons/like.svg"
-                alt="Unlike"
-                text="Unlike"
+                name="Unlike"
                 fontWeight={500}
               />
             ) : (
               <IconTextButton
                 onClick={likeHandler}
                 src="/icons/like.svg"
-                alt="Like"
-                text="Like"
+                name="Like"
                 fontWeight={500}
               />
             )}
@@ -130,8 +127,7 @@ const Post = ({ email, post, onClick, isYourPost }) => {
             <IconTextButton
               onClick={() => setShowComments(!showComments)}
               src="/icons/comment.svg"
-              alt="Comment"
-              text="Comment"
+              name="Comment"
               fontWeight={500}
             />
           </div>
@@ -145,6 +141,13 @@ const Post = ({ email, post, onClick, isYourPost }) => {
       </Wrapper>
     </GreyWrapper>
   );
+};
+
+Post.propTypes = {
+  email: PropTypes.string.isRequired,
+  post: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+  isYourPost: PropTypes.bool.isRequired,
 };
 
 export default Post;

@@ -13,10 +13,10 @@ const GreyWrapper = ({ onClick, children, as = "div" }) => (
   </Wrapper>
 );
 
-GreyWrapper.prototype = {
+GreyWrapper.propTypes = {
+  onClick: PropTypes.func,
   children: PropTypes.node.isRequired,
   as: PropTypes.string,
-  onClick: PropTypes.func,
 };
 
 export default GreyWrapper;

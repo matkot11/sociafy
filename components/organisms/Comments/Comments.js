@@ -3,6 +3,7 @@ import Comment from "../../molecules/Comment/Comment";
 import styled from "styled-components";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
+import PropTypes from "prop-types";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -63,6 +64,12 @@ const Comments = ({ comments, email, postId }) => {
       )}
     </Wrapper>
   );
+};
+
+Comments.propTypes = {
+  comments: PropTypes.array.isRequired,
+  email: PropTypes.string.isRequired,
+  postId: PropTypes.string.isRequired,
 };
 
 export default Comments;

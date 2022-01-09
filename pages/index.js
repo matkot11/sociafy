@@ -9,6 +9,7 @@ import Posts from "../components/organisms/Posts/Posts";
 import { format } from "date-fns";
 import ErrorMessage from "../components/molecules/ErrorMessage/ErrorMessage";
 import { useError } from "../hooks/useError";
+import PropTypes from "prop-types";
 
 const HomePage = ({ profileImage, posts, session, userId }) => {
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
@@ -24,6 +25,13 @@ const HomePage = ({ profileImage, posts, session, userId }) => {
       {error && <ErrorMessage message={error} />}
     </MainTemplate>
   );
+};
+
+HomePage.propTypes = {
+  profileImage: PropTypes.string.isRequired,
+  posts: PropTypes.array.isRequired,
+  session: PropTypes.object.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 export const getServerSideProps = async (context) => {

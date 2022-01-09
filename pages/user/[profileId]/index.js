@@ -5,7 +5,7 @@ import ProfileImage from "../../../components/atoms/ProfileImage/ProfileImage";
 import {
   UserDetailsWrapper,
   Wrapper,
-} from "../../../components/layouts/Profile.styles";
+} from "../../../components/layouts/ProfilePage.styles";
 import MainTemplate from "../../../components/templates/MainTemplate/MainTemplate";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
@@ -17,6 +17,7 @@ import RectangleButton from "../../../components/atoms/RectangleButton/Rectangle
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import ErrorMessage from "../../../components/molecules/ErrorMessage/ErrorMessage";
+import PropTypes from "prop-types";
 
 const ProfilePage = ({ user }) => {
   const [isFriend, setIsFriend] = useState(false);
@@ -102,6 +103,10 @@ const ProfilePage = ({ user }) => {
       {error && <ErrorMessage message={error} />}
     </MainTemplate>
   );
+};
+
+ProfilePage.propTypes = {
+  user: PropTypes.object.isRequired,
 };
 
 export const getStaticPaths = async () => {

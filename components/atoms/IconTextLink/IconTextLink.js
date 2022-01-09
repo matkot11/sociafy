@@ -20,14 +20,14 @@ const StyledLink = styled.a`
 `;
 
 const IconTextLink = forwardRef(
-  ({ onClick, href, iconPath, width, height, name }, ref) => (
-    <StyledLink href={href} onClick={onClick} ref={ref}>
+  ({ href, iconPath, imageWidth, imageHeight, name }, ref) => (
+    <StyledLink href={href} ref={ref}>
       <Image
         src={iconPath}
         alt={name}
         layout="fixed"
-        width={width}
-        height={height}
+        width={imageWidth}
+        height={imageHeight}
       />
       <span>{name}</span>
     </StyledLink>
@@ -36,9 +36,10 @@ const IconTextLink = forwardRef(
 IconTextLink.displayName = "IconTextLink";
 
 IconTextLink.propTypes = {
+  href: PropTypes.string,
   iconPath: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  imageWidth: PropTypes.number.isRequired,
+  imageHeight: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
 };
 

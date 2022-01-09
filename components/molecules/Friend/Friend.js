@@ -1,6 +1,8 @@
 import Link from "next/link";
 import ProfileImage from "../../atoms/ProfileImage/ProfileImage";
 import styled from "styled-components";
+import Friends from "../../organisms/Friends/Friends";
+import PropTypes from "prop-types";
 
 const Wrapper = styled.div`
   //width: 90%;
@@ -27,5 +29,9 @@ const Friend = ({ friend }) => (
     </Wrapper>
   </Link>
 );
+
+Friend.propTypes = {
+  friend: PropTypes.object.isRequired,
+};
 
 export default Friend;

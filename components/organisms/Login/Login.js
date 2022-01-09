@@ -61,7 +61,7 @@ const Login = ({ onClickRegister }) => {
 };
 
 Login.propTypes = {
-  onClickRegister: PropTypes.func,
+  onClickRegister: PropTypes.func.isRequired,
 };
 
 export default Login;

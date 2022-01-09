@@ -17,23 +17,21 @@ const Wrapper = styled.button`
 const IconTextButton = ({
   onClick,
   src,
-  alt,
-  text,
+  name,
   imageWidth = 23,
   imageHeight = 23,
   fontWeight = 600,
 }) => (
   <Wrapper onClick={onClick} fontWeight={fontWeight}>
-    <Image src={src} alt={alt} width={imageWidth} height={imageHeight} />
-    <span>{text}</span>
+    <Image src={src} alt={name} width={imageWidth} height={imageHeight} />
+    <span>{name}</span>
   </Wrapper>
 );
 
 IconTextButton.propTypes = {
   onClick: PropTypes.func,
   src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   imageWidth: PropTypes.number,
   imageHeight: PropTypes.number,
   fontWeight: PropTypes.number,

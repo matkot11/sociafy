@@ -4,7 +4,9 @@ import IconTextLink from "../../atoms/IconTextLink/IconTextLink";
 import { CloseButton, Wrapper } from "./Sidebar.styles";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import IconLink from "../../atoms/IconLink/IconLink";
+import Icon from "../../atoms/Icon/Icon";
+import IconTextButton from "../../atoms/IconTextButton/IconTextButton";
+import PropTypes from "prop-types";
 
 const Sidebar = ({ onClick, userId }) => {
   const router = useRouter();
@@ -17,12 +19,7 @@ const Sidebar = ({ onClick, userId }) => {
   return (
     <Wrapper>
       <CloseButton onClick={onClick}>
-        <IconLink
-          iconPath="/icons/close.svg"
-          name="Close"
-          width={24}
-          height={24}
-        />
+        <Icon iconPath="/icons/close.svg" name="Close" width={24} height={24} />
       </CloseButton>
       <div>
         <div>
@@ -30,41 +27,46 @@ const Sidebar = ({ onClick, userId }) => {
             <IconTextLink
               iconPath="/icons/home.svg"
               name="Main page"
-              width={35}
-              height={35}
+              imageWidth={35}
+              imageHeight={35}
             />
           </Link>
           <Link href="/" passHref>
             <IconTextLink
               iconPath="/icons/calendar.svg"
               name="Events"
-              width={35}
-              height={35}
+              imageWidth={35}
+              imageHeight={35}
             />
           </Link>
           <Link href={`/user/${userId}`} passHref>
             <IconTextLink
               iconPath="/icons/user-profile.svg"
               name="Profile"
-              width={35}
-              height={35}
+              imageWidth={35}
+              imageHeight={35}
             />
           </Link>
         </div>
         <div>
-          <button onClick={logoutHandler}>
-            <IconTextLink
-              iconPath="/icons/logout.svg"
-              name="Logout"
-              width={35}
-              height={35}
-            />
-          </button>
+          <IconTextButton
+            onClick={logoutHandler}
+            src="/icons/logout.svg"
+            name="Logout"
+            imageWidth={35}
+            imageHeight={35}
+            fontWeight={400}
+          />
         </div>
       </div>
       <Footer isBlack={false} />
     </Wrapper>
   );
+};
+
+Sidebar.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 export default Sidebar;

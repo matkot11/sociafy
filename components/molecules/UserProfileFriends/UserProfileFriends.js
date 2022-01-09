@@ -2,6 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
 import Friends from "../../organisms/Friends/Friends";
+import PropTypes from "prop-types";
 
 const UserProfileFriends = ({ friends }) => {
   const [isFriendsOpen, setIsFriendsOpen] = useState(false);
@@ -11,7 +12,6 @@ const UserProfileFriends = ({ friends }) => {
         onClick={() => setIsFriendsOpen(!isFriendsOpen)}
         lightGrey
       >
-        {/* {console.log(friends ? friends : "no friends")} */}
         <span>Friends</span>
         {isFriendsOpen ? (
           <Image
@@ -32,6 +32,10 @@ const UserProfileFriends = ({ friends }) => {
       {isFriendsOpen && <Friends friends={friends} />}
     </>
   );
+};
+
+UserProfileFriends.propTypes = {
+  friends: PropTypes.array.isRequired,
 };
 
 export default UserProfileFriends;

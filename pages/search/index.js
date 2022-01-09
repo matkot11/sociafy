@@ -8,7 +8,7 @@ import {
   ResultItem,
   ResultList,
   Wrapper,
-} from "../../components/layouts/Search";
+} from "../../components/layouts/SearchPage";
 import Friend from "../../components/molecules/Friend/Friend";
 
 const SearchPage = ({ userId, users }) => {

@@ -1,10 +1,9 @@
 import { Wrapper } from "./Navbar.styles";
-import Image from "next/image";
-import IconLink from "../../atoms/IconLink/IconLink";
 import NavbarButtons from "../../molecules/NavbarButtons/NavbarButtons";
 import { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import NavbarTop from "../../molecules/NavbarTop/NavbarTop";
+import PropTypes from "prop-types";
 
 const Navbar = ({ userId }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -20,6 +19,10 @@ const Navbar = ({ userId }) => {
       )}
     </Wrapper>
   );
+};
+
+Navbar.propTypes = {
+  userId: PropTypes.string.isRequired,
 };
 
 export default Navbar;

@@ -9,6 +9,7 @@ import { useError } from "../../../hooks/useError";
 import Loading from "../Loading/Loading";
 import { useRouter } from "next/router";
 import { ButtonWrapper, Wrapper } from "./UpdateUserDetails.styles";
+import PropTypes from "prop-types";
 
 const UpdateUserDetails = ({ profileImage, name, birthday }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -93,6 +94,12 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
       </Form>
     </Wrapper>
   );
+};
+
+UpdateUserDetails.propTypes = {
+  profileImage: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  birthday: PropTypes.string,
 };
 
 export default UpdateUserDetails;
