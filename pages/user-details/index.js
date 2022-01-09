@@ -13,7 +13,7 @@ export const InnerWrapper = styled.div`
   transition: all 0.5s;
 `;
 
-const UserDetails = ({ id, profileImage, name, birthday }) => {
+const UserDetailsPage = ({ id, profileImage, name, birthday }) => {
   const { error } = useError();
 
   return (
@@ -55,4 +55,4 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-export default UserDetails;
+export default UserDetailsPage;

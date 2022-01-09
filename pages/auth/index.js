@@ -11,7 +11,7 @@ import ErrorMessage from "../../components/molecules/ErrorMessage/ErrorMessage";
 import { getSession, useSession } from "next-auth/react";
 import Loading from "../../components/organisms/Loading/Loading";
 
-const Auth = () => {
+const AuthPage = () => {
   const { status } = useSession();
   const { error } = useError();
   const [isLoginOpen, setIsLoginOpen] = useState(true);
@@ -55,4 +55,4 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-export default Auth;
+export default AuthPage;

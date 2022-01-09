@@ -3,9 +3,10 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   z-index: 100;
   position: fixed;
-  width: 100vw;
-  height: calc(100vh - 4rem);
+  top: 0;
+  right: 0;
   bottom: 0;
+  left: 0;
   display: grid;
   grid-template-rows: 1fr auto;
   align-items: center;
@@ -29,4 +30,10 @@ export const Wrapper = styled.div`
       }
     }
   }
+`;
+
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 `;

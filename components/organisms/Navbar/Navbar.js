@@ -1,42 +1,23 @@
-import { UpperInnerWrapper, Wrapper } from "./Navbar.styles";
+import { Wrapper } from "./Navbar.styles";
 import Image from "next/image";
 import IconLink from "../../atoms/IconLink/IconLink";
 import NavbarButtons from "../../molecules/NavbarButtons/NavbarButtons";
 import { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
+import NavbarTop from "../../molecules/NavbarTop/NavbarTop";
 
 const Navbar = ({ userId }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <Wrapper>
-      <UpperInnerWrapper>
-        <Image
-          src="/icons/logo.svg"
-          alt="Logo"
-          layout="fixed"
-          width={100}
-          height={30}
+      <NavbarTop onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
+      <NavbarButtons userId={userId} />
+      {isSidebarOpen && (
+        <Sidebar
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          userId={userId}
         />
-        <div>
-          <button>
-            <IconLink
-              iconPath="/icons/magnifier.svg"
-              name="Magnifier"
-              width={24}
-              height={24}
-            />
-          </button>
-          <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-            <IconLink
-              iconPath="/icons/menu.svg"
-              name="Menu"
-              width={24}
-              height={24}
-            />
-          </button>
-        </div>
-      </UpperInnerWrapper>
-      {isSidebarOpen ? <Sidebar /> : <NavbarButtons userId={userId} />}
+      )}
     </Wrapper>
   );
 };

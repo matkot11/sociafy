@@ -3,14 +3,17 @@ import Navbar from "../../organisms/Navbar/Navbar";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
 const InnerWrapper = styled.div`
-  margin-top: 2rem;
+  padding-top: 2rem;
   width: 100%;
+  overflow-y: scroll;
   justify-self: center;
   transition: all 0.5s;
   display: flex;
@@ -31,6 +34,7 @@ const MainTemplate = ({ children, userId }) => (
 
 MainTemplate.propTypes = {
   children: PropTypes.node.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 export default MainTemplate;

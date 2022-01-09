@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Footer from "../../atoms/Footer/Footer";
 import IconTextLink from "../../atoms/IconTextLink/IconTextLink";
-import { Wrapper } from "./Sidebar.styles";
+import { CloseButton, Wrapper } from "./Sidebar.styles";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import IconLink from "../../atoms/IconLink/IconLink";
 
-const Sidebar = () => {
+const Sidebar = ({ onClick, userId }) => {
   const router = useRouter();
 
   const logoutHandler = async () => {
@@ -15,6 +16,14 @@ const Sidebar = () => {
 
   return (
     <Wrapper>
+      <CloseButton onClick={onClick}>
+        <IconLink
+          iconPath="/icons/close.svg"
+          name="Close"
+          width={24}
+          height={24}
+        />
+      </CloseButton>
       <div>
         <div>
           <Link href="/" passHref>
@@ -33,7 +42,7 @@ const Sidebar = () => {
               height={35}
             />
           </Link>
-          <Link href="/" passHref>
+          <Link href={`/user/${userId}`} passHref>
             <IconTextLink
               iconPath="/icons/user-profile.svg"
               name="Profile"

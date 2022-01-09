@@ -18,7 +18,7 @@ import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import ErrorMessage from "../../../components/molecules/ErrorMessage/ErrorMessage";
 
-const Profile = ({ user }) => {
+const ProfilePage = ({ user }) => {
   const [isFriend, setIsFriend] = useState(false);
   const [friends, setFriends] = useState(null);
   const [authUser, setAuthUser] = useState(null);
@@ -164,4 +164,4 @@ export const getStaticProps = async (context) => {
   };
 };
 
-export default Profile;
+export default ProfilePage;
