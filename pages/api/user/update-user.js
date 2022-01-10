@@ -1,4 +1,3 @@
-import cloudinary from "cloudinary";
 import { connectToDataBase } from "../../../lib/db";
 import { getAndCheckSession } from "../../../lib/getAndCheckSession";
 import { uploadImage } from "../../../lib/uploadImage";
@@ -40,6 +39,25 @@ const handler = async (req, res) => {
       res.status(404).json({ message: "Data did not upload correctly" });
       await client.close();
     }
+
+    await db.collection("posts").updateMany(
+      { email: session.user.email },
+      {
+        $set: {
+          profileImage: imageUrl,
+          name,
+        },
+      },
+    );
+
+    await db.collection("posts").updateMany(
+      { comments: { $elemMatch: { email: session.user.email } } },
+      {
+        $set: {
+          "comments.$.name": name,
+        },
+      },
+    );
   }
 
   if (file && name && !birthday) {
@@ -63,6 +81,25 @@ const handler = async (req, res) => {
       res.status(404).json({ message: "Data did not upload correctly" });
       await client.close();
     }
+
+    await db.collection("posts").updateMany(
+      { email: session.user.email },
+      {
+        $set: {
+          profileImage: imageUrl,
+          name,
+        },
+      },
+    );
+
+    await db.collection("posts").updateMany(
+      { comments: { $elemMatch: { email: session.user.email } } },
+      {
+        $set: {
+          "comments.$.name": name,
+        },
+      },
+    );
   }
 
   if (file && birthday && !name) {
@@ -86,6 +123,15 @@ const handler = async (req, res) => {
       res.status(404).json({ message: "Data did not upload correctly" });
       await client.close();
     }
+
+    await db.collection("posts").updateMany(
+      { email: session.user.email },
+      {
+        $set: {
+          profileImage: imageUrl,
+        },
+      },
+    );
   }
 
   if (name && birthday && !file) {
@@ -103,6 +149,24 @@ const handler = async (req, res) => {
       res.status(404).json({ message: "Data did not upload correctly" });
       await client.close();
     }
+
+    await db.collection("posts").updateMany(
+      { email: session.user.email },
+      {
+        $set: {
+          name,
+        },
+      },
+    );
+
+    await db.collection("posts").updateMany(
+      { comments: { $elemMatch: { email: session.user.email } } },
+      {
+        $set: {
+          "comments.$.name": name,
+        },
+      },
+    );
   }
 
   if (name && !birthday && !file) {
@@ -119,6 +183,24 @@ const handler = async (req, res) => {
       res.status(404).json({ message: "Name did not upload correctly" });
       await client.close();
     }
+
+    await db.collection("posts").updateMany(
+      { email: session.user.email },
+      {
+        $set: {
+          name,
+        },
+      },
+    );
+
+    await db.collection("posts").updateMany(
+      { comments: { $elemMatch: { email: session.user.email } } },
+      {
+        $set: {
+          "comments.$.name": name,
+        },
+      },
+    );
   }
 
   if (birthday && !name && !file) {

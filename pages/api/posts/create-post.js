@@ -30,6 +30,7 @@ const handler = async (req, res) => {
 
     await db.collection("posts").insertOne({
       _id: id,
+      userId: existingUser._id,
       email: session.user.email,
       profileImage: existingUser.profileImage,
       name: existingUser.name,
@@ -46,6 +47,7 @@ const handler = async (req, res) => {
   if (text && !image) {
     await db.collection("posts").insertOne({
       _id: id,
+      userId: existingUser._id,
       email: session.user.email,
       profileImage: existingUser.profileImage,
       name: existingUser.name,
@@ -64,6 +66,7 @@ const handler = async (req, res) => {
 
     await db.collection("posts").insertOne({
       _id: id,
+      userId: existingUser._id,
       email: session.user.email,
       profileImage: existingUser.profileImage,
       name: existingUser.name,

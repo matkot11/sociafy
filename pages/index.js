@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { getSession } from "next-auth/react";
 import MainTemplate from "../components/templates/MainTemplate/MainTemplate";
 import { connectToDataBase } from "../lib/db";
@@ -10,15 +11,43 @@ import { format } from "date-fns";
 import ErrorMessage from "../components/molecules/ErrorMessage/ErrorMessage";
 import { useError } from "../hooks/useError";
 import PropTypes from "prop-types";
+import RectangleButton from "../components/atoms/RectangleButton/RectangleButton";
+import styled from "styled-components";
 
-const HomePage = ({ profileImage, posts, session, userId }) => {
+const StyledRectangleButton = styled(RectangleButton)`
+  margin-top: 2rem;
+  width: 80%;
+`;
+
+const HomePage = ({ profileImage, posts, friendsPosts, session, userId }) => {
+  const [isFriendsPostsOpen, setIsFriendsPostsOpen] = useState(false);
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
   const { error } = useError();
 
   return (
     <MainTemplate userId={userId}>
       <AddPostButton profileImage={profileImage} onClick={handleOpenModal} />
-      <Posts posts={posts} email={session.user.email} />
+      {isFriendsPostsOpen ? (
+        <StyledRectangleButton
+          onClick={() => setIsFriendsPostsOpen(false)}
+          lightGrey
+        >
+          See all posts
+        </StyledRectangleButton>
+      ) : (
+        <StyledRectangleButton
+          onClick={() => setIsFriendsPostsOpen(true)}
+          lightGrey
+        >
+          See your friends posts
+        </StyledRectangleButton>
+      )}
+      {isFriendsPostsOpen ? (
+        <Posts posts={friendsPosts} email={session.user.email} />
+      ) : (
+        <Posts posts={posts} email={session.user.email} />
+      )}
+
       <Modal isOpen={isOpen} handleClose={handleCloseModal}>
         <CreatePost />
       </Modal>
@@ -59,29 +88,16 @@ export const getServerSideProps = async (context) => {
   }
 
   const posts = await db.collection("posts").find().sort({ _id: -1 }).toArray();
+  const filteredPosts = [];
+  const existingUserFriends = existingUser.friends;
+  const existingUserFriendsEmails = existingUserFriends.map(
+    (friend) => friend.email,
+  );
+  existingUserFriendsEmails.map((email) =>
+    filteredPosts.push(posts.filter((post) => post.email === email)),
+  );
 
   await client.close();
-
-  // // Updates posts with newest [profileId] images and names
-  // for (const post of posts) {
-  //   const { collection, client } = await connectToDataBase(
-  //     context.res,
-  //     "users",
-  //     {
-  //       email: post.email,
-  //     },
-  //   );
-  //
-  //   await db.collection("posts").updateOne(
-  //     { email: post.email },
-  //     {
-  //       $set: {
-  //         profileImage: collection.profileImage,
-  //         name: collection.name,
-  //       },
-  //     },
-  //   );
-  // }
 
   return {
     props: {
@@ -90,6 +106,7 @@ export const getServerSideProps = async (context) => {
       userId: existingUser._id.toString(),
       posts: posts.map((post) => ({
         id: post._id.toString(),
+        userId: post._id.toString(),
         email: post.email,
         date: format(new Date(post._id.getTimestamp()), "PP"),
         name: post.name,
@@ -99,6 +116,19 @@ export const getServerSideProps = async (context) => {
         likes: post.likes,
         comments: post.comments,
       })),
+      friendsPosts: filteredPosts[0].map((post) => ({
+        id: post._id.toString(),
+        userId: post._id.toString(),
+        email: post.email,
+        date: format(new Date(post._id.getTimestamp()), "PP"),
+        name: post.name,
+        profileImage: post.profileImage,
+        text: post.text,
+        image: post.image,
+        likes: post.likes,
+        comments: post.comments,
+      })),
+
       revalidate: 1,
     },
   };
