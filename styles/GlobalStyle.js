@@ -21,6 +21,7 @@ export const GlobalStyle = createGlobalStyle`
   a, button {
     font-family: 'Montserrat', sans-serif;
     padding: 0;
+    color: #000;
     cursor: pointer;
   }
 
@@ -44,7 +45,7 @@ export const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h5 {
     margin: 0;
   }
-  
+
   p {
     margin: 0;
   }
@@ -55,6 +56,7 @@ export const GlobalStyle = createGlobalStyle`
 
   input, textarea {
     font-family: 'Montserrat', sans-serif;
+    color: #000;
   }
 
 `;

@@ -22,13 +22,16 @@ const CreateEvent = () => {
   const descriptionRef = useRef();
   const router = useRouter();
   const { dispatchError } = useError();
+
   const fileHandler = async (e) => {
-    await setSelectedFile(e.target.files[0]);
-    const reader = new FileReader();
-    await reader.readAsDataURL(e.target.files[0]);
-    reader.onload = async () => {
-      await setPreparedFile(reader.result);
-    };
+    if (e.target.files[0]) {
+      await setSelectedFile(e.target.files[0]);
+      const reader = new FileReader();
+      await reader.readAsDataURL(e.target.files[0]);
+      reader.onload = async () => {
+        await setPreparedFile(reader.result);
+      };
+    }
   };
 
   const addEventHandler = async (e) => {

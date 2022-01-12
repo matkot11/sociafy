@@ -31,12 +31,17 @@ const NavbarTop = ({ onClick }) => (
         <Icon
           iconPath="/icons/magnifier.svg"
           name="Magnifier"
-          width={24}
-          height={24}
+          imageWidth={24}
+          imageHeight={24}
         />
       </Link>
       <button onClick={onClick}>
-        <Icon iconPath="/icons/menu.svg" name="Menu" width={24} height={24} />
+        <Icon
+          iconPath="/icons/menu.svg"
+          name="Menu"
+          imageWidth={24}
+          imageHeight={24}
+        />
       </button>
     </div>
   </Wrapper>

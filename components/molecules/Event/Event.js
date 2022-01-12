@@ -22,8 +22,8 @@ const Event = ({ event, userId, onClick, displayDelete }) => (
           onClick={onClick}
           name="Bin"
           iconPath="/icons/bin.svg"
-          width={24}
-          height={24}
+          imageWidth={24}
+          imageHeight={24}
         />
       )}
     </Wrapper>

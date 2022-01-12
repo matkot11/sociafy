@@ -13,7 +13,14 @@ const StyledImage = styled(Image)`
 `;
 
 const ProfileImage = ({ src, width = 125, height = 125 }) => (
-  <StyledImage src={src} alt="Profile image" width={width} height={height} />
+  <StyledImage
+    placeholder="blur"
+    blurDataURL="/icons/user.svg"
+    src={src}
+    alt="Profile image"
+    width={width}
+    height={height}
+  />
 );
 
 ProfileImage.propTypes = {

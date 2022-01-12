@@ -52,16 +52,15 @@ const SearchPage = ({ userId, users }) => {
           {matchingUsers.length > 0 &&
             getInputProps().value !== "" &&
             matchingUsers.map((user, index) => (
-              <ResultItem
+              <Friend
                 isHighlighted={highlightedIndex === index}
                 {...getItemProps({
                   user,
                   index,
                 })}
                 key={user.userId}
-              >
-                <Friend friend={user} />
-              </ResultItem>
+                friend={user}
+              />
             ))}
         </ResultList>
       </Wrapper>

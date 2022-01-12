@@ -82,8 +82,8 @@ const Post = ({ email, post, onClick, isYourPost, displayDelete }) => {
               onClick={onClick}
               name="Bin"
               iconPath="/icons/bin.svg"
-              width={24}
-              height={24}
+              imageWidth={24}
+              imageHeight={24}
             />
           )}
         </UserWrapper>
@@ -91,6 +91,8 @@ const Post = ({ email, post, onClick, isYourPost, displayDelete }) => {
         {post.image && (
           <ImageWrapper>
             <Image
+              placeholder="blur"
+              blurDataURL="/svg/post.svg"
               src={post.image}
               alt="Post image"
               layout="fill"

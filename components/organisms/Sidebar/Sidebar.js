@@ -47,6 +47,14 @@ const Sidebar = ({ onClick, userId }) => {
               imageHeight={35}
             />
           </Link>
+          <Link href={`/user-details`} passHref>
+            <IconTextLink
+              iconPath="/icons/pen.svg"
+              name="User profile"
+              imageWidth={24}
+              imageHeight={24}
+            />
+          </Link>
         </div>
         <div>
           <IconTextButton

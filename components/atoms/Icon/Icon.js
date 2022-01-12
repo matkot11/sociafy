@@ -3,14 +3,14 @@ import Image from "next/image";
 import PropTypes from "prop-types";
 
 const Icon = forwardRef(
-  ({ onClick, href, iconPath, width, height, name }, ref) => (
+  ({ onClick, href, iconPath, imageWidth, imageHeight, name }, ref) => (
     <a href={href} onClick={onClick} ref={ref}>
       <Image
         src={iconPath}
         alt={name}
         layout="fixed"
-        width={width}
-        height={height}
+        width={imageWidth}
+        height={imageHeight}
       />
     </a>
   ),
@@ -21,8 +21,8 @@ Icon.propTypes = {
   onClick: PropTypes.func,
   href: PropTypes.string,
   iconPath: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  imageWidth: PropTypes.number.isRequired,
+  imageHeight: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
 };
 

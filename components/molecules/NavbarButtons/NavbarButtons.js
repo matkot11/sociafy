@@ -1,5 +1,5 @@
 import Link from "next/link";
-import IconsLink from "../../atoms/Icon/Icon";
+import Icon from "../../atoms/Icon/Icon";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -13,35 +13,35 @@ const Wrapper = styled.div`
 const NavbarButtons = ({ userId }) => (
   <Wrapper>
     <Link href="/" passHref>
-      <IconsLink
+      <Icon
         iconPath="/icons/home.svg"
         name="Home"
-        width={24}
-        height={24}
+        imageWidth={24}
+        imageHeight={24}
       />
     </Link>
     <Link href="/events" passHref>
-      <IconsLink
+      <Icon
         iconPath="/icons/calendar.svg"
         name="Events"
-        width={24}
-        height={24}
+        imageWidth={24}
+        imageHeight={24}
       />
     </Link>
     <Link href={`/user/${userId}`} passHref>
-      <IconsLink
+      <Icon
         iconPath="/icons/user-profile.svg"
         name="User profile"
-        width={24}
-        height={24}
+        imageWidth={24}
+        imageHeight={24}
       />
     </Link>
     <Link href={`/user-details`} passHref>
-      <IconsLink
+      <Icon
         iconPath="/icons/pen.svg"
         name="User profile"
-        width={24}
-        height={24}
+        imageWidth={24}
+        imageHeight={24}
       />
     </Link>
   </Wrapper>

@@ -26,13 +26,15 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
   }, [name, birthday]);
 
   const profileImageHandler = async (e) => {
-    await setSelectedFile(e.target.files[0]);
-    const reader = new FileReader();
-    await reader.readAsDataURL(e.target.files[0]);
+    if (e.target.files[0]) {
+      await setSelectedFile(e.target.files[0]);
+      const reader = new FileReader();
+      await reader.readAsDataURL(e.target.files[0]);
 
-    reader.onload = async () => {
-      await setNewProfileImage(reader.result);
-    };
+      reader.onload = async () => {
+        await setNewProfileImage(reader.result);
+      };
+    }
   };
 
   const userDetailsHandler = async (e) => {

@@ -63,6 +63,7 @@ const HomePage = ({ profileImage, posts, friendsPosts, session, userId }) => {
 HomePage.propTypes = {
   profileImage: PropTypes.string.isRequired,
   posts: PropTypes.array.isRequired,
+  friendsPosts: PropTypes.array.isRequired,
   session: PropTypes.object.isRequired,
   userId: PropTypes.string.isRequired,
 };
@@ -97,8 +98,9 @@ export const getServerSideProps = async (context) => {
   const existingUserFriendsEmails = existingUserFriends.map(
     (friend) => friend.email,
   );
+
   existingUserFriendsEmails.map((email) =>
-    filteredPosts.push(posts.filter((post) => post.email === email)),
+    filteredPosts.push(posts.filter((post) => post.email === email)[0]),
   );
 
   await client.close();
@@ -120,7 +122,7 @@ export const getServerSideProps = async (context) => {
         likes: post.likes,
         comments: post.comments,
       })),
-      friendsPosts: filteredPosts[0].map((post) => ({
+      friendsPosts: filteredPosts.map((post) => ({
         id: post._id.toString(),
         userId: post.userId.toString(),
         email: post.email,
@@ -132,7 +134,6 @@ export const getServerSideProps = async (context) => {
         likes: post.likes,
         comments: post.comments,
       })),
-
       revalidate: 1,
     },
   };
