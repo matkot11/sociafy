@@ -13,21 +13,14 @@ const UserProfileFriends = ({ friends }) => {
         lightGrey
       >
         <span>Friends</span>
-        {isFriendsOpen ? (
-          <Image
-            src="/icons/arrow-down.svg"
-            alt="Arrow"
-            width={15}
-            height={15}
-          />
-        ) : (
-          <Image
-            src="/icons/arrow-right.svg"
-            alt="Arrow"
-            width={15}
-            height={15}
-          />
-        )}
+        <Image
+          src={
+            isFriendsOpen ? "/icons/arrow-down.svg" : "/icons/arrow-right.svg"
+          }
+          alt="Arrow"
+          width={15}
+          height={15}
+        />
       </RectangleButton>
       {isFriendsOpen && <Friends friends={friends} />}
     </>

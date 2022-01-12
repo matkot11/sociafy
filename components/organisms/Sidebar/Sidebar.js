@@ -31,7 +31,7 @@ const Sidebar = ({ onClick, userId }) => {
               imageHeight={35}
             />
           </Link>
-          <Link href="/" passHref>
+          <Link href="/events" passHref>
             <IconTextLink
               iconPath="/icons/calendar.svg"
               name="Events"

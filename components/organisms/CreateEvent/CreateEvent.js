@@ -1,25 +1,27 @@
 import { useState, useRef } from "react";
-import Image from "next/image";
-import GreyWrapper from "../../molecules/GreyWrapper/GreyWrapper";
-import Header from "../../atoms/Header/Header";
-import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
-import FileInput from "../../atoms/FileInput/FileInput";
+import Input from "../../atoms/Input/Input";
 import Form from "../../molecules/Form/Form";
-import { Wrapper } from "./CreatePost.styles";
 import TextArea from "../../atoms/TextArea/TextArea";
+import FileInput from "../../atoms/FileInput/FileInput";
+import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
+import GreyWrapper from "../../molecules/GreyWrapper/GreyWrapper";
+import { Wrapper } from "./CreateEvent.styles";
+import Header from "../../atoms/Header/Header";
 import Loading from "../Loading/Loading";
 import axios from "axios";
-import { useError } from "../../../hooks/useError";
 import { useRouter } from "next/router";
+import { useError } from "../../../hooks/useError";
+import Image from "next/image";
 
-const CreatePost = () => {
-  const textareaRef = useRef();
-  const [isLoading, setIsLoading] = useState(false);
+const CreateEvent = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [preparedFile, setPreparedFile] = useState(null);
-  const { dispatchError } = useError();
+  const [isLoading, setIsLoading] = useState(false);
+  const titleRef = useRef();
+  const dateRef = useRef();
+  const descriptionRef = useRef();
   const router = useRouter();
-
+  const { dispatchError } = useError();
   const fileHandler = async (e) => {
     await setSelectedFile(e.target.files[0]);
     const reader = new FileReader();
@@ -29,15 +31,20 @@ const CreatePost = () => {
     };
   };
 
-  const createPostHandler = async (e) => {
+  const addEventHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const enteredText = textareaRef.current.value;
+
+    const enteredTitle = titleRef.current.value;
+    const enteredDate = dateRef.current.value;
+    const enteredDescription = descriptionRef.current.value;
 
     await axios
-      .post("/api/posts/add-post", {
-        image: preparedFile,
-        text: enteredText,
+      .post("/api/events/add-event", {
+        file: preparedFile,
+        title: enteredTitle,
+        date: enteredDate,
+        description: enteredDescription,
       })
       .then((response) => {
         router.reload();
@@ -62,9 +69,11 @@ const CreatePost = () => {
   return (
     <GreyWrapper>
       <Wrapper>
-        <Header>Create post</Header>
-        <Form onSubmit={createPostHandler}>
-          <TextArea placeholder="What's on your mind?" ref={textareaRef} />
+        <Header>Create Event</Header>
+        <Form onSubmit={addEventHandler}>
+          <Input ref={titleRef} inputType="text" name="Title" required={true} />
+          <Input ref={dateRef} inputType="date" name="Date" required={true} />
+          <TextArea ref={descriptionRef} placeholder="What's on your mind?" />
           <FileInput
             lightGrey
             text="Add"
@@ -79,11 +88,11 @@ const CreatePost = () => {
               height={50}
             />
           )}
-          <RectangleButton lightGrey>Post</RectangleButton>
+          <RectangleButton>Create event</RectangleButton>
         </Form>
       </Wrapper>
     </GreyWrapper>
   );
 };
 
-export default CreatePost;
+export default CreateEvent;

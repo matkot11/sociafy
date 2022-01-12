@@ -13,18 +13,19 @@ const Wrapper = styled.div`
   }
 `;
 
-const Friends = ({ friends }) => (
+const Friends = ({ friends, emptyText = "No friends" }) => (
   <Wrapper>
     {friends.length !== 0 ? (
       friends.map((friend) => <Friend key={friend.id} friend={friend} />)
     ) : (
-      <span>No friends</span>
+      <span>{emptyText}</span>
     )}
   </Wrapper>
 );
 
 Friends.propTypes = {
   friends: PropTypes.array.isRequired,
+  emptyText: PropTypes.string,
 };
 
 export default Friends;

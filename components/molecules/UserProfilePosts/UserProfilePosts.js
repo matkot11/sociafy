@@ -10,23 +10,17 @@ const UserProfilePosts = ({ posts, email }) => {
     <>
       <RectangleButton onClick={() => setIsPostsOpen(!isPostsOpen)} lightGrey>
         <span>Posts</span>
-        {isPostsOpen ? (
-          <Image
-            src="/icons/arrow-down.svg"
-            alt="Arrow"
-            width={15}
-            height={15}
-          />
-        ) : (
-          <Image
-            src="/icons/arrow-right.svg"
-            alt="Arrow"
-            width={15}
-            height={15}
-          />
-        )}
+
+        <Image
+          src={isPostsOpen ? "/icons/arrow-down.svg" : "/icons/arrow-right.svg"}
+          alt="Arrow"
+          width={15}
+          height={15}
+        />
       </RectangleButton>
-      {isPostsOpen && <Posts posts={posts} email={email} />}
+      {isPostsOpen && (
+        <Posts posts={posts} email={email} displayDelete={false} />
+      )}
     </>
   );
 };

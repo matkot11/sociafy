@@ -43,9 +43,13 @@ const HomePage = ({ profileImage, posts, friendsPosts, session, userId }) => {
         </StyledRectangleButton>
       )}
       {isFriendsPostsOpen ? (
-        <Posts posts={friendsPosts} email={session.user.email} />
+        <Posts
+          posts={friendsPosts}
+          email={session.user.email}
+          displayDelete={true}
+        />
       ) : (
-        <Posts posts={posts} email={session.user.email} />
+        <Posts posts={posts} email={session.user.email} displayDelete={true} />
       )}
 
       <Modal isOpen={isOpen} handleClose={handleCloseModal}>
@@ -106,7 +110,7 @@ export const getServerSideProps = async (context) => {
       userId: existingUser._id.toString(),
       posts: posts.map((post) => ({
         id: post._id.toString(),
-        userId: post._id.toString(),
+        userId: post.userId.toString(),
         email: post.email,
         date: format(new Date(post._id.getTimestamp()), "PP"),
         name: post.name,
@@ -118,7 +122,7 @@ export const getServerSideProps = async (context) => {
       })),
       friendsPosts: filteredPosts[0].map((post) => ({
         id: post._id.toString(),
-        userId: post._id.toString(),
+        userId: post.userId.toString(),
         email: post.email,
         date: format(new Date(post._id.getTimestamp()), "PP"),
         name: post.name,

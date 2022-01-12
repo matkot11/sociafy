@@ -8,7 +8,7 @@ import {
 } from "../../../components/layouts/ProfilePage.styles";
 import MainTemplate from "../../../components/templates/MainTemplate/MainTemplate";
 import { format } from "date-fns";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import Loading from "../../../components/organisms/Loading/Loading";
 import UserProfilePosts from "../../../components/molecules/UserProfilePosts/UserProfilePosts";
 import UserProfileFriends from "../../../components/molecules/UserProfileFriends/UserProfileFriends";
@@ -18,6 +18,7 @@ import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import ErrorMessage from "../../../components/molecules/ErrorMessage/ErrorMessage";
 import PropTypes from "prop-types";
+import UserProfileEvents from "../../../components/molecules/UserProfileEvents/UserProfileEvents";
 
 const ProfilePage = ({ user }) => {
   const [isFriend, setIsFriend] = useState(false);
@@ -53,7 +54,7 @@ const ProfilePage = ({ user }) => {
       getUser();
       setFriends(user.friends);
     }
-  }, [dispatchError, session, user.email]);
+  }, [dispatchError, session, user.email, user, friends]);
 
   const friendHandler = async () => {
     await axios
@@ -84,19 +85,14 @@ const ProfilePage = ({ user }) => {
             <div>
               <span>{user.name}</span>
               {session.user.email !== user.email ? (
-                !isFriend ? (
-                  <RectangleButton onClick={friendHandler} lightGrey>
-                    Add friend
-                  </RectangleButton>
-                ) : (
-                  <RectangleButton onClick={friendHandler} lightGrey>
-                    Remove friend
-                  </RectangleButton>
-                )
+                <RectangleButton onClick={friendHandler} lightGrey>
+                  {!isFriend ? "Add friend" : "Remove friend"}
+                </RectangleButton>
               ) : null}
             </div>
           </UserDetailsWrapper>
           <UserProfileFriends friends={friends} />
+          <UserProfileEvents events={user.events} userId={user.id} />
           <UserProfilePosts posts={user.posts} email={session.user.email} />
         </Wrapper>
       </GreyWrapper>
@@ -111,6 +107,7 @@ ProfilePage.propTypes = {
 
 export const getStaticPaths = async () => {
   const { client, db } = await connectToDataBase();
+  const session = await getSession();
 
   const users = await db.collection("users").find().toArray();
 
@@ -137,6 +134,13 @@ export const getStaticProps = async (context) => {
 
   const userPosts = posts.filter((post) => post.email === user.email);
 
+  const events = await db
+    .collection("events")
+    .find()
+    .sort({ date: 1 })
+    .toArray();
+
+  const userEvents = events.filter((event) => event.email === user.email);
   await client.close();
 
   return {
@@ -155,6 +159,7 @@ export const getStaticProps = async (context) => {
         })),
         posts: userPosts.map((post) => ({
           id: post._id.toString(),
+          userId: post.userId.toString(),
           email: post.email,
           date: format(new Date(post._id.getTimestamp()), "PP"),
           name: post.name,
@@ -163,6 +168,16 @@ export const getStaticProps = async (context) => {
           image: post.image,
           likes: post.likes,
           comments: post.comments,
+        })),
+        events: userEvents.map((event) => ({
+          id: event._id.toString(),
+          userId: event.userId.toString(),
+          userName: event.userName,
+          email: event.email,
+          eventImage: event.eventImage,
+          title: event.title,
+          date: event.date,
+          isBirthday: event.isBirthday,
         })),
       },
     },

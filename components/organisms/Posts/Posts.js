@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Posts = ({ posts, email }) => {
+const Posts = ({ posts, email, displayDelete }) => {
   const [postsArray, setPostsArray] = useState(posts);
   const { dispatchError } = useError();
 
@@ -47,6 +47,7 @@ const Posts = ({ posts, email }) => {
             email={email}
             isYourPost={email === post.email}
             onClick={() => deletePostHandler(post.id)}
+            displayDelete={displayDelete}
           />
         ))
       ) : (
@@ -59,6 +60,7 @@ const Posts = ({ posts, email }) => {
 Posts.propTypes = {
   posts: PropTypes.array.isRequired,
   email: PropTypes.string.isRequired,
+  displayDelete: PropTypes.bool.isRequired,
 };
 
 export default Posts;

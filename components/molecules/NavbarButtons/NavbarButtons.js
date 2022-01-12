@@ -20,7 +20,7 @@ const NavbarButtons = ({ userId }) => (
         height={24}
       />
     </Link>
-    <Link href="/" passHref>
+    <Link href="/events" passHref>
       <IconsLink
         iconPath="/icons/calendar.svg"
         name="Events"

@@ -5,7 +5,7 @@ import Friends from "../../organisms/Friends/Friends";
 import PropTypes from "prop-types";
 
 const Wrapper = styled.div`
-  //width: 90%;
+  width: 90%;
   padding: 1rem;
   display: flex;
   align-items: center;
