@@ -13,7 +13,7 @@ export default NextAuth({
       async authorize(credentials) {
         const client = await MongoClient.connect(process.env.MONGODBAPI);
 
-        const usersCollection = client.db().collection("users");
+        const usersCollection = await client.db.collection("users");
 
         const user = await usersCollection.findOne({
           email: credentials.email,
