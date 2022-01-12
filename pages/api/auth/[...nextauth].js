@@ -6,6 +6,7 @@ import { MongoClient } from "mongodb";
 export default NextAuth({
   session: {
     strategy: "jwt",
+    secret: process.env.SECRET_NEXTAUTH,
   },
   providers: [
     CredentialProvider({
