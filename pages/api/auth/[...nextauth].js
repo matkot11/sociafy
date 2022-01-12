@@ -6,14 +6,15 @@ import { MongoClient } from "mongodb";
 export default NextAuth({
   session: {
     strategy: "jwt",
-    secret: process.env.SECRET_NEXTAUTH,
+    secret: process.env.JWT_SECRET,
   },
+  secret: process.env.JWT_SECRET,
   providers: [
     CredentialProvider({
       async authorize(credentials) {
         const client = await MongoClient.connect(process.env.MONGODBAPI);
 
-        const usersCollection = await client.db.collection("users");
+        const usersCollection = await client.db().collection("users");
 
         const user = await usersCollection.findOne({
           email: credentials.email,
