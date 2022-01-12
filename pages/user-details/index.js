@@ -51,6 +51,7 @@ export const getServerSideProps = async (context) => {
       profileImage: existingUser.profileImage,
       name: existingUser.name,
       birthday: existingUser.birthday,
+      revalidate: 1,
     },
   };
 };

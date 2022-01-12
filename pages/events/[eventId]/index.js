@@ -212,6 +212,7 @@ export const getStaticProps = async (context) => {
           profileImage: participant.profileImage,
         })),
       },
+      revalidate: 1,
     },
   };
 };

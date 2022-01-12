@@ -180,6 +180,7 @@ export const getStaticProps = async (context) => {
           isBirthday: event.isBirthday,
         })),
       },
+      revalidate: 1,
     },
   };
 };
