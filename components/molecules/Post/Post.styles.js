@@ -12,6 +12,7 @@ export const UserWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
 
   div {
     display: flex;

@@ -8,7 +8,7 @@ import {
   ResultItem,
   ResultList,
   Wrapper,
-} from "../../components/layouts/SearchPage";
+} from "../../components/layouts/SearchPage.styles";
 import Friend from "../../components/molecules/Friend/Friend";
 
 const SearchPage = ({ userId, users }) => {
@@ -106,6 +106,7 @@ export const getServerSideProps = async (context) => {
         email: user.email,
         profileImage: user.profileImage,
       })),
+      revalidate: 1,
     },
   };
 };

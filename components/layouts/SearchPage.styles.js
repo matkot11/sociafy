@@ -2,9 +2,6 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 90%;
-  //display: flex;
-  //flex-direction: column;
-  //align-items: center;
 
   input {
     padding: 0.5rem 1rem 0.5rem 1rem;

@@ -19,6 +19,12 @@ const handler = async (req, res) => {
     .collection("users")
     .findOne({ email: session.user.email });
 
+  if (!user) {
+    res.status(404).json({ message: "User not found" });
+    await client.close();
+    return;
+  }
+
   const friend = await db.collection("users").findOne({ email });
 
   const userFriendEmail = await user.friends.map((friend) => friend.email);
@@ -60,7 +66,7 @@ const handler = async (req, res) => {
   res.status(201).json({
     friends: friendsList.friends,
     isYourFriend,
-    message: "Friend added",
+    message: "Friends updated successfully",
   });
   await client.close();
 };

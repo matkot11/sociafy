@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import ProfileImage from "../../atoms/ProfileImage/ProfileImage";
 import GreyWrapper from "../GreyWrapper/GreyWrapper";
@@ -17,7 +18,7 @@ import AddComment from "../../atoms/Add Comment/AddComment";
 import Icon from "../../atoms/Icon/Icon";
 import PropTypes from "prop-types";
 
-const Post = ({ email, post, onClick, isYourPost }) => {
+const Post = ({ email, post, onClick, isYourPost, displayDelete }) => {
   const commentRef = useRef();
   const [likesArray, setLikesArray] = useState(post.likes);
   const [commentsArray, setCommentsArray] = useState(post.comments);
@@ -67,14 +68,16 @@ const Post = ({ email, post, onClick, isYourPost }) => {
     <GreyWrapper>
       <Wrapper>
         <UserWrapper>
-          <div>
-            <ProfileImage src={post.profileImage} width={40} height={40} />
+          <Link href={`/user/${post.userId}`} passHref>
             <div>
-              <span>{post.name}</span>
-              <span>{post.date}</span>
+              <ProfileImage src={post.profileImage} width={40} height={40} />
+              <div>
+                <span>{post.name}</span>
+                <span>{post.date}</span>
+              </div>
             </div>
-          </div>
-          {isYourPost && (
+          </Link>
+          {displayDelete && isYourPost && (
             <Icon
               onClick={onClick}
               name="Bin"
@@ -148,6 +151,7 @@ Post.propTypes = {
   post: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   isYourPost: PropTypes.bool.isRequired,
+  displayDelete: PropTypes.bool.isRequired,
 };
 
 export default Post;

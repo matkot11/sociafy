@@ -1,7 +1,6 @@
 import { connectToDataBase } from "../../../lib/db";
 import { hashPassword } from "../../../lib/auth";
 import { ObjectId } from "mongodb";
-import cloudinary from "cloudinary";
 import { uploadImage } from "../../../lib/uploadImage";
 
 const handler = async (req, res) => {

@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   width: 100%;
 
   input {
+    background-color: inherit;
     padding: 0.5rem 1rem 0.5rem 1rem;
     width: 100%;
     font-size: ${({ theme }) => theme.fontSize.s};
