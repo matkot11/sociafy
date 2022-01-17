@@ -51,12 +51,11 @@ const ProfilePage = ({ user }) => {
           }, 1200);
         });
     };
-
-    if (session) {
+    if (session && user) {
       getUser();
       setFriends(user.friends);
     }
-  }, [dispatchError, session, user.email, user, friends]);
+  }, [dispatchError, session, user, user, friends]);
 
   const friendHandler = async () => {
     await axios
@@ -81,6 +80,7 @@ const ProfilePage = ({ user }) => {
   return (
     <MainTemplate userId={authUser._id}>
       <GreyWrapper>
+        {console.log(router.isFallback)}
         <Wrapper>
           <UserDetailsWrapper>
             <ProfileImage src={user.profileImage} width={144} height={144} />
@@ -131,6 +131,11 @@ export const getStaticProps = async (context) => {
   const user = await db
     .collection("users")
     .findOne({ _id: ObjectId(profileId) });
+
+  if (!user) {
+    await client.close();
+    return { notFound: true };
+  }
 
   const posts = await db.collection("posts").find().sort({ _id: -1 }).toArray();
 

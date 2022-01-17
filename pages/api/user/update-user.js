@@ -17,6 +17,7 @@ const handler = async (req, res) => {
   const existingUser = await db.collection("users").findOne({
     email: session.user.email,
   });
+
   let birthdayDate;
   if (birthday) {
     const currentDate = new Date();
