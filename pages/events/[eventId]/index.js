@@ -25,7 +25,7 @@ import Image from "next/image";
 import Friends from "../../../components/organisms/Friends/Friends";
 import Icon from "../../../components/atoms/Icon/Icon";
 import { useRouter } from "next/router";
-import { format, parse, parseISO } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 const EventPage = ({ event }) => {
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
@@ -190,10 +190,6 @@ export const getStaticProps = async (context) => {
   const event = await db
     .collection("events")
     .findOne({ _id: ObjectId(eventId) });
-
-  // const date = event.date.split("-")
-  // const newDate = new Date(date[0], date[2], date[1])
-  // console.log(newDate)
 
   await client.close();
 
