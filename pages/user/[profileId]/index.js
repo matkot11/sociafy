@@ -80,7 +80,6 @@ const ProfilePage = ({ user }) => {
   return (
     <MainTemplate userId={authUser._id}>
       <GreyWrapper>
-        {console.log(router.isFallback)}
         <Wrapper>
           <UserDetailsWrapper>
             <ProfileImage src={user.profileImage} width={144} height={144} />
@@ -109,7 +108,6 @@ ProfilePage.propTypes = {
 
 export const getStaticPaths = async () => {
   const { client, db } = await connectToDataBase();
-  const session = await getSession();
 
   const users = await db.collection("users").find().toArray();
 
@@ -123,8 +121,8 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async (context) => {
-  const profileId = context.params.profileId;
+export const getStaticProps = async ({ params }) => {
+  const profileId = params.profileId;
 
   const { client, db } = await connectToDataBase();
 
@@ -188,8 +186,8 @@ export const getStaticProps = async (context) => {
           isBirthday: event.isBirthday,
         })),
       },
-      revalidate: 1,
     },
+    revalidate: 1,
   };
 };
 
