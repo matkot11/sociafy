@@ -7,7 +7,7 @@ import {
   Wrapper,
 } from "../../../components/layouts/ProfilePage.styles";
 import MainTemplate from "../../../components/templates/MainTemplate/MainTemplate";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { getSession, useSession } from "next-auth/react";
 import Loading from "../../../components/organisms/Loading/Loading";
 import UserProfilePosts from "../../../components/molecules/UserProfilePosts/UserProfilePosts";
@@ -176,7 +176,7 @@ export const getStaticProps = async (context) => {
           email: event.email,
           eventImage: event.eventImage,
           title: event.title,
-          date: event.date,
+          date: format(parseISO(event.date), "PP"),
           isBirthday: event.isBirthday,
         })),
       },

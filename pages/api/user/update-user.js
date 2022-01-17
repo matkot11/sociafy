@@ -99,8 +99,17 @@ const handler = async (req, res) => {
     await client.close();
   }
 
-  if (existingUser.birthday !== null) {
-    await db.collection("events").deleteOne({ userId: existingUser._id });
+  if (birthday) {
+    if (existingUser.birthday !== null) {
+      try {
+        await db.collection("events").deleteOne({ userId: existingUser._id });
+      } catch (e) {
+        res
+          .status(404)
+          .json({ message: "Birthday event did not upload correctly" });
+        await client.close();
+      }
+    }
 
     const id = new ObjectId();
 

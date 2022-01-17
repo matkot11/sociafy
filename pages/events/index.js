@@ -10,6 +10,7 @@ import ErrorMessage from "../../components/molecules/ErrorMessage/ErrorMessage";
 import { useError } from "../../hooks/useError";
 import Events from "../../components/organisms/Events/Events";
 import axios from "axios";
+import { format, parseISO } from "date-fns";
 
 const EventsPage = ({ userId, events }) => {
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
@@ -74,7 +75,7 @@ export const getServerSideProps = async (context) => {
         email: event.email,
         eventImage: event.eventImage,
         title: event.title,
-        date: event.date,
+        date: format(parseISO(event.date), "PP"),
         isBirthday: event.isBirthday,
       })),
       revalidate: 1,
