@@ -19,6 +19,7 @@ import { useError } from "../../../hooks/useError";
 import ErrorMessage from "../../../components/molecules/ErrorMessage/ErrorMessage";
 import PropTypes from "prop-types";
 import UserProfileEvents from "../../../components/molecules/UserProfileEvents/UserProfileEvents";
+import { useRouter } from "next/router";
 
 const ProfilePage = ({ user }) => {
   const [isFriend, setIsFriend] = useState(false);
@@ -26,6 +27,7 @@ const ProfilePage = ({ user }) => {
   const [authUser, setAuthUser] = useState(null);
   const { data: session, status } = useSession();
   const { dispatchError, error } = useError();
+  const router = useRouter();
 
   useEffect(() => {
     const getUser = async () => {
@@ -72,7 +74,7 @@ const ProfilePage = ({ user }) => {
       });
   };
 
-  if (status === "loading" || !authUser) {
+  if (status === "loading" || !authUser || router.isFallback) {
     return <Loading />;
   }
 
@@ -117,7 +119,7 @@ export const getStaticPaths = async () => {
     paths: users.map((user) => ({
       params: { profileId: user._id.toString() },
     })),
-    fallback: "blocking",
+    fallback: true,
   };
 };
 
