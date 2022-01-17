@@ -175,10 +175,10 @@ export const getStaticPaths = async () => {
   await client.close();
 
   return {
-    fallback: "blocking",
     paths: events.map((user) => ({
       params: { eventId: user._id.toString() },
     })),
+    fallback: "blocking",
   };
 };
 

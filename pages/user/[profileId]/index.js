@@ -114,10 +114,10 @@ export const getStaticPaths = async () => {
   await client.close();
 
   return {
-    fallback: true,
     paths: users.map((user) => ({
       params: { profileId: user._id.toString() },
     })),
+    fallback: "blocking",
   };
 };
 
@@ -141,6 +141,7 @@ export const getStaticProps = async (context) => {
     .toArray();
 
   const userEvents = events.filter((event) => event.email === user.email);
+
   await client.close();
 
   return {
