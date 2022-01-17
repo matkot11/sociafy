@@ -114,7 +114,7 @@ export const getStaticPaths = async () => {
   await client.close();
 
   return {
-    fallback: "true",
+    fallback: true,
     paths: users.map((user) => ({
       params: { profileId: user._id.toString() },
     })),
