@@ -134,7 +134,6 @@ export const getServerSideProps = async (context) => {
         likes: post.likes,
         comments: post.comments,
       })),
-      revalidate: 1,
     },
   };
 };

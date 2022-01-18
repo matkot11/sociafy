@@ -101,7 +101,7 @@ const EventPage = ({ event }) => {
       });
   };
 
-  if (status === "loading" || !authUser || isLoading) {
+  if (status === "loading" || !authUser || isLoading || router.isFallback) {
     return <Loading />;
   }
 
@@ -178,7 +178,7 @@ export const getStaticPaths = async () => {
     paths: events.map((user) => ({
       params: { eventId: user._id.toString() },
     })),
-    fallback: "blocking",
+    fallback: true,
   };
 };
 
@@ -213,8 +213,8 @@ export const getStaticProps = async (context) => {
           profileImage: participant.profileImage,
         })),
       },
-      revalidate: 1,
     },
+    revalidate: 1,
   };
 };
 
