@@ -63,7 +63,7 @@ const EventPage = ({ event }) => {
         });
     };
 
-    if (session && event.participants) {
+    if (session && event && event.participants) {
       getUser();
       setParticipants(event.participants);
     }

@@ -19,7 +19,12 @@ const Sidebar = ({ onClick, userId }) => {
   return (
     <Wrapper>
       <CloseButton onClick={onClick}>
-        <Icon iconPath="/icons/close.svg" name="Close" width={24} height={24} />
+        <Icon
+          iconPath="/icons/close.svg"
+          name="Close"
+          imageWidth={24}
+          imageHeight={24}
+        />
       </CloseButton>
       <div>
         <div>

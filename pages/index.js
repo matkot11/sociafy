@@ -13,6 +13,7 @@ import { useError } from "../hooks/useError";
 import PropTypes from "prop-types";
 import RectangleButton from "../components/atoms/RectangleButton/RectangleButton";
 import styled from "styled-components";
+import Loading from "../components/organisms/Loading/Loading";
 
 const StyledRectangleButton = styled(RectangleButton)`
   margin-top: 2rem;
@@ -23,6 +24,10 @@ const HomePage = ({ profileImage, posts, friendsPosts, session, userId }) => {
   const [isFriendsPostsOpen, setIsFriendsPostsOpen] = useState(false);
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
   const { error } = useError();
+
+  if (!profileImage && !posts && !friendsPosts && !session && !userId) {
+    return <Loading />;
+  }
 
   return (
     <MainTemplate userId={userId}>

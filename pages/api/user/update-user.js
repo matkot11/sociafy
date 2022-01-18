@@ -127,7 +127,7 @@ const handler = async (req, res) => {
         eventImage: imageUrl,
         title: `${name ? name : existingUser.name}'s birthday`,
         date: birthday ? birthdayDate : existingUser.birthday,
-        description: `This is ${existingUser.name}'s birthday!!!`,
+        description: `This is ${name ? name : existingUser.name}'s birthday!!!`,
         isBirthday: true,
         participants: [],
       });
