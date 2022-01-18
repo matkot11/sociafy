@@ -46,6 +46,7 @@ const EventPage = ({ event }) => {
         .then(({ data }) => {
           setAuthUser(data.user);
           if (
+            event.participants &&
             event.participants
               .map((participant) => participant.email)
               .includes(data.user.email)
