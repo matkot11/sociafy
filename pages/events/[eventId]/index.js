@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { connectToDataBase } from "../../../lib/db";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { ObjectId } from "mongodb";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
@@ -29,7 +29,9 @@ import { format, parseISO } from "date-fns";
 
 const EventPage = ({ event }) => {
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
-  const [participants, setParticipants] = useState(event.participants);
+  const [participants, setParticipants] = useState(
+    event.participants && event.participants,
+  );
   const [areYouParticipant, setAreYouParticipant] = useState(false);
   const [authUser, setAuthUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -169,7 +171,6 @@ EventPage.propTypes = {
 
 export const getStaticPaths = async () => {
   const { client, db } = await connectToDataBase();
-  const session = await getSession();
 
   const events = await db.collection("events").find().toArray();
 
@@ -191,6 +192,11 @@ export const getStaticProps = async (context) => {
   const event = await db
     .collection("events")
     .findOne({ _id: ObjectId(eventId) });
+
+  if (!event) {
+    await client.close();
+    return { notFound: true };
+  }
 
   await client.close();
 
