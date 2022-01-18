@@ -29,9 +29,7 @@ import { format, parseISO } from "date-fns";
 
 const EventPage = ({ event }) => {
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
-  const [participants, setParticipants] = useState(
-    event.participants && event.participants,
-  );
+  const [participants, setParticipants] = useState(null);
   const [areYouParticipant, setAreYouParticipant] = useState(false);
   const [authUser, setAuthUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,8 +63,9 @@ const EventPage = ({ event }) => {
         });
     };
 
-    if (session) {
+    if (session && event.participants) {
       getUser();
+      setParticipants(event.participants);
     }
   }, [dispatchError, session, event]);
 
