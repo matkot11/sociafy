@@ -55,7 +55,7 @@ const ProfilePage = ({ user }) => {
       getUser();
       setFriends(user.friends);
     }
-  }, [dispatchError, session, user, user, friends]);
+  }, [dispatchError, session, user, friends]);
 
   const friendHandler = async () => {
     await axios

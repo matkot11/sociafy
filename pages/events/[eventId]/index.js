@@ -65,7 +65,7 @@ const EventPage = ({ event }) => {
     if (session) {
       getUser();
     }
-  }, [dispatchError, session, event.participants]);
+  }, [dispatchError, session, event]);
 
   const participateButtonHandler = async () => {
     await axios
