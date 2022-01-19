@@ -8,7 +8,7 @@ import {
 } from "../../../components/layouts/ProfilePage.styles";
 import MainTemplate from "../../../components/templates/MainTemplate/MainTemplate";
 import { format, parseISO } from "date-fns";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Loading from "../../../components/organisms/Loading/Loading";
 import UserProfilePosts from "../../../components/molecules/UserProfilePosts/UserProfilePosts";
 import UserProfileFriends from "../../../components/molecules/UserProfileFriends/UserProfileFriends";

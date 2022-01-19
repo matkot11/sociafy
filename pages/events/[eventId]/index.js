@@ -37,7 +37,7 @@ const EventPage = ({ event }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (session && event.participants) {
+    if (session && event && event.participants) {
       if (
         event.participants &&
         event.participants
@@ -50,7 +50,7 @@ const EventPage = ({ event }) => {
       }
       setParticipants(event.participants);
     }
-  }, [dispatchError, session, event.participants]);
+  }, [dispatchError, session, event, event.participants]);
 
   const participateButtonHandler = async () => {
     await axios
