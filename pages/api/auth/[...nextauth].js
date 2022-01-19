@@ -23,11 +23,11 @@ export default NextAuth({
         await client.close();
         throw new Error("No user found!");
       }
-
       session.user = {
         email: currentUser.email,
         id: currentUser._id.toString(),
       };
+
       return session;
     },
   },
@@ -60,6 +60,7 @@ export default NextAuth({
 
         return {
           email: user.email,
+          id: user._id.toString(),
         };
       },
     }),

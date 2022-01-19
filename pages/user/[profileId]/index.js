@@ -50,7 +50,9 @@ const ProfilePage = ({ user }) => {
           }, 1200);
         });
     };
-
+    {
+      console.log(session);
+    }
     if (session && user) {
       getUser();
       setFriends(user.friends);
@@ -72,7 +74,7 @@ const ProfilePage = ({ user }) => {
         }, 1200);
       });
   };
-
+  console.log(status);
   if (status === "loading" || router.isFallback || !user) {
     return <LoadingComments />;
   }
