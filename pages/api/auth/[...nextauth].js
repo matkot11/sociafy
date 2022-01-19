@@ -9,6 +9,28 @@ export default NextAuth({
     secret: process.env.JWT_SECRET,
   },
   secret: process.env.JWT_SECRET,
+  callbacks: {
+    async session({ session }) {
+      const client = await MongoClient.connect(process.env.MONGODBAPI);
+
+      const usersCollection = await client.db().collection("users");
+
+      const currentUser = await usersCollection.findOne({
+        email: session.user.email,
+      });
+
+      if (!currentUser) {
+        await client.close();
+        throw new Error("No user found!");
+      }
+
+      session.user = {
+        email: currentUser.email,
+        id: currentUser._id.toString(),
+      };
+      return session;
+    },
+  },
   providers: [
     CredentialProvider({
       async authorize(credentials) {

@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import "../styles/fonts.css";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, getSession } from "next-auth/react";
 import AppProviders from "../providers/AppProviders";
 import { useRouter } from "next/router";
 import Loading from "../components/organisms/Loading/Loading";
+import MainTemplate from "../components/templates/MainTemplate/MainTemplate";
+import App from "next/app";
 
-function MyApp({ Component, pageProps }) {
-  const router = useRouter();
+function MyApp({ Component, pageProps, session }) {
   const [loading, setLoading] = useState(false);
+  // const session = getSession();
+  const router = useRouter();
 
   useEffect(() => {
     const handleStart = (url) => {
@@ -22,11 +25,17 @@ function MyApp({ Component, pageProps }) {
     router.events.on("routeChangeError", handleComplete);
   }, [router]);
 
+  if (!session && loading) {
+    return <Loading />;
+  }
+
   if (loading) {
     return (
       <AppProviders>
         <SessionProvider session={pageProps.session}>
-          <Loading />
+          <MainTemplate userId={session.user.id}>
+            <Loading />
+          </MainTemplate>
         </SessionProvider>
       </AppProviders>
     );
@@ -40,5 +49,16 @@ function MyApp({ Component, pageProps }) {
     </AppProviders>
   );
 }
+
+MyApp.getInitialProps = async (context) => {
+  const appProps = await App.getInitialProps(context);
+  const session = await getSession(context);
+  console.log(session);
+
+  return {
+    ...appProps,
+    session,
+  };
+};
 
 export default MyApp;

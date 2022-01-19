@@ -20,7 +20,10 @@ const StyledRectangleButton = styled(RectangleButton)`
   width: 80%;
 `;
 
-const HomePage = ({ profileImage, posts, friendsPosts, session, userId }) => {
+const HomePage = (
+  { profileImage, posts, friendsPosts, session, userId },
+  pageProps,
+) => {
   const [isFriendsPostsOpen, setIsFriendsPostsOpen] = useState(false);
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
   const { error } = useError();
@@ -31,6 +34,7 @@ const HomePage = ({ profileImage, posts, friendsPosts, session, userId }) => {
 
   return (
     <MainTemplate userId={userId}>
+      {console.log(pageProps)}
       <AddPostButton profileImage={profileImage} onClick={handleOpenModal} />
       {isFriendsPostsOpen ? (
         <StyledRectangleButton
