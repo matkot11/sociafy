@@ -23,7 +23,7 @@ import { useRouter } from "next/router";
 
 const ProfilePage = ({ user }) => {
   const [isFriend, setIsFriend] = useState(false);
-  const [friends, setFriends] = useState(null);
+  const [friends, setFriends] = useState([]);
   const { data: session, status } = useSession();
   const { dispatchError, error } = useError();
   const router = useRouter();
@@ -49,6 +49,7 @@ const ProfilePage = ({ user }) => {
           }, 1200);
         });
     };
+
     if (session && user) {
       getUser();
       setFriends(user.friends);

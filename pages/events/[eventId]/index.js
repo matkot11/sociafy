@@ -29,7 +29,7 @@ import { format, parseISO } from "date-fns";
 
 const EventPage = ({ event }) => {
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
-  const [participants, setParticipants] = useState(null);
+  const [participants, setParticipants] = useState([]);
   const [areYouParticipant, setAreYouParticipant] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { data: session, status } = useSession();
