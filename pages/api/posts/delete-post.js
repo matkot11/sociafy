@@ -1,5 +1,6 @@
 import { connectToDataBase } from "../../../lib/db";
 import { ObjectId } from "mongodb";
+import { deleteImage } from "../../../lib/deleteImage";
 
 const handler = async (req, res) => {
   if (req.method !== "DELETE") {
@@ -9,6 +10,12 @@ const handler = async (req, res) => {
   const { id } = req.body;
 
   const { client, db } = await connectToDataBase();
+
+  const post = await db.collection("posts").findOne({ _id: ObjectId(id) });
+
+  if (post.image) {
+    await deleteImage(res, `posts/${id}`);
+  }
 
   await db.collection("posts").deleteOne({ _id: ObjectId(id) });
 

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { useRouter } from "next/router";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -19,6 +20,7 @@ const Wrapper = styled.div`
 const Posts = ({ posts, email, displayDelete }) => {
   const [postsArray, setPostsArray] = useState(posts);
   const { dispatchError } = useError();
+  const router = useRouter();
 
   useEffect(() => {
     setPostsArray(posts);
@@ -29,6 +31,7 @@ const Posts = ({ posts, email, displayDelete }) => {
       .delete("/api/posts/delete-post", { data: { id } })
       .then(({ data }) => {
         setPostsArray(data.posts);
+        router.reload();
       })
       .catch((e) => {
         setTimeout(() => {

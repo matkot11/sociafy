@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
+import { useRouter } from "next/router";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -17,8 +18,9 @@ const Wrapper = styled.div`
 `;
 
 const Events = ({ events, userId, displayDelete }) => {
-  const { dispatchError } = useError();
   const [eventsArray, setEventsArray] = useState(events);
+  const { dispatchError } = useError();
+  const router = useRouter();
 
   const deleteEventHandler = async (id) => {
     await axios
@@ -29,6 +31,7 @@ const Events = ({ events, userId, displayDelete }) => {
       })
       .then(({ data }) => {
         setEventsArray(data.events);
+        router.reload();
       })
       .catch((e) => {
         setTimeout(() => {

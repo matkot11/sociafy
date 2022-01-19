@@ -1,5 +1,6 @@
 import { connectToDataBase } from "../../../lib/db";
 import { ObjectId } from "mongodb";
+import { deleteImage } from "../../../lib/deleteImage";
 
 const handler = async (req, res) => {
   if (req.method !== "DELETE") {
@@ -10,6 +11,8 @@ const handler = async (req, res) => {
 
   const { client, db } = await connectToDataBase();
 
+  await deleteImage(res, `events/${id}`);
+
   await db.collection("events").deleteOne({ _id: ObjectId(id) });
 
   const events = await db
@@ -18,11 +21,12 @@ const handler = async (req, res) => {
     .sort({ date: 1 })
     .toArray();
 
+  await client.close();
+
   res.status(201).json({
     events,
     message: "Post deleted",
   });
-  await client.close();
 };
 
 export default handler;
