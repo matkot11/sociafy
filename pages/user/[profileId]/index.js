@@ -24,7 +24,6 @@ import { useRouter } from "next/router";
 const ProfilePage = ({ user }) => {
   const [isFriend, setIsFriend] = useState(false);
   const [friends, setFriends] = useState(null);
-  const [authUser, setAuthUser] = useState(null);
   const { data: session, status } = useSession();
   const { dispatchError, error } = useError();
   const router = useRouter();
@@ -36,7 +35,6 @@ const ProfilePage = ({ user }) => {
           email: session.user.email,
         })
         .then(({ data }) => {
-          setAuthUser(data.user);
           if (
             data.user.friends.map((friend) => friend.email).includes(user.email)
           ) {
@@ -73,12 +71,12 @@ const ProfilePage = ({ user }) => {
       });
   };
 
-  if (status === "loading" || !authUser || router.isFallback) {
+  if (status === "loading" || router.isFallback) {
     return <Loading />;
   }
 
   return (
-    <MainTemplate userId={authUser._id}>
+    <MainTemplate userId={session.user.id}>
       <GreyWrapper>
         <Wrapper>
           <UserDetailsWrapper>

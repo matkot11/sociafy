@@ -21,20 +21,19 @@ const StyledRectangleButton = styled(RectangleButton)`
 `;
 
 const HomePage = (
-  { profileImage, posts, friendsPosts, session, userId },
+  { profileImage, posts, friendsPosts, session },
   pageProps,
 ) => {
   const [isFriendsPostsOpen, setIsFriendsPostsOpen] = useState(false);
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
   const { error } = useError();
 
-  if (!profileImage && !posts && !friendsPosts && !session && !userId) {
+  if (!profileImage && !posts && !friendsPosts && !session) {
     return <Loading />;
   }
 
   return (
-    <MainTemplate userId={userId}>
-      {console.log(pageProps)}
+    <MainTemplate userId={session.user.id}>
       <AddPostButton profileImage={profileImage} onClick={handleOpenModal} />
       {isFriendsPostsOpen ? (
         <StyledRectangleButton
@@ -74,7 +73,6 @@ HomePage.propTypes = {
   posts: PropTypes.array.isRequired,
   friendsPosts: PropTypes.array.isRequired,
   session: PropTypes.object.isRequired,
-  userId: PropTypes.string.isRequired,
 };
 
 export const getServerSideProps = async (context) => {
@@ -118,7 +116,6 @@ export const getServerSideProps = async (context) => {
     props: {
       session,
       profileImage: existingUser.profileImage,
-      userId: existingUser._id.toString(),
       posts: posts.map((post) => ({
         id: post._id.toString(),
         userId: post.userId.toString(),

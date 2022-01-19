@@ -49,25 +49,17 @@ export const getServerSideProps = async (context) => {
 
   const { client, db } = await connectToDataBase();
 
-  const existingUser = await db.collection("users").findOne({
-    email: session.user.email,
-  });
-
-  if (!existingUser) {
-    context.res.status(404).json({ message: "User not found" });
-    await client.close();
-    return;
-  }
-
   const events = await db
     .collection("events")
     .find()
     .sort({ date: 1 })
     .toArray();
 
+  await client.close();
+
   return {
     props: {
-      userId: existingUser._id.toString(),
+      userId: session.user.id,
       events: events.map((event) => ({
         id: event._id.toString(),
         userId: event.userId.toString(),

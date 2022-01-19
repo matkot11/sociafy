@@ -31,43 +31,26 @@ const EventPage = ({ event }) => {
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
   const [participants, setParticipants] = useState(null);
   const [areYouParticipant, setAreYouParticipant] = useState(false);
-  const [authUser, setAuthUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { data: session, status } = useSession();
   const { dispatchError, error } = useError();
   const router = useRouter();
 
   useEffect(() => {
-    const getUser = async () => {
-      await axios
-        .post("/api/user/get-user", {
-          email: session.user.email,
-        })
-        .then(({ data }) => {
-          setAuthUser(data.user);
-          if (
-            event.participants &&
-            event.participants
-              .map((participant) => participant.email)
-              .includes(data.user.email)
-          ) {
-            setAreYouParticipant(true);
-          } else {
-            setAreYouParticipant(false);
-          }
-        })
-        .catch((e) => {
-          setTimeout(() => {
-            dispatchError(e.response.data.message);
-          }, 1200);
-        });
-    };
-
-    if (session && event && event.participants) {
-      getUser();
+    if (session && event.participants) {
+      if (
+        event.participants &&
+        event.participants
+          .map((participant) => participant.email)
+          .includes(session.user.email)
+      ) {
+        setAreYouParticipant(true);
+      } else {
+        setAreYouParticipant(false);
+      }
       setParticipants(event.participants);
     }
-  }, [dispatchError, session, event]);
+  }, [dispatchError, session, event.participants]);
 
   const participateButtonHandler = async () => {
     await axios
@@ -103,15 +86,15 @@ const EventPage = ({ event }) => {
       });
   };
 
-  if (status === "loading" || !authUser || isLoading || router.isFallback) {
+  if (status === "loading" || isLoading || router.isFallback) {
     return <Loading />;
   }
 
   return (
-    <MainTemplate userId={authUser._id}>
+    <MainTemplate userId={session.user.id}>
       <GreyWrapper>
         <Wrapper>
-          {!event.isBirthday && event.userId === authUser._id.toString() && (
+          {!event.isBirthday && event.userId === session.user.id && (
             <DeleteButtonWrapper>
               <Icon
                 onClick={deleteEventHandler}

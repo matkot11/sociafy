@@ -9,7 +9,6 @@ import App from "next/app";
 
 function MyApp({ Component, pageProps, session }) {
   const [loading, setLoading] = useState(false);
-  // const session = getSession();
   const router = useRouter();
 
   useEffect(() => {
@@ -53,7 +52,6 @@ function MyApp({ Component, pageProps, session }) {
 MyApp.getInitialProps = async (context) => {
   const appProps = await App.getInitialProps(context);
   const session = await getSession(context);
-  console.log(session);
 
   return {
     ...appProps,

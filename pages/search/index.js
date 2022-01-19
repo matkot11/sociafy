@@ -82,23 +82,13 @@ export const getServerSideProps = async (context) => {
 
   const { client, db } = await connectToDataBase();
 
-  const existingUser = await db.collection("users").findOne({
-    email: session.user.email,
-  });
-
-  if (!existingUser) {
-    context.res.status(404).json({ message: "User not found" });
-    await client.close();
-    return;
-  }
-
   const users = await db.collection("users").find().toArray();
 
   await client.close();
 
   return {
     props: {
-      userId: existingUser._id.toString(),
+      userId: session.user.id,
       users: users.map((user) => ({
         userId: user._id.toString(),
         name: user.name,
