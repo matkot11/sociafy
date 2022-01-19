@@ -7,10 +7,10 @@ import FileInput from "../../atoms/FileInput/FileInput";
 import Form from "../../molecules/Form/Form";
 import { Wrapper } from "./CreatePost.styles";
 import TextArea from "../../atoms/TextArea/TextArea";
-import Loading from "../Loading/Loading";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import { useRouter } from "next/router";
+import LoadingCircle from "../../atoms/LoadingCircle/LoadingCircle";
 
 const CreatePost = () => {
   const textareaRef = useRef();
@@ -57,10 +57,6 @@ const CreatePost = () => {
       });
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <GreyWrapper>
       <Wrapper>
@@ -81,7 +77,13 @@ const CreatePost = () => {
               height={50}
             />
           )}
-          <RectangleButton lightGrey>Post</RectangleButton>
+          {isLoading ? (
+            <LoadingCircle />
+          ) : (
+            <RectangleButton disabled={isLoading} lightGrey>
+              Create post
+            </RectangleButton>
+          )}
         </Form>
       </Wrapper>
     </GreyWrapper>

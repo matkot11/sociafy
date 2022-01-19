@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { ModalWrapper, StyledButton } from "./Modal.styles";
+import LoadingComments from "../../organisms/LoadingComments/LoadingComments";
 
 const Modal = ({ handleClose, isOpen, children }) => {
   const [_document, set_document] = useState(null);
@@ -21,7 +22,7 @@ const Modal = ({ handleClose, isOpen, children }) => {
       </ModalWrapper>
     );
   }
-  return <h1>loading</h1>;
+  return <LoadingComments />;
 };
 
 Modal.propTypes = {

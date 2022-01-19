@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 `;
 
 const InnerWrapper = styled.div`
-  padding: 2rem 0 5rem 0;
+  padding: 2rem 0 8rem 0;
   width: 100%;
   overflow-y: scroll;
   justify-self: center;

@@ -7,11 +7,12 @@ import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
 import GreyWrapper from "../../molecules/GreyWrapper/GreyWrapper";
 import { Wrapper } from "./CreateEvent.styles";
 import Header from "../../atoms/Header/Header";
-import Loading from "../Loading/Loading";
+import LoadingComments from "../LoadingComments/LoadingComments";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useError } from "../../../hooks/useError";
 import Image from "next/image";
+import LoadingCircle from "../../atoms/LoadingCircle/LoadingCircle";
 
 const CreateEvent = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -65,10 +66,6 @@ const CreateEvent = () => {
       });
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <GreyWrapper>
       <Wrapper>
@@ -91,7 +88,13 @@ const CreateEvent = () => {
               height={50}
             />
           )}
-          <RectangleButton>Create event</RectangleButton>
+          {isLoading ? (
+            <LoadingCircle />
+          ) : (
+            <RectangleButton disabled={isLoading} lightGrey>
+              Create event
+            </RectangleButton>
+          )}
         </Form>
       </Wrapper>
     </GreyWrapper>

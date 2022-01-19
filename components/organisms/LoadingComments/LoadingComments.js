@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { Wrapper } from "./Loading.styles";
+import { Wrapper } from "./LoadingComments.styles";
 import gsap from "gsap";
 
-const Loading = () => {
+const LoadingComments = () => {
   const image = useRef(null);
 
   useEffect(() => {
@@ -73,4 +73,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default LoadingComments;

@@ -9,7 +9,7 @@ import {
 import MainTemplate from "../../../components/templates/MainTemplate/MainTemplate";
 import { format, parseISO } from "date-fns";
 import { useSession } from "next-auth/react";
-import Loading from "../../../components/organisms/Loading/Loading";
+import LoadingComments from "../../../components/organisms/LoadingComments/LoadingComments";
 import UserProfilePosts from "../../../components/molecules/UserProfilePosts/UserProfilePosts";
 import UserProfileFriends from "../../../components/molecules/UserProfileFriends/UserProfileFriends";
 import GreyWrapper from "../../../components/molecules/GreyWrapper/GreyWrapper";
@@ -73,7 +73,7 @@ const ProfilePage = ({ user }) => {
   };
 
   if (status === "loading" || router.isFallback) {
-    return <Loading />;
+    return <LoadingComments />;
   }
 
   return (

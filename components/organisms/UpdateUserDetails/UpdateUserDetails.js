@@ -6,7 +6,7 @@ import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
 import ProfileImage from "../../atoms/ProfileImage/ProfileImage";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
-import Loading from "../Loading/Loading";
+import LoadingComments from "../LoadingComments/LoadingComments";
 import { useRouter } from "next/router";
 import { ButtonWrapper, Wrapper } from "./UpdateUserDetails.styles";
 import PropTypes from "prop-types";
@@ -66,7 +66,7 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
   };
 
   if (isLoading) {
-    return <Loading />;
+    return <LoadingComments />;
   }
 
   return (

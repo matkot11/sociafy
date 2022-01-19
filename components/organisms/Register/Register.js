@@ -6,8 +6,8 @@ import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import { signIn } from "next-auth/react";
-import Loading from "../Loading/Loading";
 import { useRouter } from "next/router";
+import LoadingCircle from "../../atoms/LoadingCircle/LoadingCircle";
 
 const Register = ({ onClickLogin }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,10 +51,6 @@ const Register = ({ onClickLogin }) => {
       });
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <>
       <Form onSubmit={registerHandler}>
@@ -71,9 +67,15 @@ const Register = ({ onClickLogin }) => {
           name="Repeat Password*"
           required={true}
         />
-        <RectangleButton>Register</RectangleButton>
+        {isLoading ? (
+          <LoadingCircle />
+        ) : (
+          <RectangleButton disabled={isLoading}>Register</RectangleButton>
+        )}
       </Form>
-      <RectangleButton onClick={onClickLogin}>Login</RectangleButton>
+      {!isLoading && (
+        <RectangleButton onClick={onClickLogin}>Login</RectangleButton>
+      )}
     </>
   );
 };

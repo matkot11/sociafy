@@ -13,7 +13,7 @@ import { useError } from "../hooks/useError";
 import PropTypes from "prop-types";
 import RectangleButton from "../components/atoms/RectangleButton/RectangleButton";
 import styled from "styled-components";
-import Loading from "../components/organisms/Loading/Loading";
+import LoadingComments from "../components/organisms/LoadingComments/LoadingComments";
 
 const StyledRectangleButton = styled(RectangleButton)`
   margin-top: 2rem;
@@ -29,7 +29,7 @@ const HomePage = (
   const { error } = useError();
 
   if (!profileImage && !posts && !friendsPosts && !session) {
-    return <Loading />;
+    return <LoadingComments />;
   }
 
   return (

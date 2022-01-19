@@ -23,6 +23,10 @@ const RectangleButton = styled.button`
     transform: scale(0.95);
     box-shadow: 0 4px 4px ${({ theme }) => theme.color.lightGreen};
   }
+
+  &:disabled {
+    box-shadow: none;
+  }
 `;
 
 export default RectangleButton;

@@ -6,7 +6,7 @@ import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import ErrorMessage from "../../../components/molecules/ErrorMessage/ErrorMessage";
 import MainTemplate from "../../../components/templates/MainTemplate/MainTemplate";
-import Loading from "../../../components/organisms/Loading/Loading";
+import LoadingComments from "../../../components/organisms/LoadingComments/LoadingComments";
 import GreyWrapper from "../../../components/molecules/GreyWrapper/GreyWrapper";
 import ProfileImage from "../../../components/atoms/ProfileImage/ProfileImage";
 import RectangleButton from "../../../components/atoms/RectangleButton/RectangleButton";
@@ -87,7 +87,7 @@ const EventPage = ({ event }) => {
   };
 
   if (status === "loading" || isLoading || router.isFallback) {
-    return <Loading />;
+    return <LoadingComments />;
   }
 
   return (

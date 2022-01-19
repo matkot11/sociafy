@@ -3,7 +3,7 @@ import "../styles/fonts.css";
 import { SessionProvider, getSession } from "next-auth/react";
 import AppProviders from "../providers/AppProviders";
 import { useRouter } from "next/router";
-import Loading from "../components/organisms/Loading/Loading";
+import LoadingComments from "../components/organisms/LoadingComments/LoadingComments";
 import MainTemplate from "../components/templates/MainTemplate/MainTemplate";
 import App from "next/app";
 
@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps, session }) {
   }, [router]);
 
   if (!session && loading) {
-    return <Loading />;
+    return <LoadingComments />;
   }
 
   if (loading) {
@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps, session }) {
       <AppProviders>
         <SessionProvider session={pageProps.session}>
           <MainTemplate userId={session.user.id}>
-            <Loading />
+            <LoadingComments />
           </MainTemplate>
         </SessionProvider>
       </AppProviders>

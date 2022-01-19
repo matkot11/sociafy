@@ -6,7 +6,7 @@ import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useError } from "../../../hooks/useError";
-import Loading from "../Loading/Loading";
+import LoadingCircle from "../../atoms/LoadingCircle/LoadingCircle";
 
 const Login = ({ onClickRegister }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,10 +39,6 @@ const Login = ({ onClickRegister }) => {
     }
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <>
       <Form onSubmit={loginHandler}>
@@ -53,9 +49,15 @@ const Login = ({ onClickRegister }) => {
           name="Password*"
           required={true}
         />
-        <RectangleButton>Login</RectangleButton>
+        {isLoading ? (
+          <LoadingCircle />
+        ) : (
+          <RectangleButton disabled={isLoading}>Login</RectangleButton>
+        )}
       </Form>
-      <RectangleButton onClick={onClickRegister}>Register</RectangleButton>
+      {!isLoading && (
+        <RectangleButton onClick={onClickRegister}>Register</RectangleButton>
+      )}
     </>
   );
 };
