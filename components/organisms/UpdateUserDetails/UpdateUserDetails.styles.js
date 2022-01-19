@@ -13,3 +13,24 @@ export const ButtonWrapper = styled.div`
     width: 45%;
   }
 `;
+
+export const ImageWrapper = styled.div`
+  position: relative;
+
+  &:hover,
+  &:active {
+    div {
+      display: block;
+    }
+  }
+
+  div {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    z-index: 10;
+  }
+`;

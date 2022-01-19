@@ -5,12 +5,13 @@ import Header from "../../atoms/Header/Header";
 import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
 import FileInput from "../../atoms/FileInput/FileInput";
 import Form from "../../molecules/Form/Form";
-import { Wrapper } from "./CreatePost.styles";
+import { ImageWrapper, Wrapper } from "./CreatePost.styles";
 import TextArea from "../../atoms/TextArea/TextArea";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import { useRouter } from "next/router";
 import LoadingCircle from "../../atoms/LoadingCircle/LoadingCircle";
+import Icon from "../../atoms/Icon/Icon";
 
 const CreatePost = () => {
   const textareaRef = useRef();
@@ -70,12 +71,26 @@ const CreatePost = () => {
             onChange={fileHandler}
           />
           {selectedFile && (
-            <Image
-              src={URL.createObjectURL(selectedFile)}
-              alt="Selected file"
-              width={50}
-              height={50}
-            />
+            <ImageWrapper>
+              <div>
+                <Icon
+                  onClick={() => {
+                    setSelectedFile(null);
+                    setPreparedFile(null);
+                  }}
+                  iconPath="/icons/close.svg"
+                  name="close"
+                  imageWidth={20}
+                  imageHeight={20}
+                />
+              </div>
+              <Image
+                src={URL.createObjectURL(selectedFile)}
+                alt="Selected file"
+                width={50}
+                height={50}
+              />
+            </ImageWrapper>
           )}
           {isLoading ? (
             <LoadingCircle />

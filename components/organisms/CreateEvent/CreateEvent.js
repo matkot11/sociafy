@@ -5,7 +5,7 @@ import TextArea from "../../atoms/TextArea/TextArea";
 import FileInput from "../../atoms/FileInput/FileInput";
 import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
 import GreyWrapper from "../../molecules/GreyWrapper/GreyWrapper";
-import { Wrapper } from "./CreateEvent.styles";
+import { ImageWrapper, Wrapper } from "./CreateEvent.styles";
 import Header from "../../atoms/Header/Header";
 import LoadingComments from "../LoadingComments/LoadingComments";
 import axios from "axios";
@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useError } from "../../../hooks/useError";
 import Image from "next/image";
 import LoadingCircle from "../../atoms/LoadingCircle/LoadingCircle";
+import Icon from "../../atoms/Icon/Icon";
 
 const CreateEvent = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -81,12 +82,26 @@ const CreateEvent = () => {
             onChange={fileHandler}
           />
           {selectedFile && (
-            <Image
-              src={URL.createObjectURL(selectedFile)}
-              alt="Selected file"
-              width={50}
-              height={50}
-            />
+            <ImageWrapper>
+              <div>
+                <Icon
+                  onClick={() => {
+                    setSelectedFile(null);
+                    setPreparedFile(null);
+                  }}
+                  iconPath="/icons/close.svg"
+                  name="close"
+                  imageWidth={20}
+                  imageHeight={20}
+                />
+              </div>
+              <Image
+                src={URL.createObjectURL(selectedFile)}
+                alt="Selected file"
+                width={50}
+                height={50}
+              />
+            </ImageWrapper>
           )}
           {isLoading ? (
             <LoadingCircle />

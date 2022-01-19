@@ -8,8 +8,14 @@ import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import LoadingComments from "../LoadingComments/LoadingComments";
 import { useRouter } from "next/router";
-import { ButtonWrapper, Wrapper } from "./UpdateUserDetails.styles";
+import {
+  ButtonWrapper,
+  ImageWrapper,
+  Wrapper,
+} from "./UpdateUserDetails.styles";
 import PropTypes from "prop-types";
+import Icon from "../../atoms/Icon/Icon";
+import Image from "next/image";
 
 const UpdateUserDetails = ({ profileImage, name, birthday }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -73,7 +79,21 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
     <Wrapper>
       <Form onSubmit={userDetailsHandler}>
         {selectedFile ? (
-          <ProfileImage src={URL.createObjectURL(selectedFile)} />
+          <ImageWrapper>
+            <div>
+              <Icon
+                onClick={() => {
+                  setSelectedFile(null);
+                  setNewProfileImage(null);
+                }}
+                iconPath="/icons/close.svg"
+                name="close"
+                imageWidth={40}
+                imageHeight={40}
+              />
+            </div>
+            <ProfileImage src={URL.createObjectURL(selectedFile)} />
+          </ImageWrapper>
         ) : (
           <ProfileImage src={profileImage} />
         )}
