@@ -15,7 +15,6 @@ import {
 } from "./UpdateUserDetails.styles";
 import PropTypes from "prop-types";
 import Icon from "../../atoms/Icon/Icon";
-import Image from "next/image";
 
 const UpdateUserDetails = ({ profileImage, name, birthday }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -97,7 +96,11 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
         ) : (
           <ProfileImage src={profileImage} />
         )}
-        <FileInput text="Add profile image" onChange={profileImageHandler} />
+        <FileInput
+          text="Add profile image"
+          onClick={(e) => (e.target.value = "")}
+          onChange={profileImageHandler}
+        />
         <Input ref={nameRef} inputType="text" name="Name" required={false} />
         <Input
           ref={birthdayRef}

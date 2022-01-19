@@ -68,6 +68,7 @@ const CreatePost = () => {
             lightGrey
             text="Add"
             src="/icons/image.svg"
+            onClick={(e) => (e.target.value = "")}
             onChange={fileHandler}
           />
           {selectedFile && (
