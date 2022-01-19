@@ -5,24 +5,32 @@ import { getSession } from "next-auth/react";
 import { connectToDataBase } from "../../lib/db";
 import MainTemplate from "../../components/templates/MainTemplate/MainTemplate";
 import {
-  ResultItem,
   ResultList,
   Wrapper,
 } from "../../components/layouts/SearchPage.styles";
 import Friend from "../../components/molecules/Friend/Friend";
+import { format, parseISO } from "date-fns";
+import PropTypes from "prop-types";
+import Event from "../../components/molecules/Event/Event";
 
-const SearchPage = ({ userId, users }) => {
+const SearchPage = ({ userId, users, events }) => {
   const [matchingUsers, setMatchingUsers] = useState([]);
+  const [matchingEvents, setMatchingEvents] = useState([]);
 
   const getMatchingUsers = debounce(async ({ inputValue }) => {
     const filteredUsers = await users.filter((user) =>
       user.name.toLowerCase().startsWith(inputValue.toLowerCase()),
     );
+
+    const filteredEvents = await events.filter((event) =>
+      event.title.toLowerCase().startsWith(inputValue.toLowerCase()),
+    );
+
     setMatchingUsers(filteredUsers);
+    setMatchingEvents(filteredEvents);
   }, 500);
 
   const {
-    isOpen,
     getMenuProps,
     getInputProps,
     getComboboxProps,
@@ -41,16 +49,16 @@ const SearchPage = ({ userId, users }) => {
           {...getInputProps()}
           name="Search"
           id="Search"
-          placeholder="Search users"
+          placeholder="Search for users and events"
           type=" text"
         />
         <ResultList
           isVisible={matchingUsers.length > 0}
           {...getMenuProps()}
-          aria-label=" search"
+          aria-label="search"
         >
-          {matchingUsers.length > 0 &&
-            getInputProps().value !== "" &&
+          {getInputProps().value !== "" &&
+            matchingUsers.length > 0 &&
             matchingUsers.map((user, index) => (
               <Friend
                 isHighlighted={highlightedIndex === index}
@@ -63,9 +71,36 @@ const SearchPage = ({ userId, users }) => {
               />
             ))}
         </ResultList>
+        <ResultList
+          isVisible={matchingEvents.length > 0}
+          {...getMenuProps()}
+          aria-label="search"
+        >
+          {getInputProps().value !== "" &&
+            matchingEvents.length > 0 &&
+            matchingEvents.map((event, index) => (
+              <Event
+                isHighlighted={highlightedIndex === index}
+                {...getItemProps({
+                  event,
+                  index,
+                })}
+                key={event.id}
+                userId={event.userId}
+                event={event}
+                displayDelete={false}
+              />
+            ))}
+        </ResultList>
       </Wrapper>
     </MainTemplate>
   );
+};
+
+SearchPage.propTypes = {
+  userId: PropTypes.string.isRequired,
+  users: PropTypes.array.isRequired,
+  events: PropTypes.array.isRequired,
 };
 
 export const getServerSideProps = async (context) => {
@@ -84,6 +119,8 @@ export const getServerSideProps = async (context) => {
 
   const users = await db.collection("users").find().toArray();
 
+  const events = await db.collection("events").find().toArray();
+
   await client.close();
 
   return {
@@ -94,6 +131,16 @@ export const getServerSideProps = async (context) => {
         name: user.name,
         email: user.email,
         profileImage: user.profileImage,
+      })),
+      events: events.map((event) => ({
+        id: event._id.toString(),
+        userId: event.userId.toString(),
+        userName: event.userName,
+        email: event.email,
+        eventImage: event.eventImage,
+        title: event.title,
+        date: format(parseISO(event.date), "PP"),
+        isBirthday: event.isBirthday,
       })),
       revalidate: 1,
     },

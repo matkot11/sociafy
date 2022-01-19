@@ -23,17 +23,12 @@ export const ResultList = styled.ul`
   width: 100%;
   visibility: ${({ isVisible }) => (isVisible ? "visible" : "hidden")};
   padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   & > * {
     margin-top: 2rem;
   }
-`;
-
-export const ResultItem = styled.li`
-  width: 100%;
-  list-style: none;
-  box-shadow: ${({ isHighlighted, theme }) =>
-    isHighlighted
-      ? `0 4px 4px ${theme.color.lightGreen}`
-      : "0 4px 4px rgba(0, 0, 0, 0.25)"};
 `;

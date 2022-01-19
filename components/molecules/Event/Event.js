@@ -33,7 +33,7 @@ const Event = ({ event, userId, onClick, displayDelete }) => (
 Event.propTypes = {
   event: PropTypes.object.isRequired,
   userId: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   displayDelete: PropTypes.bool.isRequired,
 };
 
