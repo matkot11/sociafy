@@ -26,6 +26,7 @@ import Friends from "../../../components/organisms/Friends/Friends";
 import Icon from "../../../components/atoms/Icon/Icon";
 import { useRouter } from "next/router";
 import { format, parseISO } from "date-fns";
+import Head from "next/head";
 
 const EventPage = ({ event }) => {
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
@@ -86,64 +87,70 @@ const EventPage = ({ event }) => {
       });
   };
 
-  if (status === "loading" || isLoading || router.isFallback) {
+  if (status === "loading" || isLoading || router.isFallback || !event) {
     return <LoadingComments />;
   }
 
   return (
-    <MainTemplate userId={session.user.id}>
-      <GreyWrapper>
-        <Wrapper>
-          {!event.isBirthday && event.userId === session.user.id && (
-            <DeleteButtonWrapper>
-              <Icon
-                onClick={deleteEventHandler}
-                name="Bin"
-                iconPath="/icons/bin.svg"
-                imageWidth={24}
-                imageHeight={24}
-              />
-            </DeleteButtonWrapper>
-          )}
-          <ImageWrapper>
-            <ProfileImage src={event.eventImage} width={115} height={115} />
-          </ImageWrapper>
-          <Title>{event.title}</Title>
-          <Date>{event.date}</Date>
-          <Description>{event.description}</Description>
-          {!event.isBirthday && (
-            <CreatedBy>Event created by {event.userName}</CreatedBy>
-          )}
-          {!event.isBirthday && (
-            <ButtonWrapper>
-              <RectangleButton onClick={participateButtonHandler} lightGrey>
-                {areYouParticipant ? "Leave event" : "Join event"}
-              </RectangleButton>
-              <RectangleButton
-                onClick={() => setIsParticipantsOpen(!isParticipantsOpen)}
-                lightGrey
-              >
-                <span>Participants</span>
-                <Image
-                  src={
-                    isParticipantsOpen
-                      ? "/icons/arrow-down.svg"
-                      : "/icons/arrow-right.svg"
-                  }
-                  alt="Arrow"
-                  width={15}
-                  height={15}
+    <>
+      <Head>
+        <title>{event.title}</title>
+        <meta name="description" content={event.description} />
+      </Head>
+      <MainTemplate userId={session.user.id}>
+        <GreyWrapper>
+          <Wrapper>
+            {!event.isBirthday && event.userId === session.user.id && (
+              <DeleteButtonWrapper>
+                <Icon
+                  onClick={deleteEventHandler}
+                  name="Bin"
+                  iconPath="/icons/bin.svg"
+                  imageWidth={24}
+                  imageHeight={24}
                 />
-              </RectangleButton>
-            </ButtonWrapper>
-          )}
-          {isParticipantsOpen && (
-            <Friends friends={participants} emptyText="No participants" />
-          )}
-        </Wrapper>
-      </GreyWrapper>
-      {error && <ErrorMessage message={error} />}
-    </MainTemplate>
+              </DeleteButtonWrapper>
+            )}
+            <ImageWrapper>
+              <ProfileImage src={event.eventImage} width={115} height={115} />
+            </ImageWrapper>
+            <Title>{event.title}</Title>
+            <Date>{event.date}</Date>
+            <Description>{event.description}</Description>
+            {!event.isBirthday && (
+              <CreatedBy>Event created by {event.userName}</CreatedBy>
+            )}
+            {!event.isBirthday && (
+              <ButtonWrapper>
+                <RectangleButton onClick={participateButtonHandler} lightGrey>
+                  {areYouParticipant ? "Leave event" : "Join event"}
+                </RectangleButton>
+                <RectangleButton
+                  onClick={() => setIsParticipantsOpen(!isParticipantsOpen)}
+                  lightGrey
+                >
+                  <span>Participants</span>
+                  <Image
+                    src={
+                      isParticipantsOpen
+                        ? "/icons/arrow-down.svg"
+                        : "/icons/arrow-right.svg"
+                    }
+                    alt="Arrow"
+                    width={15}
+                    height={15}
+                  />
+                </RectangleButton>
+              </ButtonWrapper>
+            )}
+            {isParticipantsOpen && (
+              <Friends friends={participants} emptyText="No participants" />
+            )}
+          </Wrapper>
+        </GreyWrapper>
+        {error && <ErrorMessage message={error} />}
+      </MainTemplate>
+    </>
   );
 };
 

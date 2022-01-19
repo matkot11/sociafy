@@ -20,6 +20,7 @@ import ErrorMessage from "../../../components/molecules/ErrorMessage/ErrorMessag
 import PropTypes from "prop-types";
 import UserProfileEvents from "../../../components/molecules/UserProfileEvents/UserProfileEvents";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const ProfilePage = ({ user }) => {
   const [isFriend, setIsFriend] = useState(false);
@@ -72,32 +73,38 @@ const ProfilePage = ({ user }) => {
       });
   };
 
-  if (status === "loading" || router.isFallback) {
+  if (status === "loading" || router.isFallback || !user) {
     return <LoadingComments />;
   }
 
   return (
-    <MainTemplate userId={session.user.id}>
-      <GreyWrapper>
-        <Wrapper>
-          <UserDetailsWrapper>
-            <ProfileImage src={user.profileImage} width={144} height={144} />
-            <div>
-              <span>{user.name}</span>
-              {session.user.email !== user.email ? (
-                <RectangleButton onClick={friendHandler} lightGrey>
-                  {!isFriend ? "Add friend" : "Remove friend"}
-                </RectangleButton>
-              ) : null}
-            </div>
-          </UserDetailsWrapper>
-          <UserProfileFriends friends={friends} />
-          <UserProfileEvents events={user.events} userId={user.id} />
-          <UserProfilePosts posts={user.posts} email={session.user.email} />
-        </Wrapper>
-      </GreyWrapper>
-      {error && <ErrorMessage message={error} />}
-    </MainTemplate>
+    <>
+      <Head>
+        <title>{user.name}</title>
+        <meta name="description" content={`${user.name}'s profile`} />
+      </Head>
+      <MainTemplate userId={session.user.id}>
+        <GreyWrapper>
+          <Wrapper>
+            <UserDetailsWrapper>
+              <ProfileImage src={user.profileImage} width={144} height={144} />
+              <div>
+                <span>{user.name}</span>
+                {session.user.email !== user.email ? (
+                  <RectangleButton onClick={friendHandler} lightGrey>
+                    {!isFriend ? "Add friend" : "Remove friend"}
+                  </RectangleButton>
+                ) : null}
+              </div>
+            </UserDetailsWrapper>
+            <UserProfileFriends friends={friends} />
+            <UserProfileEvents events={user.events} userId={user.id} />
+            <UserProfilePosts posts={user.posts} email={session.user.email} />
+          </Wrapper>
+        </GreyWrapper>
+        {error && <ErrorMessage message={error} />}
+      </MainTemplate>
+    </>
   );
 };
 

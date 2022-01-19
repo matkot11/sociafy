@@ -10,6 +10,7 @@ import { useError } from "../../hooks/useError";
 import ErrorMessage from "../../components/molecules/ErrorMessage/ErrorMessage";
 import { getSession, useSession } from "next-auth/react";
 import LoadingComments from "../../components/organisms/LoadingComments/LoadingComments";
+import Head from "next/head";
 
 const AuthPage = () => {
   const { status } = useSession();
@@ -26,15 +27,21 @@ const AuthPage = () => {
   }
 
   return (
-    <AuthTemplate>
-      <LoginWrapper isOpenLogin={isLoginOpen && "isOpenLogin"}>
-        <Login onClickRegister={(e) => handleDisplayAuth(e, false)} />
-      </LoginWrapper>
-      <RegisterWrapper isOpenLogin={isLoginOpen && "isOpenLogin"}>
-        <Register onClickLogin={(e) => handleDisplayAuth(e, true)} />
-      </RegisterWrapper>
-      {error && <ErrorMessage message={error} />}
-    </AuthTemplate>
+    <>
+      <Head>
+        <title>{isLoginOpen ? "Login" : "Register"}</title>
+        <meta name="description" content="Authentication" />
+      </Head>
+      <AuthTemplate>
+        <LoginWrapper isOpenLogin={isLoginOpen && "isOpenLogin"}>
+          <Login onClickRegister={(e) => handleDisplayAuth(e, false)} />
+        </LoginWrapper>
+        <RegisterWrapper isOpenLogin={isLoginOpen && "isOpenLogin"}>
+          <Register onClickLogin={(e) => handleDisplayAuth(e, true)} />
+        </RegisterWrapper>
+        {error && <ErrorMessage message={error} />}
+      </AuthTemplate>
+    </>
   );
 };
 

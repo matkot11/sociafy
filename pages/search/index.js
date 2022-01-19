@@ -12,6 +12,7 @@ import Friend from "../../components/molecules/Friend/Friend";
 import { format, parseISO } from "date-fns";
 import PropTypes from "prop-types";
 import Event from "../../components/molecules/Event/Event";
+import Head from "next/head";
 
 const SearchPage = ({ userId, users, events }) => {
   const [matchingUsers, setMatchingUsers] = useState([]);
@@ -43,57 +44,63 @@ const SearchPage = ({ userId, users, events }) => {
   });
 
   return (
-    <MainTemplate userId={userId}>
-      <Wrapper {...getComboboxProps()}>
-        <input
-          {...getInputProps()}
-          name="Search"
-          id="Search"
-          placeholder="Search for users and events"
-          type=" text"
-        />
-        <ResultList
-          isVisible={matchingUsers.length > 0}
-          {...getMenuProps()}
-          aria-label="search"
-        >
-          {getInputProps().value !== "" &&
-            matchingUsers.length > 0 &&
-            matchingUsers.map((user, index) => (
-              <Friend
-                isHighlighted={highlightedIndex === index}
-                {...getItemProps({
-                  user,
-                  index,
-                })}
-                key={user.userId}
-                friend={user}
-              />
-            ))}
-        </ResultList>
-        <ResultList
-          isVisible={matchingEvents.length > 0}
-          {...getMenuProps()}
-          aria-label="search"
-        >
-          {getInputProps().value !== "" &&
-            matchingEvents.length > 0 &&
-            matchingEvents.map((event, index) => (
-              <Event
-                isHighlighted={highlightedIndex === index}
-                {...getItemProps({
-                  event,
-                  index,
-                })}
-                key={event.id}
-                userId={event.userId}
-                event={event}
-                displayDelete={false}
-              />
-            ))}
-        </ResultList>
-      </Wrapper>
-    </MainTemplate>
+    <>
+      <Head>
+        <title>Search</title>
+        <meta name="description" content="Search for users and events" />
+      </Head>
+      <MainTemplate userId={userId}>
+        <Wrapper {...getComboboxProps()}>
+          <input
+            {...getInputProps()}
+            name="Search"
+            id="Search"
+            placeholder="Search for users and events"
+            type=" text"
+          />
+          <ResultList
+            isVisible={matchingUsers.length > 0}
+            {...getMenuProps()}
+            aria-label="search"
+          >
+            {getInputProps().value !== "" &&
+              matchingUsers.length > 0 &&
+              matchingUsers.map((user, index) => (
+                <Friend
+                  isHighlighted={highlightedIndex === index}
+                  {...getItemProps({
+                    user,
+                    index,
+                  })}
+                  key={user.userId}
+                  friend={user}
+                />
+              ))}
+          </ResultList>
+          <ResultList
+            isVisible={matchingEvents.length > 0}
+            {...getMenuProps()}
+            aria-label="search"
+          >
+            {getInputProps().value !== "" &&
+              matchingEvents.length > 0 &&
+              matchingEvents.map((event, index) => (
+                <Event
+                  isHighlighted={highlightedIndex === index}
+                  {...getItemProps({
+                    event,
+                    index,
+                  })}
+                  key={event.id}
+                  userId={event.userId}
+                  event={event}
+                  displayDelete={false}
+                />
+              ))}
+          </ResultList>
+        </Wrapper>
+      </MainTemplate>
+    </>
   );
 };
 

@@ -101,7 +101,7 @@ const UpdateUserDetails = ({ profileImage, name, birthday }) => {
           onClick={(e) => (e.target.value = "")}
           onChange={profileImageHandler}
         />
-        <Input ref={nameRef} inputType="text" name="Name" required={false} />
+        <Input ref={nameRef} inputType="text" name="Name" required={true} />
         <Input
           ref={birthdayRef}
           inputType="date"

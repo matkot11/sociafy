@@ -14,6 +14,7 @@ import PropTypes from "prop-types";
 import RectangleButton from "../components/atoms/RectangleButton/RectangleButton";
 import styled from "styled-components";
 import LoadingComments from "../components/organisms/LoadingComments/LoadingComments";
+import Head from "next/head";
 
 const StyledRectangleButton = styled(RectangleButton)`
   margin-top: 2rem;
@@ -33,38 +34,48 @@ const HomePage = (
   }
 
   return (
-    <MainTemplate userId={session.user.id}>
-      <AddPostButton profileImage={profileImage} onClick={handleOpenModal} />
-      {isFriendsPostsOpen ? (
-        <StyledRectangleButton
-          onClick={() => setIsFriendsPostsOpen(false)}
-          lightGrey
-        >
-          See all posts
-        </StyledRectangleButton>
-      ) : (
-        <StyledRectangleButton
-          onClick={() => setIsFriendsPostsOpen(true)}
-          lightGrey
-        >
-          See your friends posts
-        </StyledRectangleButton>
-      )}
-      {isFriendsPostsOpen ? (
-        <Posts
-          posts={friendsPosts}
-          email={session.user.email}
-          displayDelete={true}
-        />
-      ) : (
-        <Posts posts={posts} email={session.user.email} displayDelete={true} />
-      )}
+    <>
+      <Head>
+        <title>Sociafy</title>
+        <meta name="description" content="Share your life with friends" />
+      </Head>
+      <MainTemplate userId={session.user.id}>
+        <AddPostButton profileImage={profileImage} onClick={handleOpenModal} />
+        {isFriendsPostsOpen ? (
+          <StyledRectangleButton
+            onClick={() => setIsFriendsPostsOpen(false)}
+            lightGrey
+          >
+            See all posts
+          </StyledRectangleButton>
+        ) : (
+          <StyledRectangleButton
+            onClick={() => setIsFriendsPostsOpen(true)}
+            lightGrey
+          >
+            See your friends posts
+          </StyledRectangleButton>
+        )}
+        {isFriendsPostsOpen ? (
+          <Posts
+            posts={friendsPosts}
+            email={session.user.email}
+            displayDelete={true}
+          />
+        ) : (
+          <Posts
+            posts={posts}
+            email={session.user.email}
+            displayDelete={true}
+          />
+        )}
 
-      <Modal isOpen={isOpen} handleClose={handleCloseModal}>
-        <CreatePost />
-      </Modal>
-      {error && <ErrorMessage message={error} />}
-    </MainTemplate>
+        <Modal isOpen={isOpen} handleClose={handleCloseModal}>
+          <CreatePost />
+        </Modal>
+        {error && <ErrorMessage message={error} />}
+      </MainTemplate>
+    </>
   );
 };
 

@@ -5,6 +5,8 @@ import { useError } from "../../hooks/useError";
 import { getAndCheckSession } from "../../lib/getAndCheckSession";
 import { connectToDataBase } from "../../lib/db";
 import MainTemplate from "../../components/templates/MainTemplate/MainTemplate";
+import Head from "next/head";
+import PropTypes from "prop-types";
 
 export const InnerWrapper = styled.div`
   margin-top: 2rem;
@@ -17,15 +19,28 @@ const UserDetailsPage = ({ id, profileImage, name, birthday }) => {
   const { error } = useError();
 
   return (
-    <MainTemplate userId={id}>
-      <UpdateUserDetails
-        profileImage={profileImage}
-        name={name}
-        birthday={birthday}
-      />
-      {error && <ErrorMessage message={error} />}
-    </MainTemplate>
+    <>
+      <Head>
+        <title>Edit user details</title>
+        <meta name="description" content="Edit user details" />
+      </Head>
+      <MainTemplate userId={id}>
+        <UpdateUserDetails
+          profileImage={profileImage}
+          name={name}
+          birthday={birthday}
+        />
+        {error && <ErrorMessage message={error} />}
+      </MainTemplate>
+    </>
   );
+};
+
+UserDetailsPage.proptypes = {
+  id: PropTypes.string.isRequired,
+  profileImage: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  birthday: PropTypes.string,
 };
 
 export const getServerSideProps = async (context) => {

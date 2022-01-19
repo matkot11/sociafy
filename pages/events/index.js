@@ -9,24 +9,30 @@ import PropTypes from "prop-types";
 import ErrorMessage from "../../components/molecules/ErrorMessage/ErrorMessage";
 import { useError } from "../../hooks/useError";
 import Events from "../../components/organisms/Events/Events";
-import axios from "axios";
 import { format, parseISO } from "date-fns";
+import Head from "next/head";
 
 const EventsPage = ({ userId, events }) => {
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
   const { error } = useError();
 
   return (
-    <MainTemplate userId={userId}>
-      <StyledRectangleButton onClick={handleOpenModal}>
-        Add event
-      </StyledRectangleButton>
-      <Events events={events} userId={userId} displayDelete={true} />
-      <Modal isOpen={isOpen} handleClose={handleCloseModal}>
-        <CreateEvent />
-      </Modal>
-      {error && <ErrorMessage message={error} />}
-    </MainTemplate>
+    <>
+      <Head>
+        <title>Events</title>
+        <meta name="description" content="Find and add events" />
+      </Head>
+      <MainTemplate userId={userId}>
+        <StyledRectangleButton onClick={handleOpenModal}>
+          Add event
+        </StyledRectangleButton>
+        <Events events={events} userId={userId} displayDelete={true} />
+        <Modal isOpen={isOpen} handleClose={handleCloseModal}>
+          <CreateEvent />
+        </Modal>
+        {error && <ErrorMessage message={error} />}
+      </MainTemplate>
+    </>
   );
 };
 
