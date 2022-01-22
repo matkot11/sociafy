@@ -24,26 +24,10 @@ function MyApp({ Component, pageProps, session }) {
     router.events.on("routeChangeError", handleComplete);
   }, [router]);
 
-  if (!pageProps && loading) {
-    return <LoadingComments />;
-  }
-
-  if (pageProps.session && loading) {
-    return (
-      <AppProviders>
-        <SessionProvider session={pageProps.session}>
-          <MainTemplate userId={pageProps.session.user.id}>
-            <LoadingComments />
-          </MainTemplate>
-        </SessionProvider>
-      </AppProviders>
-    );
-  }
-
   return (
     <AppProviders>
       <SessionProvider session={pageProps.session}>
-        <Component {...pageProps} />
+        {loading ? <LoadingComments /> : <Component {...pageProps} />}
       </SessionProvider>
     </AppProviders>
   );

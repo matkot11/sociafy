@@ -23,11 +23,11 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 
 const ProfilePage = ({ user }) => {
+  const router = useRouter();
   const [isFriend, setIsFriend] = useState(false);
   const [friends, setFriends] = useState([]);
-  const { data: session, status } = useSession({ required: true });
+  const { data: session, status } = useSession();
   const { dispatchError, error } = useError();
-  const router = useRouter();
 
   useEffect(() => {
     const getUser = async () => {
@@ -114,6 +114,8 @@ ProfilePage.propTypes = {
 
 export const getStaticPaths = async () => {
   const { client, db } = await connectToDataBase();
+  const session = await getSession();
+  await console.log(session);
 
   const users = await db.collection("users").find().toArray();
 

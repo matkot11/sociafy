@@ -33,7 +33,7 @@ const EventPage = ({ event }) => {
   const [participants, setParticipants] = useState([]);
   const [areYouParticipant, setAreYouParticipant] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { data: session, status } = useSession({ required: true });
+  const { data: session, status } = useSession();
   const { dispatchError, error } = useError();
   const router = useRouter();
 
