@@ -8,7 +8,7 @@ import {
 } from "../../../components/layouts/ProfilePage.styles";
 import MainTemplate from "../../../components/templates/MainTemplate/MainTemplate";
 import { format, parseISO } from "date-fns";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import LoadingComments from "../../../components/organisms/LoadingComments/LoadingComments";
 import UserProfilePosts from "../../../components/molecules/UserProfilePosts/UserProfilePosts";
 import UserProfileFriends from "../../../components/molecules/UserProfileFriends/UserProfileFriends";
@@ -25,7 +25,7 @@ import Head from "next/head";
 const ProfilePage = ({ user }) => {
   const [isFriend, setIsFriend] = useState(false);
   const [friends, setFriends] = useState([]);
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession({ required: true });
   const { dispatchError, error } = useError();
   const router = useRouter();
 
@@ -50,9 +50,7 @@ const ProfilePage = ({ user }) => {
           }, 1200);
         });
     };
-    {
-      console.log(session);
-    }
+
     if (session && user) {
       getUser();
       setFriends(user.friends);
@@ -74,7 +72,7 @@ const ProfilePage = ({ user }) => {
         }, 1200);
       });
   };
-  console.log(status);
+
   if (status === "loading" || router.isFallback || !user) {
     return <LoadingComments />;
   }
@@ -119,6 +117,12 @@ export const getStaticPaths = async () => {
 
   const users = await db.collection("users").find().toArray();
 
+  if (!users) {
+    return {
+      notFound: true,
+    };
+  }
+
   await client.close();
 
   return {
@@ -129,9 +133,8 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }, context) => {
   const profileId = params.profileId;
-
   const { client, db } = await connectToDataBase();
 
   const user = await db
