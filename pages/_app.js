@@ -24,15 +24,15 @@ function MyApp({ Component, pageProps, session }) {
     router.events.on("routeChangeError", handleComplete);
   }, [router]);
 
-  if (!session && loading) {
+  if (!pageProps && loading) {
     return <LoadingComments />;
   }
 
-  if (loading) {
+  if (pageProps.session && loading) {
     return (
       <AppProviders>
         <SessionProvider session={pageProps.session}>
-          <MainTemplate userId={session.user.id}>
+          <MainTemplate userId={pageProps.session.user.id}>
             <LoadingComments />
           </MainTemplate>
         </SessionProvider>
@@ -52,6 +52,15 @@ function MyApp({ Component, pageProps, session }) {
 MyApp.getInitialProps = async (context) => {
   const appProps = await App.getInitialProps(context);
   const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth",
+        permanent: false,
+      },
+    };
+  }
 
   return {
     ...appProps,
