@@ -11,6 +11,11 @@ const handler = async (req, res) => {
 
   const session = await getAndCheckSession(req, res);
 
+  if (!session) {
+    res.status(404).json({ message: "Could not authorize operation" });
+    return;
+  }
+
   const { client, db } = await connectToDataBase();
 
   const existingUser = await db.collection("users").findOne({
@@ -25,62 +30,32 @@ const handler = async (req, res) => {
 
   const id = new ObjectId();
 
-  if (text && image) {
+  if (!image && !text) {
+    await client.close();
+    res.status(404).json({ message: "Did not provide any data" });
+    return;
+  }
+
+  let imageFile;
+
+  if (image) {
     const { imageUrl } = await uploadImage(res, image, id, "posts");
-
-    await db.collection("posts").insertOne({
-      _id: id,
-      userId: existingUser._id,
-      email: session.user.email,
-      profileImage: existingUser.profileImage,
-      name: existingUser.name,
-      image: imageUrl,
-      text,
-      likes: [],
-      comments: [],
-    });
-
-    res.status(201).json({ message: "Post created!" });
-    await client.close();
+    imageFile = imageUrl;
   }
 
-  if (text && !image) {
-    await db.collection("posts").insertOne({
-      _id: id,
-      userId: existingUser._id,
-      email: session.user.email,
-      profileImage: existingUser.profileImage,
-      name: existingUser.name,
-      image: null,
-      text,
-      likes: [],
-      comments: [],
-    });
+  await db.collection("posts").insertOne({
+    _id: id,
+    userId: existingUser._id,
+    email: session.user.email,
+    profileImage: existingUser.profileImage,
+    name: existingUser.name,
+    image: image ? imageFile : null,
+    text: text ? text : "",
+    likes: [],
+    comments: [],
+  });
 
-    res.status(201).json({ message: "Post created!" });
-    await client.close();
-  }
-
-  if (image && !text) {
-    const { imageUrl } = await uploadImage(res, image, id, "posts");
-
-    await db.collection("posts").insertOne({
-      _id: id,
-      userId: existingUser._id,
-      email: session.user.email,
-      profileImage: existingUser.profileImage,
-      name: existingUser.name,
-      image: imageUrl,
-      text: "",
-      likes: [],
-      comments: [],
-    });
-
-    res.status(201).json({ message: "Post created!" });
-    await client.close();
-  }
-
-  res.status(404).json({ message: "Did not provide any data" });
+  res.status(201).json({ message: "Post created!" });
   await client.close();
 };
 
