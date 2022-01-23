@@ -3,6 +3,9 @@ import styled from "styled-components";
 const RectangleButton = styled.button`
   padding: 1rem;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: ${({ theme }) => theme.fontSize.m};
   font-weight: ${({ theme }) => theme.fontWeight.semiBold};
   background-color: ${({ theme, lightGrey }) =>
@@ -10,6 +13,10 @@ const RectangleButton = styled.button`
   border-radius: 5px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.2s;
+
+  span {
+    margin-right: 1rem;
+  }
 
   &:focus {
     box-shadow: 0 4px 4px ${({ theme }) => theme.color.lightGreen};

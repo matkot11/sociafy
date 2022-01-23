@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import Icon from "../../atoms/Icon/Icon";
 import styled from "styled-components";
 import PropTypes from "prop-types";
@@ -19,13 +18,15 @@ const Wrapper = styled.div`
 
 const NavbarTop = ({ onClick }) => (
   <Wrapper>
-    <Image
-      src="/icons/logo.svg"
-      alt="Logo"
-      layout="fixed"
-      width={100}
-      height={30}
-    />
+    <Link href="/" passHref>
+      <Icon
+        iconPath="/icons/logo.svg"
+        name="Logo"
+        layout="fixed"
+        imageWidth={100}
+        imageHeight={30}
+      />
+    </Link>
     <div>
       <Link href="/search" passHref>
         <Icon

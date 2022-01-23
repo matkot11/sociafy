@@ -5,13 +5,12 @@ import Header from "../../atoms/Header/Header";
 import RectangleButton from "../../atoms/RectangleButton/RectangleButton";
 import FileInput from "../../atoms/FileInput/FileInput";
 import Form from "../../molecules/Form/Form";
-import { ImageWrapper, Wrapper } from "./CreatePost.styles";
+import { Wrapper } from "./CreatePost.styles";
 import TextArea from "../../atoms/TextArea/TextArea";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import { useRouter } from "next/router";
 import LoadingCircle from "../../atoms/LoadingCircle/LoadingCircle";
-import Icon from "../../atoms/Icon/Icon";
 
 const CreatePost = () => {
   const textareaRef = useRef();
@@ -64,34 +63,37 @@ const CreatePost = () => {
         <Header>Create post</Header>
         <Form onSubmit={createPostHandler}>
           <TextArea placeholder="What's on your mind?" ref={textareaRef} />
-          <FileInput
-            lightGrey
-            text="Add"
-            src="/icons/image.svg"
-            onClick={(e) => (e.target.value = "")}
-            onChange={fileHandler}
-          />
-          {selectedFile && (
-            <ImageWrapper>
-              <div>
-                <Icon
-                  onClick={() => {
-                    setSelectedFile(null);
-                    setPreparedFile(null);
-                  }}
-                  iconPath="/icons/close.svg"
-                  name="close"
-                  imageWidth={20}
-                  imageHeight={20}
-                />
-              </div>
+          {selectedFile ? (
+            <RectangleButton
+              onClick={() => {
+                setSelectedFile(null);
+                setPreparedFile(null);
+              }}
+            >
+              <span>Remove</span>
               <Image
-                src={URL.createObjectURL(selectedFile)}
-                alt="Selected file"
-                width={50}
-                height={50}
+                src="/icons/image.svg"
+                alt="image"
+                width={20}
+                height={20}
               />
-            </ImageWrapper>
+            </RectangleButton>
+          ) : (
+            <FileInput
+              lightGrey
+              text="Add"
+              src="/icons/image.svg"
+              onClick={(e) => (e.target.value = "")}
+              onChange={fileHandler}
+            />
+          )}
+          {selectedFile && (
+            <Image
+              src={URL.createObjectURL(selectedFile)}
+              alt="Selected file"
+              width={50}
+              height={50}
+            />
           )}
           {isLoading ? (
             <LoadingCircle />
