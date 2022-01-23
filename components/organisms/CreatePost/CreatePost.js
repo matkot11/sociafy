@@ -42,7 +42,7 @@ const CreatePost = () => {
         text: enteredText,
       })
       .then((response) => {
-        router.reload();
+        // router.reload();
         setIsLoading(false);
       })
       .catch((e) => {
