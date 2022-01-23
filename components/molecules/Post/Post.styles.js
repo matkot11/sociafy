@@ -61,21 +61,24 @@ export const BottomWrapper = styled.div`
     border-top: 1px solid ${({ theme }) => theme.color.lightGrey};
   }
 
-  div {
-    padding: 0.7rem;
-  }
-
-  div:first-child {
-    align-self: flex-end;
-    display: flex;
-
-    button {
-      margin-right: 2rem;
-    }
-  }
-
   div:last-child {
+    padding: 0.7rem;
     display: flex;
+    align-items: center;
     justify-content: space-around;
   }
+`;
+
+export const CounterWrapper = styled.div`
+  padding: 0.7rem;
+  align-self: flex-end;
+  display: flex;
+
+  button {
+    margin-right: 2rem;
+  }
+`;
+
+export const LoaderWrapper = styled.div`
+  margin: 1rem;
 `;

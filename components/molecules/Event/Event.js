@@ -1,9 +1,8 @@
 import Link from "next/link";
 import ProfileImage from "../../atoms/ProfileImage/ProfileImage";
 import PropTypes from "prop-types";
-import { DeleteButtonWrapper, Wrapper } from "./Event.styles";
+import { Wrapper } from "./Event.styles";
 import Icon from "../../atoms/Icon/Icon";
-import axios from "axios";
 
 const Event = ({ event, userId, onClick, displayDelete }) => (
   <>

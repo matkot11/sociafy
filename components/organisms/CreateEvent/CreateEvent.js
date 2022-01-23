@@ -107,7 +107,7 @@ const CreateEvent = () => {
             />
           )}
           {isLoading ? (
-            <LoadingCircle />
+            <LoadingCircle size={3} borderWeight={3} />
           ) : (
             <RectangleButton disabled={isLoading} lightGrey>
               Create event

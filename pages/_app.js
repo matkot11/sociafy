@@ -4,19 +4,18 @@ import { SessionProvider, getSession } from "next-auth/react";
 import AppProviders from "../providers/AppProviders";
 import { useRouter } from "next/router";
 import LoadingComments from "../components/organisms/LoadingComments/LoadingComments";
-import MainTemplate from "../components/templates/MainTemplate/MainTemplate";
 import App from "next/app";
 
-function MyApp({ Component, pageProps, session }) {
-  const [loading, setLoading] = useState(false);
+function MyApp({ Component, pageProps }) {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const handleStart = (url) => {
-      url !== router.pathname ? setLoading(true) : setLoading(false);
+      url !== router.pathname ? setIsLoading(true) : setIsLoading(false);
     };
-    const handleComplete = (url) => {
-      setLoading(false);
+    const handleComplete = () => {
+      setIsLoading(false);
     };
 
     router.events.on("routeChangeStart", handleStart);
@@ -27,7 +26,7 @@ function MyApp({ Component, pageProps, session }) {
   return (
     <AppProviders>
       <SessionProvider session={pageProps.session}>
-        {loading ? <LoadingComments /> : <Component {...pageProps} />}
+        {isLoading ? <LoadingComments /> : <Component {...pageProps} />}
       </SessionProvider>
     </AppProviders>
   );
@@ -48,7 +47,6 @@ MyApp.getInitialProps = async (context) => {
 
   return {
     ...appProps,
-    session,
   };
 };
 

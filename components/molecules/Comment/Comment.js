@@ -1,6 +1,7 @@
 import Icon from "../../atoms/Icon/Icon";
-import { Wrapper } from "./Comment.styles";
+import { LoaderWrapper, Wrapper } from "./Comment.styles";
 import PropTypes from "prop-types";
+import LoadingCircle from "../../atoms/LoadingCircle/LoadingCircle";
 
 const Comment = ({ onClick, comment, isYourComment }) => (
   <Wrapper>

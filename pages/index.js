@@ -15,6 +15,7 @@ import RectangleButton from "../components/atoms/RectangleButton/RectangleButton
 import styled from "styled-components";
 import LoadingComments from "../components/organisms/LoadingComments/LoadingComments";
 import Head from "next/head";
+import LoadingCircle from "../components/atoms/LoadingCircle/LoadingCircle";
 
 const StyledRectangleButton = styled(RectangleButton)`
   margin-top: 2rem;

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import PropTypes from "prop-types";
+import LoadingCircle from "../../atoms/LoadingCircle/LoadingCircle";
 
 const Wrapper = styled.div`
   width: 100%;

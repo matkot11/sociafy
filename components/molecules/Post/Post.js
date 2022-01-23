@@ -5,7 +5,9 @@ import ProfileImage from "../../atoms/ProfileImage/ProfileImage";
 import GreyWrapper from "../GreyWrapper/GreyWrapper";
 import {
   BottomWrapper,
+  CounterWrapper,
   ImageWrapper,
+  LoaderWrapper,
   Paragraph,
   UserWrapper,
   Wrapper,
@@ -17,23 +19,30 @@ import Comments from "../../organisms/Comments/Comments";
 import AddComment from "../../atoms/Add Comment/AddComment";
 import Icon from "../../atoms/Icon/Icon";
 import PropTypes from "prop-types";
+import LoadingCircle from "../../atoms/LoadingCircle/LoadingCircle";
 
 const Post = ({ email, post, onClick, isYourPost, displayDelete }) => {
   const commentRef = useRef();
+  const [isLikeLoading, setIsLikeLoading] = useState(false);
+  const [isCommentLoading, setIsCommentLoading] = useState(false);
   const [likesArray, setLikesArray] = useState(post.likes);
   const [commentsArray, setCommentsArray] = useState(post.comments);
   const [showComments, setShowComments] = useState(false);
   const { dispatchError } = useError();
+
   const likeHandler = async () => {
+    setIsLikeLoading(true);
     await axios
       .patch("/api/posts/like-post", {
         id: post.id,
       })
       .then(({ data }) => {
         setLikesArray(data.likes);
+        setIsLikeLoading(false);
       })
       .catch((e) => {
         setTimeout(() => {
+          setIsLikeLoading(false);
           dispatchError(e.response.data.message);
         }, 1200);
       });
@@ -41,6 +50,7 @@ const Post = ({ email, post, onClick, isYourPost, displayDelete }) => {
 
   const commentHandler = async (e) => {
     e.preventDefault();
+    setIsCommentLoading(true);
     const comment = commentRef.current.value;
 
     if (comment !== "") {
@@ -52,15 +62,17 @@ const Post = ({ email, post, onClick, isYourPost, displayDelete }) => {
         })
         .then(({ data }) => {
           setCommentsArray(data.comments);
-          commentRef.current.value = "";
+          setIsCommentLoading(false);
         })
         .catch((e) => {
           setTimeout(() => {
+            setIsCommentLoading(false);
             dispatchError(e.response.data.message);
           }, 1200);
         });
     } else {
       dispatchError("Comment is empty");
+      setIsCommentLoading(false);
     }
   };
 
@@ -101,7 +113,7 @@ const Post = ({ email, post, onClick, isYourPost, displayDelete }) => {
           </ImageWrapper>
         )}
         <BottomWrapper>
-          <div>
+          <CounterWrapper>
             <IconTextButton
               src="/icons/like.svg"
               name={likesArray.length.toString()}
@@ -110,10 +122,12 @@ const Post = ({ email, post, onClick, isYourPost, displayDelete }) => {
               src="/icons/comment.svg"
               name={commentsArray.length.toString()}
             />
-          </div>
+          </CounterWrapper>
           <hr />
           <div>
-            {likesArray && likesArray.includes(email) ? (
+            {isLikeLoading ? (
+              <LoadingCircle size={2} borderWeight={2} />
+            ) : likesArray && likesArray.includes(email) ? (
               <IconTextButton
                 onClick={likeHandler}
                 src="/icons/like.svg"
@@ -140,7 +154,13 @@ const Post = ({ email, post, onClick, isYourPost, displayDelete }) => {
         {showComments && (
           <>
             <Comments comments={commentsArray} email={email} postId={post.id} />
-            <AddComment onSubmit={commentHandler} ref={commentRef} />
+            {isCommentLoading ? (
+              <LoaderWrapper>
+                <LoadingCircle size={3} borderWeight={3} />
+              </LoaderWrapper>
+            ) : (
+              <AddComment onSubmit={commentHandler} ref={commentRef} />
+            )}
           </>
         )}
       </Wrapper>

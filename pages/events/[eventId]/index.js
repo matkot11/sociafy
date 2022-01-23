@@ -27,12 +27,14 @@ import Icon from "../../../components/atoms/Icon/Icon";
 import { useRouter } from "next/router";
 import { format, parseISO } from "date-fns";
 import Head from "next/head";
+import LoadingCircle from "../../../components/atoms/LoadingCircle/LoadingCircle";
 
 const EventPage = ({ event }) => {
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
   const [participants, setParticipants] = useState([]);
   const [areYouParticipant, setAreYouParticipant] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isParticipationLoading, setIsParticipationLoading] = useState(false);
   const { data: session, status } = useSession();
   const { dispatchError, error } = useError();
   const router = useRouter();
@@ -54,14 +56,17 @@ const EventPage = ({ event }) => {
   }, [dispatchError, session, event]);
 
   const participateButtonHandler = async () => {
+    setIsParticipationLoading(true);
     await axios
       .post("/api/events/add-participant", { eventId: event.id })
       .then(({ data }) => {
         setParticipants(data.participants);
         setAreYouParticipant(data.areYouParticipant);
+        setIsParticipationLoading(false);
       })
       .catch((e) => {
         setTimeout(() => {
+          setIsParticipationLoading(false);
           dispatchError(e.response.data.message);
         }, 1200);
       });
@@ -120,30 +125,33 @@ const EventPage = ({ event }) => {
             {!event.isBirthday && (
               <CreatedBy>Event created by {event.userName}</CreatedBy>
             )}
-            {!event.isBirthday && (
-              <ButtonWrapper>
-                <RectangleButton onClick={participateButtonHandler} lightGrey>
-                  {areYouParticipant ? "Leave event" : "Join event"}
-                </RectangleButton>
-                <RectangleButton
-                  onClick={() => setIsParticipantsOpen(!isParticipantsOpen)}
-                  lightGrey
-                >
-                  <span>Participants</span>
-                  <Image
-                    src={
-                      isParticipantsOpen
-                        ? "/icons/arrow-down.svg"
-                        : "/icons/arrow-right.svg"
-                    }
-                    alt="Arrow"
-                    width={15}
-                    height={15}
-                  />
-                </RectangleButton>
-              </ButtonWrapper>
-            )}
-            {isParticipantsOpen && (
+            {!event.isBirthday &&
+              (isParticipationLoading ? (
+                <LoadingCircle size={2} borderWeight={2} />
+              ) : (
+                <ButtonWrapper>
+                  <RectangleButton onClick={participateButtonHandler} lightGrey>
+                    {areYouParticipant ? "Leave event" : "Join event"}
+                  </RectangleButton>
+                  <RectangleButton
+                    onClick={() => setIsParticipantsOpen(!isParticipantsOpen)}
+                    lightGrey
+                  >
+                    <span>Participants</span>
+                    <Image
+                      src={
+                        isParticipantsOpen
+                          ? "/icons/arrow-down.svg"
+                          : "/icons/arrow-right.svg"
+                      }
+                      alt="Arrow"
+                      width={15}
+                      height={15}
+                    />
+                  </RectangleButton>
+                </ButtonWrapper>
+              ))}
+            {isParticipantsOpen && !isParticipationLoading && (
               <Friends friends={participants} emptyText="No participants" />
             )}
           </Wrapper>

@@ -21,9 +21,11 @@ import PropTypes from "prop-types";
 import UserProfileEvents from "../../../components/molecules/UserProfileEvents/UserProfileEvents";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import LoadingCircle from "../../../components/atoms/LoadingCircle/LoadingCircle";
 
 const ProfilePage = ({ user }) => {
   const router = useRouter();
+  const [isAddFriendLoading, setIsFriendLoading] = useState(false);
   const [isFriend, setIsFriend] = useState(false);
   const [friends, setFriends] = useState([]);
   const { data: session, status } = useSession();
@@ -58,6 +60,7 @@ const ProfilePage = ({ user }) => {
   }, [dispatchError, session, user, friends]);
 
   const friendHandler = async () => {
+    setIsFriendLoading(true);
     await axios
       .post("/api/user/add-friend", {
         email: user.email,
@@ -65,10 +68,12 @@ const ProfilePage = ({ user }) => {
       .then(({ data }) => {
         setFriends(data.friends);
         setIsFriend(data.isYourFriend);
+        setIsFriendLoading(false);
       })
       .catch((e) => {
         setTimeout(() => {
           dispatchError(e.response.data.message);
+          setIsFriendLoading(false);
         }, 1200);
       });
   };
@@ -91,9 +96,13 @@ const ProfilePage = ({ user }) => {
               <div>
                 <span>{user.name}</span>
                 {session.user.email !== user.email ? (
-                  <RectangleButton onClick={friendHandler} lightGrey>
-                    {!isFriend ? "Add friend" : "Remove friend"}
-                  </RectangleButton>
+                  isAddFriendLoading ? (
+                    <LoadingCircle size={2.8} borderWeight={3.5} />
+                  ) : (
+                    <RectangleButton onClick={friendHandler} lightGrey>
+                      {!isFriend ? "Add friend" : "Remove friend"}
+                    </RectangleButton>
+                  )
                 ) : null}
               </div>
             </UserDetailsWrapper>
