@@ -8,7 +8,7 @@ import {
 } from "../../../components/layouts/ProfilePage.styles";
 import MainTemplate from "../../../components/templates/MainTemplate/MainTemplate";
 import { format, parseISO } from "date-fns";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import LoadingComments from "../../../components/organisms/LoadingComments/LoadingComments";
 import UserProfilePosts from "../../../components/molecules/UserProfilePosts/UserProfilePosts";
 import UserProfileFriends from "../../../components/molecules/UserProfileFriends/UserProfileFriends";
@@ -123,8 +123,6 @@ ProfilePage.propTypes = {
 
 export const getStaticPaths = async () => {
   const { client, db } = await connectToDataBase();
-  const session = await getSession();
-  await console.log(session);
 
   const users = await db.collection("users").find().toArray();
 

@@ -32,24 +32,32 @@ const Sidebar = ({ onClick, userId }) => {
             <IconTextLink
               iconPath="/icons/home.svg"
               name="Main page"
-              imageWidth={35}
-              imageHeight={35}
+              imageWidth={30}
+              imageHeight={30}
+            />
+          </Link>
+          <Link href="/search" passHref>
+            <IconTextLink
+              iconPath="/icons/magnifier.svg"
+              name="Search"
+              imageWidth={30}
+              imageHeight={30}
             />
           </Link>
           <Link href="/events" passHref>
             <IconTextLink
               iconPath="/icons/calendar.svg"
               name="Events"
-              imageWidth={35}
-              imageHeight={35}
+              imageWidth={30}
+              imageHeight={30}
             />
           </Link>
           <Link href={`/user/${userId}`} passHref>
             <IconTextLink
               iconPath="/icons/user-profile.svg"
               name="Profile"
-              imageWidth={35}
-              imageHeight={35}
+              imageWidth={30}
+              imageHeight={30}
             />
           </Link>
           <Link href={`/user-details`} passHref>
@@ -66,8 +74,8 @@ const Sidebar = ({ onClick, userId }) => {
             onClick={logoutHandler}
             src="/icons/logout.svg"
             name="Logout"
-            imageWidth={35}
-            imageHeight={35}
+            imageWidth={30}
+            imageHeight={30}
             fontWeight={400}
           />
         </div>
@@ -78,7 +86,7 @@ const Sidebar = ({ onClick, userId }) => {
 };
 
 Sidebar.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   userId: PropTypes.string.isRequired,
 };
 

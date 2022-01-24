@@ -16,6 +16,10 @@ const StyledLink = styled.a`
     margin-left: 1rem;
     font-size: ${({ theme }) => theme.fontSize.m};
     color: ${({ theme }) => theme.color.lightGrey};
+
+    @media only screen and (min-width: ${({ theme }) => theme.size.m}) {
+      font-size: ${({ theme }) => theme.fontSize.s};
+    }
   }
 `;
 

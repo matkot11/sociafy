@@ -1,13 +1,22 @@
 import PropTypes from "prop-types";
-import { InnerWrapper, Wrapper } from "./AuthTemplate.styles";
+import {
+  FooterWrapper,
+  InnerWrapper,
+  LogoWrapper,
+  Wrapper,
+} from "./AuthTemplate.styles";
 import Logo from "../../atoms/Logo/Logo";
 import Footer from "../../atoms/Footer/Footer";
 
 const AuthTemplate = ({ children }) => (
   <Wrapper>
-    <Logo />
+    <LogoWrapper>
+      <Logo />
+    </LogoWrapper>
     <InnerWrapper>{children}</InnerWrapper>
-    <Footer />
+    <FooterWrapper>
+      <Footer />
+    </FooterWrapper>
   </Wrapper>
 );
 

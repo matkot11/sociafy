@@ -8,6 +8,10 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-evenly;
+
+  @media only screen and (min-width: ${({ theme }) => theme.size.m}) {
+    display: none;
+  }
 `;
 
 const NavbarButtons = ({ userId }) => (
