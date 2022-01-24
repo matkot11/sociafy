@@ -22,4 +22,11 @@ export const theme = {
     medium: 500,
     regular: 400,
   },
+  size: {
+    xxs: "31.25rem",
+    xs: "37.5rem",
+    s: "43.75rem",
+    m: "50rem",
+    l: "62.5rem",
+  },
 };

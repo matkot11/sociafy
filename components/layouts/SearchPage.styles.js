@@ -17,6 +17,10 @@ export const Wrapper = styled.div`
       border-bottom: 2px solid ${({ theme }) => theme.color.lightGreen};
     }
   }
+
+  @media only screen and (min-width: ${({ theme }) => theme.size.xxs}) {
+    max-width: 40rem;
+  }
 `;
 
 export const ResultList = styled.ul`

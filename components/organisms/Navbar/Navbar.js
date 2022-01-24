@@ -1,12 +1,13 @@
+import { useState } from "react";
 import { Wrapper } from "./Navbar.styles";
 import NavbarButtons from "../../molecules/NavbarButtons/NavbarButtons";
-import { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import NavbarTop from "../../molecules/NavbarTop/NavbarTop";
 import PropTypes from "prop-types";
 
 const Navbar = ({ userId }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <Wrapper>
       <NavbarTop onClick={() => setIsSidebarOpen(!isSidebarOpen)} />

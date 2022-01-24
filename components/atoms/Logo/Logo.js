@@ -12,6 +12,17 @@ const Wrapper = styled.div`
     width: 60vw !important;
     height: 10rem !important;
   }
+
+  @media only screen and (min-width: ${({ theme }) => theme.size.l}) {
+    width: 40vw;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+
+    span {
+      width: auto !important;
+    }
+  }
 `;
 
 const Logo = () => (

@@ -9,10 +9,18 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  div {
-    a {
-      margin-left: 1.5rem;
-    }
+  @media only screen and (min-width: ${({ theme }) => theme.size.m}) {
+    padding: 1rem 1rem 1rem 2rem;
+  }
+`;
+
+const ButtonsWrapper = styled.div`
+  & > * {
+    margin-left: 1.5rem;
+  }
+
+  @media only screen and (min-width: ${({ theme }) => theme.size.m}) {
+    display: none;
   }
 `;
 
@@ -27,7 +35,7 @@ const NavbarTop = ({ onClick }) => (
         imageHeight={30}
       />
     </Link>
-    <div>
+    <ButtonsWrapper>
       <Link href="/search" passHref>
         <Icon
           iconPath="/icons/magnifier.svg"
@@ -44,12 +52,12 @@ const NavbarTop = ({ onClick }) => (
           imageHeight={24}
         />
       </button>
-    </div>
+    </ButtonsWrapper>
   </Wrapper>
 );
 
 NavbarTop.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
 
 export default NavbarTop;

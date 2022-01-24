@@ -34,10 +34,22 @@ export const Wrapper = styled.div`
       }
     }
   }
+
+  @media only screen and (min-width: ${({ theme }) => theme.size.m}) {
+    position: sticky;
+    top: 0;
+    padding: 0 4rem 0 4rem;
+    min-height: 100vh;
+    width: 100%;
+  }
 `;
 
 export const CloseButton = styled.button`
   position: absolute;
   top: 1rem;
   right: 1rem;
+
+  @media only screen and (min-width: ${({ theme }) => theme.size.m}) {
+    display: none;
+  }
 `;
