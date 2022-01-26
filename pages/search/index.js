@@ -5,6 +5,7 @@ import { getSession } from "next-auth/react";
 import { connectToDataBase } from "../../lib/db";
 import MainTemplate from "../../components/templates/MainTemplate/MainTemplate";
 import {
+  NoDataText,
   ResultList,
   Wrapper,
 } from "../../components/layouts/SearchPage.styles";
@@ -98,6 +99,11 @@ const SearchPage = ({ userId, users, events }) => {
                 />
               ))}
           </ResultList>
+          {getInputProps().value !== "" &&
+            matchingUsers.length === 0 &&
+            matchingEvents.length === 0 && (
+              <NoDataText>No data found</NoDataText>
+            )}
         </Wrapper>
       </MainTemplate>
     </>

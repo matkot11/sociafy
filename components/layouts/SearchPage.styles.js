@@ -36,3 +36,10 @@ export const ResultList = styled.ul`
     margin-top: 2rem;
   }
 `;
+
+export const NoDataText = styled.h3`
+  margin-top: 1rem;
+  text-align: center;
+  font-size: ${({ theme }) => theme.fontSize.m};
+  font-weight: ${({ theme }) => theme.fontWeight.semiBold};
+`;

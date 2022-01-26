@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  z-index: 100;
+  z-index: 10;
   position: fixed;
   top: 0;
   right: 0;
@@ -12,13 +12,15 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.color.darkGreen};
+  height: 100%;
+  overflow-y: auto;
 
   button {
     color: white;
   }
 
   div {
-    height: 80%;
+    height: 95%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -27,19 +29,17 @@ export const Wrapper = styled.div`
     div {
       height: max-content;
 
-      &:first-child {
-        & > * {
-          margin: 1rem 0 1rem 0;
-        }
+      & > * {
+        margin: 1rem 0 1rem 0;
       }
     }
   }
 
   @media only screen and (min-width: ${({ theme }) => theme.size.m}) {
-    position: sticky;
+    z-index: unset;
+    position: unset;
     top: 0;
     padding: 0 4rem 0 4rem;
-    min-height: 100vh;
     width: 100%;
   }
 `;

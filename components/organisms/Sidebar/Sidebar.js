@@ -78,9 +78,9 @@ const Sidebar = ({ onClick, userId }) => {
             imageHeight={30}
             fontWeight={400}
           />
+          <Footer isBlack={false} />
         </div>
       </div>
-      <Footer isBlack={false} />
     </Wrapper>
   );
 };

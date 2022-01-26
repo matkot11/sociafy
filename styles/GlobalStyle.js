@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.6rem;
+    overflow: hidden;
     margin: 0;
     padding: 0;
   }
